@@ -1,1 +1,2 @@
-## Project 3 
+## Cloning this repo will not allow you to start the app, you first need to go to the directory this folder is in and run "npm install" and then you can run "npm start". 
+## The gitignore file should ignore all the node modules
