@@ -19,7 +19,7 @@ function ViewEditMenu(){
     <>
         {/*Buttons with popup windows*/}
         <div className = "flex flex-wrap justify-center space-x-5 px-5 py-5">
-            <Button variant="danger" href="/">
+            <Button variant="danger" href="/Inventory">
                 Back
             </Button>
             <UpdateMenu/>
