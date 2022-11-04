@@ -1,8 +1,3 @@
-import EditInventory from "./EditInventory";
-import NewIngredient from "./NewIngredient";
-import RestockForm from "./RestockForm";
-import RestockHistory from "./RestockHistory";
-import ViewEditMenu from "./ViewEditMenu";
 import Button from 'react-bootstrap/Button';
 
 function ManagerSide(){
@@ -62,16 +57,16 @@ function ManagerSide(){
             <h3>Trend Analysis</h3>
         </div>
         <div class="flex flex-wrap justify-center space-x-5 px-5 pt-2 pb-5">
-            <Button variant="primary" size="lg" href="/">
+            <Button variant="primary" size="lg" href="/SalesReport">
                 Sales Report
             </Button>
-            <Button variant="primary"size="lg" href="/">
+            <Button variant="primary"size="lg" href="/PairSales">
                 Pair Sales
             </Button>
-            <Button variant="primary" size="lg" href="/">
+            <Button variant="primary" size="lg" href="/ExcessReport">
                 Excess Report
             </Button>
-            <Button variant="primary" size="lg" href="/">
+            <Button variant="primary" size="lg" href="/RestockReport">
                 Restock Report
             </Button>
         </div>
