@@ -1,5 +1,4 @@
 import Button from "react-bootstrap/Button";
-import React, { useState } from "react";
 import logo  from './Images/logo.png';
 
 function Login() {
@@ -27,9 +26,14 @@ function Login() {
             />
             </div>
         </div>
-        <Button variant="primary" onClick={handleLogin}>
-                            Login
+        <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
+            <Button variant="primary" onClick={handleLogin}>
+                                Login
             </Button>
+            <Button variant="primary" href="/ManagerSide">
+                                Manager Override
+            </Button>
+        </div>
         </form>
     </div>
   );

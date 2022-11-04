@@ -2,7 +2,6 @@ import EditInventory from "./EditInventory";
 import NewIngredient from "./NewIngredient";
 import RestockForm from "./RestockForm";
 import RestockHistory from "./RestockHistory";
-import ViewEditMenu from "./ViewEditMenu";
 import Button from 'react-bootstrap/Button';
 
 function Inventory(){
