@@ -11,20 +11,31 @@ import Salads from './popups/Salads';
 import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
+import Modal from 'react-bootstrap/Modal';
+import salad from './popups/project3_foodpics/ceasarsalad.jpg'
 
 function ServerSide(){
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const serverName = "Jane Doe";
     const OrderNum = '001';
 
+    const testName = "test";
+    const testAmount = 1000000;
+
     const [cart, setCart] = useState([]);
  
-    const addToCart = async(product) => {
+    const addToCart = async(menuName,menuPrice) => {
         // Check if duplicates and add to quantity
-        console.log(product);
+        //need to somehow pass in the product
+        //console.log(product);
         let addingProduct = {
-        'name': "name",
+        'name': menuName,
         'quantity': 1,
-        'totalAmount': 100,
+        'totalAmount': menuPrice,
       }
       setCart([...cart, addingProduct]);
       console.log(cart);
@@ -92,7 +103,7 @@ function ServerSide(){
                         <td>{item.quantity}</td>
                         <td>{item.totalAmount}</td>
                         <td>
-                            <Button variant='danger' onClick={() => remove("item")}> Remove</Button>
+                            <Button variant='danger' onClick={() => remove(item.name)}> Remove</Button>
                         </td>
                         </tr>
                     );
@@ -110,17 +121,19 @@ function ServerSide(){
         {/* End of Cart */}
             
             <div className="box5">
-                <Burgers />
-                <Chicken />
-                <Desserts />
-                <Beverages />
-                <Salads />
+                <Burgers function={addToCart}/>
+                <Chicken function={addToCart}/>
+                <Desserts function ={addToCart}/>
+                <Beverages function ={addToCart}/>
+                <Salads function = {addToCart}/>
                 <Seasonal />
                 <Add />
 
-                <Button style = {styles.catagory} onClick = {() => addToCart("item")}>
+                <Button style = {styles.catagory} name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>
                     TEST
                 </Button>
+
+                {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
             </div> 
         </div>
     </>

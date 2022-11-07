@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import drink from './project3_foodpics/drink.jpg'
 
 
-function Beverages() {
+function Beverages(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -21,7 +21,12 @@ function Beverages() {
           <Modal.Title>Beverage Options</Modal.Title>
         </Modal.Header>
         <Modal.Body>Select:
-        <Button><img src={drink} alt="drink" /></Button> 
+        <>
+        <div class="relative">
+            <img class="scale-75" src={drink} alt="drink"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Drink" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Drink</button>
+        </div>
+        </>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

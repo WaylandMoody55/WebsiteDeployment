@@ -6,7 +6,7 @@ import cheeseburger from './project3_foodpics/cheeseburger.webp'
 import bacon from './project3_foodpics/baconCheeseburger.webp'
 import blackbean from './project3_foodpics/blackbeanburger.webp'
 
-function Burgers() {
+function Burgers(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -23,10 +23,30 @@ function Burgers() {
           <Modal.Title>Burger Options</Modal.Title>
         </Modal.Header>
         <Modal.Body>Select:
-        <Button><img src={burger} alt="burger" /></Button> 
-        <Button><img src={cheeseburger} alt="cheese burger" /></Button>
-        <Button><img src={bacon} alt="bacon burger" /></Button>
-        <Button><img src={blackbean} alt="black bean burger" /></Button>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={burger} alt="burger"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Hamburger" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Hamburger</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={cheeseburger} alt="cheeseBurger"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Cheeseburger" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Cheeseburger</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={bacon} alt="baconBurger"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Baconburger" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Baconburger</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={blackbean} alt="blackBean"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Black-Bean Burger" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Black-Bean Burger</button>
+        </div>
+        </>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

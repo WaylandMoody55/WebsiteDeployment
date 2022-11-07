@@ -9,7 +9,7 @@ import choccream from './project3_foodpics/chocicecream.webp'
 import strawcream from './project3_foodpics/strawicecream.jpg'
 import cookiesand from './project3_foodpics/cookiesand.jpg'
 
-function Desserts() {
+function Desserts(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -26,13 +26,48 @@ function Desserts() {
           <Modal.Title>Dessert Options</Modal.Title>
         </Modal.Header>
         <Modal.Body>Select:
-        <Button><img src={vanshake} alt="vanilla shake" /></Button>
-        <Button><img src={chocshake} alt="chocolate shake" /></Button>
-        <Button><img src={strawshake} alt="strawberry shake" /></Button>
-        <Button><img src={vancream} alt="vanilla ice cream" /></Button>
-        <Button><img src={choccream} alt="chocolate ice cream" /></Button>
-        <Button><img src={strawcream} alt="strawberry ice cream" /></Button>
-        <Button><img src={cookiesand} alt="cookie sandwich" /></Button>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={vanshake} alt="vanillaShake"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Vanilla Shake" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Vanilla Shake</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={chocshake} alt="chocShake"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Chocolate Shake" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Chocolate Shake</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={strawshake} alt="strawShake"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Strawberry Shake" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Strawberry Shake</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={vancream} alt="vanCream"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Vanilla Ice Cream" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Vanilla Ice Cream</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={choccream} alt="chocCream"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Chocolate Ice Cream" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Chocolate Ice Cream</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={strawcream} alt="strawCream"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Strawberry Ice Cream" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Strawberry Ice Cream</button>
+        </div>
+        </>
+        <>
+        <div class="relative">
+            <img class="scale-75" src={cookiesand} alt="cookieSandwich"></img>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Cookie Sandwich" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Cookie Sandwich</button>
+        </div>
+        </>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
