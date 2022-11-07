@@ -1,11 +1,16 @@
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import React from 'react';
 
 import Header from './ServerHeader'
 import Search from './SearchBar'
 import Order from './Order'
-// import Catagories from './src/components/ServerCatagories'
-// import Order from './src/components/ServerOrder'
+import Burgers from './popups/Burgers';
+import Chicken from './popups/Chicken';
+import Desserts from './popups/Desserts';
+import Salads from './popups/Salads';
+import Seasonal from './popups/Seasonal';
+import Add from './popups/Add';
+import Beverages from './popups/Beverages';
 
 function ServerSide(){
      
@@ -21,33 +26,14 @@ function ServerSide(){
             <Order />
             
             <div className="box5">
-                <Button style = {styles.catagory}>
-                    Burgers
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Chicken
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Dessert
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Beverages
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Salads
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Seasonal Items
-                </Button>
-
-                <Button style = {styles.catagory}>
-                    Add-ons
-                </Button>
+                <Burgers />
+                <Chicken />
+                <Desserts />
+                <Beverages />
+                <Salads />
+                <Seasonal />
+                <Add />
+                
             </div> 
         </div>
     </>
@@ -57,15 +43,3 @@ function ServerSide(){
 }
 
 export default ServerSide;
-
-const styles = {
-    container:{
-        width: '100%',
-    },
-    catagory:{
-        width: '200px',
-        height: '200px',
-        marginLeft: '20px',
-        marginTop: '20px',
-    }
-};

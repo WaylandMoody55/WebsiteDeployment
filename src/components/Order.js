@@ -11,7 +11,7 @@ function Order(){
     return(
     <>
         <div className="box3">
-            <h5>Beverages</h5>
+            <h5 style={styles.catg}>Beverages</h5 >
             <table className='table table-light'>
                 <thead>
                     <tr>
@@ -37,10 +37,10 @@ function Order(){
                 </tbody>
             </table>
 
-            <h4>Food Items</h4>
+            <h5 style={styles.catg}>Food Items</h5 >
             <table className='table table-light'>
                 <thead>
-                    <tr>
+                      <tr>
                         <td>Item</td>
                         <td>QTY</td>
                         <td>Price</td>
@@ -63,7 +63,7 @@ function Order(){
                 </tbody>
             </table>
 
-            <h4>Dessert</h4>
+            <h5 style={styles.catg}>Dessert</h5 >
             <table className='table table-light'>
                 <thead>
                     <tr>
@@ -113,5 +113,9 @@ const styles = {
     },
     amnt:{
         marginLeft: '55px'
+    },
+    catg:{
+        backgroundColor: '#eee',
+        padding: '5px 5px 5px 5px'
     }
 };
