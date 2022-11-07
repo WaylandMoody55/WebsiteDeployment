@@ -23,7 +23,7 @@ function RestockHistory(){
         <>
         <Button variant="primary" onClick={handleShow}>
                     Restock History
-                </Button>
+        </Button>
 
                 <Modal
                     show={show}

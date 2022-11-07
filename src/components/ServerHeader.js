@@ -10,7 +10,7 @@ function ServerHeader(){
     return(
     <>
         <div className="box1">
-            <Button variant="danger" href="/Inventory" style = {styles.logout}>
+            <Button variant="danger" href="/" style = {styles.logout}>
                 Logout
             </Button>
 
