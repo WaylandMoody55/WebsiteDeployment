@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import drink from './project3_foodpics/drink.jpg'
+
 
 function Beverages() {
   const [show, setShow] = useState(false);
@@ -18,14 +20,17 @@ function Beverages() {
         <Modal.Header closeButton>
           <Modal.Title>Beverage Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:</Modal.Body>
+        <Modal.Body>Select:
+        <Button><img src={drink} alt="drink" /></Button> 
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button> */}
+          </Button> */
+          }
         </Modal.Footer>
       </Modal>
     </>

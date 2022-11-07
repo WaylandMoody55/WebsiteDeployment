@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import salad from './project3_foodpics/ceasarsalad.jpg'
 
 function Salads() {
   const [show, setShow] = useState(false);
@@ -18,7 +19,9 @@ function Salads() {
         <Modal.Header closeButton>
           <Modal.Title>Salad Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:</Modal.Body>
+        <Modal.Body>Select:
+        <Button><img src={salad} alt="ceasar salad" /></Button>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

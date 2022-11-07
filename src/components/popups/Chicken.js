@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import chickensand from './project3_foodpics/chickensand.webp'
+import spicychickensand from './project3_foodpics/spicychickensand.webp'
+import chickentenders from './project3_foodpics/chickentenders.jpg'
 
 function Chicken() {
   const [show, setShow] = useState(false);
@@ -18,7 +21,11 @@ function Chicken() {
         <Modal.Header closeButton>
           <Modal.Title>Chicken Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:</Modal.Body>
+        <Modal.Body>Select:
+        <Button><img src={chickensand} alt="chicken sandwich" /></Button>
+        <Button><img src={spicychickensand} alt="spicy chicken sandwich" /></Button>
+        <Button><img src={chickentenders} alt="chicken tenders" /></Button>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
