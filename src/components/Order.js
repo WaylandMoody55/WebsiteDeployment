@@ -1,16 +1,14 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import ServerSide from './ServerSide';
 import "./Format.css"
 
 function Order(){
-    const order = [
-        {name: "Item", quantity:"QTY", price: "price"},
-        {name: "Item", quantity:"QTY", price: "price"},
-      ]
+    const cart = ServerSide.cart;
 
     return(
     <>
-        <div className="box3">
+        {/* <div className="box3">
             <h5 style={styles.catg}>Beverages</h5 >
             <table className='table table-light'>
                 <thead>
@@ -22,18 +20,17 @@ function Order(){
                     </tr>
                 </thead>
                 <tbody>
-                    {order.map(item => {
-                    return (
-                        <tr>
-                        <td>{item.name}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.price}</td>
-                        <td>
-                            <Button variant='danger'> Remove</Button>
-                        </td>
-                        </tr>
-                    );
-                    })}
+                    { cart ? cart.map((cartProduct, key) => <tr key={"0"}>
+                      <td>{cartProduct.name}</td>
+                      <td>{cartProduct.quantity}</td>
+                      <td>{cartProduct.totalAmount}</td>
+                      <td>
+                        <button className='btn btn-danger btn-sm'>Remove</button>
+                      </td>
+
+                    </tr>)
+
+                    : 'No Item in Cart'}
                 </tbody>
             </table>
 
@@ -48,7 +45,7 @@ function Order(){
                     </tr>
                 </thead>
                 <tbody>
-                    {order.map(item => {
+                     {order.map(item => {
                     return (
                         <tr>
                         <td>{item.name}</td>
@@ -59,7 +56,7 @@ function Order(){
                         </td>
                         </tr>
                     );
-                    })}
+                    })} 
                 </tbody>
             </table>
 
@@ -85,7 +82,7 @@ function Order(){
                         </td>
                         </tr>
                     );
-                    })}
+                    })} 
                 </tbody>
             </table>
             <h2 className='px-2 text-black' style={styles.amnt}>Total amount: $$$</h2>
@@ -95,7 +92,7 @@ function Order(){
                     Pay Now
                 </Button>
             </div>
-        </div>
+        </div> */}
         
     </>
     );
