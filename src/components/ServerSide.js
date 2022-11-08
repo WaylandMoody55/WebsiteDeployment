@@ -120,7 +120,7 @@ function ServerSide(){
     <>
         <div className="wrapper">
             <div className="box1">
-            <Button variant="danger" href="/Inventory" style = {styles.logout}>
+            <Button variant="danger" href="/" style = {styles.logout}>
                 Logout
             </Button>
 
