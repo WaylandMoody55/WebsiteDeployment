@@ -32,7 +32,7 @@ function ServerSide(){
         let findProductInCart = await cart.find(i=>{
             return i.name === menuName
         });
-        let newtotalAmount = totalAmount + parseInt(menuPrice);
+        let newtotalAmount = totalAmount + parseFloat(menuPrice);
         setTotalAmount(newtotalAmount);
 
         if(findProductInCart){
@@ -68,6 +68,7 @@ function ServerSide(){
     const clear = async() => {
         const newCart = cart.filter(cartItem => cartItem [0]);
         setCart(newCart);
+        setTotalAmount(0);
     };
 
     const remove = async(product) => {
@@ -103,9 +104,9 @@ function ServerSide(){
         }
 
 
-        var totalPrice = parseFloat(product.totalAmount);
-        var totalQuantity = parseFloat(product.quantity);
-        setTotal(t => t - (totalPrice/totalQuantity)); 
+        // var totalPrice = parseFloat(product.totalAmount);
+        // var totalQuantity = parseFloat(product.quantity);
+        // setTotal(t => t - (totalPrice/totalQuantity)); 
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
@@ -158,21 +159,20 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: $$$</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount}</h2>
 
             <div>
-                <Button style = {styles.pay}>
+                { totalAmount !== 0 ? <div>
+                  <Button style = {styles.pay}>
                     Pay Now
                 </Button>
 
-                </div> : <div>
-                  <Button style = {styles.pay} disabled>
+                </div> : <Button style = {styles.pay} disabled>
                     Pay Now
                 </Button>
-
-                </div>
 
                 }
+
             </div>
         </div>
         {/* End of Cart */}
