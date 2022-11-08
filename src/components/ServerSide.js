@@ -26,6 +26,8 @@ function ServerSide(){
     const testName = "test";
     const testAmount = 1000000;
 
+    const [total,setTotal] = useState(0);
+
     const [cart, setCart] = useState([]);
  
     const addToCart = async(menuName,menuPrice) => {
@@ -63,12 +65,16 @@ function ServerSide(){
             setCart([...cart, addingProduct]);
             console.log(cart);
         }
+
+        var indPrice = parseInt(menuPrice);
+        setTotal(t => t + indPrice);
         
     };
 
     const clear = async() => {
         const newCart = cart.filter(cartItem => cartItem [0]);
         setCart(newCart);
+        setTotal(0);
     };
 
     const remove = async(product) => {
@@ -100,6 +106,13 @@ function ServerSide(){
             const newCart = cart.filter(cartItem => cartItem.name !== product.name);
             setCart(newCart);
         }
+
+
+        var totalPrice = parseInt(product.totalAmount);
+        var totalQuantity = parseInt(product.quantity);
+        setTotal(t => t - (totalPrice/totalQuantity)); 
+        //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
+
     };
 
     //This is where you would get the list of all the items and prices
@@ -159,10 +172,10 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: $$$</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${total}</h2>
 
             <div>
-                <Button style = {styles.pay}>
+                <Button style = {styles.pay} onClick = {() => clear()}>
                     Pay Now
                 </Button>
             </div>
