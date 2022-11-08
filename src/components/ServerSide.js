@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -11,30 +11,27 @@ import Salads from './popups/Salads';
 import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
-import Modal from 'react-bootstrap/Modal';
-import salad from './popups/project3_foodpics/ceasarsalad.jpg'
+// import Modal from 'react-bootstrap/Modal';
 
 function ServerSide(){
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     const serverName = "Jane Doe";
     const OrderNum = '001';
-
-    const testName = "test";
-    const testAmount = 1000000;
-
+    
     const [cart, setCart] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+
  
     const addToCart = async(menuName,menuPrice) => {
-        // Check if duplicates and add to quantity
-        //need to somehow pass in the product
-        //console.log(product);
+    
+        //Checks if item is already in cart
         let findProductInCart = await cart.find(i=>{
             return i.name === menuName
         });
+        let newtotalAmount = totalAmount + parseInt(menuPrice);
+        setTotalAmount(newtotalAmount);
+
         if(findProductInCart){
             let newCart = [];
             let newItem;
@@ -61,19 +58,20 @@ function ServerSide(){
                 'totalAmount': menuPrice,
             }
             setCart([...cart, addingProduct]);
-            console.log(cart);
         }
-        
     };
 
     const clear = async() => {
         const newCart = cart.filter(cartItem => cartItem [0]);
         setCart(newCart);
+        setTotalAmount(0);
     };
 
     const remove = async(product) => {
         // if duplicate only remove 1
         // const newCart =cart.filter(cartItem => cartItem.id !== product.id);
+        let newtotalAmount = totalAmount - (product.totalAmount/product.quantity);
+        setTotalAmount(newtotalAmount);
         let findProductInCart = await cart.find(i=>{
             return i.name === product.name
         });
@@ -107,7 +105,7 @@ function ServerSide(){
     <>
         <div className="wrapper">
             <div className="box1">
-            <Button variant="danger" href="/Inventory" style = {styles.logout}>
+            <Button variant="danger" href="/" style = {styles.logout}>
                 Logout
             </Button>
 
@@ -136,15 +134,6 @@ function ServerSide(){
                     </tr>
                 </thead>
                 <tbody>
-                    {/* cart.map((cartProduct, key) => <tr key={key}>
-                      <td>{cartProduct.name}</td>
-                      <td>{cartProduct.quantity}</td>
-                      <td>{cartProduct.totalAmount}</td>
-                      <td>
-                        <button className='btn btn-danger btn-sm' onClick={() => remove(cartProduct)}>Remove</button>
-                      </td>
-
-                    </tr>) */}
                     {cart.map(item => {
                     return (
                         <tr key = {item.name}>
@@ -159,12 +148,22 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: $$$</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount}</h2>
 
             <div>
-                <Button style = {styles.pay}>
+                { totalAmount !== 0 ? <div>
+                  <Button style = {styles.pay}>
                     Pay Now
                 </Button>
+
+                </div> : <div>
+                  <Button style = {styles.pay} disabled>
+                    Pay Now
+                </Button>
+
+                </div>
+
+                }
             </div>
         </div>
         {/* End of Cart */}
