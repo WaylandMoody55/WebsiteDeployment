@@ -32,13 +32,38 @@ function ServerSide(){
         // Check if duplicates and add to quantity
         //need to somehow pass in the product
         //console.log(product);
-        let addingProduct = {
-        'name': menuName,
-        'quantity': 1,
-        'totalAmount': menuPrice,
-      }
-      setCart([...cart, addingProduct]);
-      console.log(cart);
+        let findProductInCart = await cart.find(i=>{
+            return i.name === menuName
+        });
+        if(findProductInCart){
+            let newCart = [];
+            let newItem;
+
+            cart.forEach(cartItem => {
+                if(cartItem.name === menuName){
+                newItem = {
+                    'name': menuName,
+                    'quantity': cartItem.quantity + 1,
+                    'totalAmount': menuPrice * (cartItem.quantity + 1),
+                }
+                newCart.push(newItem);
+                }else{
+                newCart.push(cartItem);
+                }
+
+            });
+            setCart(newCart);
+        }
+        else{
+            let addingProduct = {
+                'name': menuName,
+                'quantity': 1,
+                'totalAmount': menuPrice,
+            }
+            setCart([...cart, addingProduct]);
+            console.log(cart);
+        }
+        
     };
 
     const clear = async() => {
@@ -49,8 +74,32 @@ function ServerSide(){
     const remove = async(product) => {
         // if duplicate only remove 1
         // const newCart =cart.filter(cartItem => cartItem.id !== product.id);
-        const newCart = cart.filter(cartItem => cartItem [0]);
-        setCart(newCart);
+        let findProductInCart = await cart.find(i=>{
+            return i.name === product.name
+        });
+        if(product.quantity > 1 && findProductInCart){
+            let newCart = [];
+            let newItem;
+
+            cart.forEach(cartItem => {
+                if(cartItem.name === product.name){
+                newItem = {
+                    'name': product.name,
+                    'quantity': cartItem.quantity - 1,
+                    'totalAmount': product.totalAmount - (product.totalAmount/cartItem.quantity),
+                }
+                newCart.push(newItem);
+                }else{
+                newCart.push(cartItem);
+                }
+
+            });
+            setCart(newCart);
+        }
+        else{
+            const newCart = cart.filter(cartItem => cartItem.name !== product.name);
+            setCart(newCart);
+        }
     };
 
     //This is where you would get the list of all the items and prices
@@ -98,12 +147,12 @@ function ServerSide(){
                     </tr>) */}
                     {cart.map(item => {
                     return (
-                        <tr>
+                        <tr key = {item.name}>
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
                         <td>{item.totalAmount}</td>
                         <td>
-                            <Button variant='danger' onClick={() => remove(item.name)}> Remove</Button>
+                            <Button variant='danger' onClick={() => remove(item)}> Remove</Button>
                         </td>
                         </tr>
                     );
