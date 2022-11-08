@@ -20,7 +20,7 @@ function Inventory(){
     return(
         <>
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
-            <Button variant="danger" href="/">
+            <Button variant="danger" href="/ManagerSide">
                 Back
             </Button>
             <RestockForm/>

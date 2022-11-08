@@ -18,7 +18,10 @@ function ServerSide(){
 
     const serverName = "Jane Doe";
     const OrderNum = '001';
-    
+
+    const testName = "test";
+    const testAmount = 1000000;
+
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
@@ -59,12 +62,12 @@ function ServerSide(){
             }
             setCart([...cart, addingProduct]);
         }
+        
     };
 
     const clear = async() => {
         const newCart = cart.filter(cartItem => cartItem [0]);
         setCart(newCart);
-        setTotalAmount(0);
     };
 
     const remove = async(product) => {
@@ -98,6 +101,13 @@ function ServerSide(){
             const newCart = cart.filter(cartItem => cartItem.name !== product.name);
             setCart(newCart);
         }
+
+
+        var totalPrice = parseFloat(product.totalAmount);
+        var totalQuantity = parseFloat(product.quantity);
+        setTotal(t => t - (totalPrice/totalQuantity)); 
+        //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
+
     };
 
     //This is where you would get the list of all the items and prices
@@ -105,7 +115,7 @@ function ServerSide(){
     <>
         <div className="wrapper">
             <div className="box1">
-            <Button variant="danger" href="/" style = {styles.logout}>
+            <Button variant="danger" href="/Inventory" style = {styles.logout}>
                 Logout
             </Button>
 
@@ -148,11 +158,10 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount}</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: $$$</h2>
 
             <div>
-                { totalAmount !== 0 ? <div>
-                  <Button style = {styles.pay}>
+                <Button style = {styles.pay}>
                     Pay Now
                 </Button>
 
@@ -175,10 +184,10 @@ function ServerSide(){
                 <Beverages function ={addToCart}/>
                 <Salads function = {addToCart}/>
                 <Seasonal />
-                <Add />
+                <Add function={addToCart}/>
 
-                <Button style = {styles.catagory} name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>
-                    TEST
+                <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Combo Charge
                 </Button>
 
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
