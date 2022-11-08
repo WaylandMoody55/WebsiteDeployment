@@ -25,7 +25,7 @@ function Salads(props) {
         <>
         <div class="relative">
             <img class="scale-75" src={salad} alt="ceasarSalad"></img>
-            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Ceasar Salad" value = "400" onClick={e => props.function(e.target.name,e.target.value)}>Ceasar Salad</button>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="caesarSalad" value = "8.29" onClick={e => props.function(e.target.name,e.target.value)}>Ceasar Salad</button>
         </div>
         </>
         </Modal.Body>

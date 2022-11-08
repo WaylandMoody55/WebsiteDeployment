@@ -25,19 +25,19 @@ function Chicken(props) {
         <>
         <div class="relative">
             <img class="scale-75" src={chickensand} alt="chickenSand"></img>
-            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Chicken Sandwich" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Chicken Sandwich</button>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="chickenSandwich" value = "7.49" onClick={e => props.function(e.target.name,e.target.value)}>Chicken Sandwich</button>
         </div>
         </>
         <>
         <div class="relative">
             <img class="scale-75" src={spicychickensand} alt="spicyChickenSand"></img>
-            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Spicy Chicken Sandwich" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Spicy Chicken Sandwich</button>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="spicyChickenSandwich" value = "7.99" onClick={e => props.function(e.target.name,e.target.value)}>Spicy Chicken Sandwich</button>
         </div>
         </>
         <>
         <div class="relative">
             <img class="scale-75" src={chickentenders} alt="chickenTenders"></img>
-            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="Chicken Tenders" value = "40" onClick={e => props.function(e.target.name,e.target.value)}>Chicken Tenders</button>
+            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="chickenTender" value = "7.49" onClick={e => props.function(e.target.name,e.target.value)}>Chicken Tenders</button>
         </div>
         </>
         </Modal.Body>

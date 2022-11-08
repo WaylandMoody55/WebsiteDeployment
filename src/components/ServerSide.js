@@ -66,7 +66,7 @@ function ServerSide(){
             console.log(cart);
         }
 
-        var indPrice = parseInt(menuPrice);
+        var indPrice = parseFloat(menuPrice);
         setTotal(t => t + indPrice);
         
     };
@@ -108,8 +108,8 @@ function ServerSide(){
         }
 
 
-        var totalPrice = parseInt(product.totalAmount);
-        var totalQuantity = parseInt(product.quantity);
+        var totalPrice = parseFloat(product.totalAmount);
+        var totalQuantity = parseFloat(product.quantity);
         setTotal(t => t - (totalPrice/totalQuantity)); 
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
@@ -189,10 +189,10 @@ function ServerSide(){
                 <Beverages function ={addToCart}/>
                 <Salads function = {addToCart}/>
                 <Seasonal />
-                <Add />
+                <Add function={addToCart}/>
 
-                <Button style = {styles.catagory} name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>
-                    TEST
+                <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Combo Charge
                 </Button>
 
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
