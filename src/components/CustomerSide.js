@@ -116,11 +116,11 @@ function CustomerSide(){
     <>
         <div className="wrapper">
             <div className="box1">
-
+            <Button variant="primary" href="/Login">Employee Login</Button>
             </div>
 
             <div className="box2">
-
+            
             <label style = {styles.name} >Order #: {OrderNum} </label>
             </div>
             <Search />

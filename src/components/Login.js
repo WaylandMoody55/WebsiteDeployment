@@ -26,12 +26,15 @@ function Login() {
             />
             </div>
         </div>
-        <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
+        <div class = "flex flex-wrap justify-center space-x-5">
             <Button variant="primary" onClick={handleLogin}>
                                 Login
             </Button>
             <Button variant="primary" href="/ManagerSide">
                                 Manager Override
+            </Button>
+            <Button variant="primary" href="/CustomerSide">
+                                Customer UI
             </Button>
         </div>
         </form>

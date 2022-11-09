@@ -17,11 +17,12 @@ function App() {
       <>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Login/>}/>
+            <Route path='/' element={<CustomerSide/>}/>
             <Route path = '/ManagerSide' element ={<ManagerSide/>}/>
             <Route path='/Inventory' element={<Inventory/>}/>
             <Route path='/ViewEditMenu' element={<ViewEditMenu/>}/>
             <Route path='/ServerSide' element={<ServerSide/>}/>
+            <Route path='/Login' element={<Login/>}/>
             <Route path='/RestockReport' element={<RestockReport/>}/>
             <Route path='/ExcessReport' element={<ExcessReport/>}/>
             <Route path='/PairSales' element={<PairSales/>}/>
