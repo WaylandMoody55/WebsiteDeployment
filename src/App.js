@@ -9,6 +9,7 @@ import RestockReport from './components/RestockReport';
 import ExcessReport from './components/ExcessReport';
 import PairSales from './components/PairSales';
 import SalesReport from './components/SalesReport';
+import CustomerSide from './components/CustomerSide';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path='/ExcessReport' element={<ExcessReport/>}/>
             <Route path='/PairSales' element={<PairSales/>}/>
             <Route path='/SalesReport' element={<SalesReport/>}/>
+            <Route path='/CustomerSide' element = {<CustomerSide/>}/>
           </Routes>
         </BrowserRouter>
       </>

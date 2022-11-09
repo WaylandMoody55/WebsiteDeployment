@@ -13,7 +13,7 @@ import Add from './popups/Add';
 import Beverages from './popups/Beverages';
 // import Modal from 'react-bootstrap/Modal';
 
-function ServerSide(){
+function CustomerSide(){
     const [show, setShow] = useState(false);
 
     const serverName = "Jane Doe";
@@ -116,17 +116,10 @@ function ServerSide(){
     <>
         <div className="wrapper">
             <div className="box1">
-            <Button variant="danger" href="/Inventory" style = {styles.logout}>
-                Logout
-            </Button>
 
-            <label style = {styles.name} >Server: {serverName}</label>
             </div>
 
             <div className="box2">
-            <Button variant="warning" onClick ={() => clear()}  style = {styles.logout}>
-                Clear
-            </Button>
 
             <label style = {styles.name} >Order #: {OrderNum} </label>
             </div>
@@ -167,7 +160,7 @@ function ServerSide(){
                     Pay Now
                 </Button>
 
-                </div> : <Button style = {styles.pay} disabled>
+                </div> : <Button style = {styles.pay}  disabled >
                     Pay Now
                 </Button>
 
@@ -199,7 +192,7 @@ function ServerSide(){
     );
 }
 
-export default ServerSide;
+export default CustomerSide;
 
 const styles = {
     container:{
