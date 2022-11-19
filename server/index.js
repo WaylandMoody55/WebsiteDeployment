@@ -62,10 +62,22 @@ app.post("/login", (req, res) => {
       });
 })
 
+
+app.post("/updatePrice", (req,res)=>{
+  const name = req.body.name
+  const price = req.body.price
+  console.log(req.body.name)
+  console.log(req.body.price)
+  // String sqlStatement = "UPDATE foodbev SET price = "+newPrice+" WHERE name = "+"'"+itemName+"'";
+    pool
+      .query("UPDATE foodbev SET price = " + price + " WHERE name = '"+name+"'")
+})
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-   
+
 
 //gbjksdbgjkfdshgjkbdsjkgsdklsgsd
 //fbjakbfjkasbjkfbajksbfkj
@@ -77,5 +89,4 @@ app.listen(PORT, () => {
 
 
 // test for riley
-
 // test for riley2
