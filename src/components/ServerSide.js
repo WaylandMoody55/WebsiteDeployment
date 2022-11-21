@@ -26,7 +26,7 @@ function ServerSide(){
 
     async function orderNumber() {
           try {
-            const res = await fetch("/ServerSide", {
+            const res = await fetch("https://websitebackendtest.onrender.com/ServerSide", {
               method: "get",
               mode : "cors",
               // cache: 'no-cache',
