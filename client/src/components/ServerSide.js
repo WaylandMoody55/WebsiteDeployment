@@ -14,18 +14,45 @@ import Beverages from './popups/Beverages';
 // import Modal from 'react-bootstrap/Modal';
 
 function ServerSide(){
-    const [show, setShow] = useState(false);
 
     const serverName = "Jane Doe";
-    const OrderNum = '001';
 
     const testName = "test";
     const testAmount = 1000000;
 
     const [cart, setCart] = useState([]);
+    const [show, setOrderNum] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
 
- 
+    async function orderNumber() {
+          try {
+            const res = await fetch("/ServerSide", {
+              method: "get",
+              mode : "cors",
+              // cache: 'no-cache',
+              headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+              },
+            });
+  
+            if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+            }
+  
+            // grabs data from server response 
+            const data = await res.json()
+            console.log(data)
+            setOrderNum(data.max)
+        }
+
+            catch (err) {
+                console.log(err.messeage);
+            }
+            }
+
     const addToCart = async(menuName,menuPrice) => {
     
         //Checks if item is already in cart
@@ -111,6 +138,7 @@ function ServerSide(){
 
     };
 
+    orderNumber();
     //This is where you would get the list of all the items and prices
     return(
     <>
@@ -128,7 +156,7 @@ function ServerSide(){
                 Clear
             </Button>
 
-            <label style = {styles.name} >Order #: {OrderNum} </label>
+            <label style = {styles.name} >Order #: {show} </label>
             </div>
             <Search />
             <Order cart = {addToCart}/>
