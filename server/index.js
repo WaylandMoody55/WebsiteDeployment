@@ -32,7 +32,7 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com/' )
   console.log("hello");
   res.send({ message: "Hello fdfja server!" });
 });
