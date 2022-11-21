@@ -38,11 +38,11 @@ function Login() {
 
           // check if it is a manager or server 
           if (data.ismanager === true) {
-            window.location.href = 'http://localhost:3000/ManagerSide'
+            window.location.href = 'https://testlaunch.onrender.com/ManagerSide'
           }
 
           if (data.ismanager === false) {
-            window.location.href = 'http://localhost:3000/ServerSide'
+            window.location.href = 'https://testlaunch.onrender.com/ServerSide'
           }
     }
 
