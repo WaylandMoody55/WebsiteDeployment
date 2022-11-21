@@ -75,9 +75,66 @@ app.post("/login", (req, res) => {
       });
 })
 
+app.post("/menuTable", (req,res) => {
+  pool 
+    .query("SELECT * FROM foodbev")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+app.post("/updatePrice", (req,res)=>{
+  const name = req.body.name
+  const price = req.body.price
+  console.log(req.body.name)
+  console.log(req.body.price)
+  // String sqlStatement = "UPDATE foodbev SET price = "+newPrice+" WHERE name = "+"'"+itemName+"'";
+    pool
+      .query("UPDATE foodbev SET price = " + price + " WHERE name = '"+name+"'")
+})
+
+
+app.post("/newMenuItem",(req,res) =>{
+  const name = req.body.name
+  const price = req.body.price
+  console.log(req.body.name)
+  console.log(req.body.price)
+  //String sqlStatement = "INSERT INTO foodbev (name, price) VALUES ('" + itemName + "', " + newPrice + ")";
+    pool
+      .query("INSERT INTO foodbev (name, price) VALUES ('"+ name+ "', " + price + ")")
+})
+
+app.post("/addSeasonal",(req,res)=>{
+  const name = req.body.name
+  const price = req.body.price
+  console.log(req.body.name)
+  console.log(req.body.price)
+  //String sqlStatement = "INSERT INTO foodbev (name, price) VALUES ('s*" + itemName + "', " + newPrice + ")";
+    pool
+      .query("INSERT INTO foodbev (name, price) VALUES ('s*" + name + "', " + price + ")")
+})
+
+app.post("/removeSeasonal", (req,res) => {
+  const name = req.body.name
+  console.log(req.body.name)
+  //String sqlStatement = "DELETE FROM foodbev WHERE name = 's*" + itemName + "'";
+    pool
+      .query("DELETE FROM foodbev WHERE name = 's*" + name + "'")
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-   
 
 
+//gbjksdbgjkfdshgjkbdsjkgsdklsgsd
+//fbjakbfjkasbjkfbajksbfkj
+
+
+//Comment for wayland me
+
+//fjdioapfdiajdf 
+
+
+// test for riley
+// test for riley2
