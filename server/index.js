@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const { urlencoded } = require("body-parser");
 const PORT = process.env.PORT || 3001;
+const cors = require('cors')
 
 
 
@@ -26,10 +27,9 @@ process.on('SIGINT', function() {
   console.log('Application successfully shutdown');
   process.exit(0);
 });
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(cors({
+    origin: 'https://testlaunch.onrender.com/'
+}));
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
