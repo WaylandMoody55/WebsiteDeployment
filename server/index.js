@@ -75,6 +75,62 @@ app.post("/login", (req, res) => {
       });
 })
 
+app.post("/ingredientTable", (req,res) => {
+  pool
+    .query("SELECT * FROM ingredients")
+    .then(query_res => {
+      res.send(query_res.rows);
+    })
+})
+
+
+app.post("/editInventory", (req,res) =>{
+  const name = req.body.name
+  const quantity = req.body.amount
+  pool
+    //String sqlstatement1 = "UPDATE ingredients SET quantity = " + inventory_quantity + " WHERE name = '" + inventory_name + "'";
+    .query("UPDATE ingredients SET quantity = " + quantity + " WHERE name = '" + name + "'")
+})
+
+app.post("/newIngredient", (req,res) =>{
+  const name = req.body.name
+  const quantity = req.body.amount
+  const price = req.body.price
+  const units = req.body.units
+  const storage = req.body.storage
+  pool
+    //String sqlStatement = "INSERT INTO ingredients VALUES ('" + itemName + "', " + quantity + "," + individualPrice + ", '" + units + "', '" + storage + "')";
+    .query("INSERT INTO ingredients VALUES ('" + name + "' ," + quantity + "," + price + ", '" + units + "' , '" + storage + "')")
+})
+
+
+//THIS COrrectly returns the max restock ID
+app.post("/restockID", (req,res) => {
+  pool
+    .query("SELECT MAX(restockid) FROM restock")
+    .then(query_res => {
+      console.log(query_res.rows[0].max)
+      res.send(query_res.rows[0].max)
+    })
+})
+
+//COULD NOT GET THIS TO WORK
+/*
+app.post("/insertRestockForm", (req,res)=>{
+  //const id = req.body.restockID
+  //const item = req.body.name
+  //const vendor = req.body.vendor
+  //const quantity = req.body.quantity
+  console.log(req.body.restockID);
+  console.log(req.body.name);
+  console.log(req.body.vendor);
+  console.log(req.body.quantity);
+  pool
+  //String sqlStatement = "INSERT INTO restock VALUES ("+restock_id+",'10/12/2022','"+item+"','"+vendor+"',"+amnt+")";
+  //  .query("INSERT INTO restock VALUES (" + id + ", '11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
+})
+*/
+
 app.post("/restockTable", (req,res) => {
   pool
     .query("SELECT * FROM restock")
