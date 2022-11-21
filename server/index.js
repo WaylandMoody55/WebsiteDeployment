@@ -37,6 +37,19 @@ app.get("/login", (req, res) => {
   res.send({ message: "Hello fdfja server!" });
 });
 
+app.get("/ServerSide", (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  console.log("serverSide get requested");
+  pool
+    .query("SELECT MAX(ordernumber) FROM orders")
+    .then(query_res => {
+      for (let i = 0; i < query_res.rowCount; i++) {
+          console.log(query_res.rows[i]);
+          res.send(query_res.rows[i]);
+      }
+  });
+});
+
 // allows for parsing of request body 
 app.use(express.json())
 
