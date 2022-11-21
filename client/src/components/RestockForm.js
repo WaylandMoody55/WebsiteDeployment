@@ -63,53 +63,7 @@ function RestockForm(){
     
 
 
-    //Inserting into restock table
-    //CANNOT GET THIS TO WORK, CAN GET THE RESTOCK ID FROM FUCNTION ABOVE BUT CANNOT INSERT INTO TABLE
-    /*
-    async function completeRestockForm(rid){
-
-        console.log("ID inside restock form is :: "+rid);
-
-        
-        const postData = {
-            restockID: rid,
-            name: item.current.value,
-            vendor: vendor.current.value,
-            quantity: quantity.current.value
-        };
-
-        console.log("ID ISSSS::::: "+ rid);
-        //console.log(item.current.value);
-        //console.log(vendor.current.value);
-        //console.log(quantity.current.value);
-
-        
-        try{
-            const res = await fetch("/insertRestockForm",{
-                method: "post",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": "token-value",
-                },
-                body: JSON.stringify(postData),
-            });
-
-            if(!res.ok){
-                const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
-            }
-
-        }
-        catch(err){
-            console.log(err.message);
-        }
-        
-        
-        
-        
-    }
-    */
+    
     
 
 

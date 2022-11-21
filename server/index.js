@@ -118,7 +118,7 @@ app.post("/restockID", (req,res) => {
       //id = query_res.rows[0].max;
       pool
         //String sqlStatement = "INSERT INTO restock VALUES ("+restock_id+",'10/12/2022','"+item+"','"+vendor+"',"+amnt+")";
-        .query("INSERT INTO restock VALUES (" + query_res.rows[0].max + ",'11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
+        .query("INSERT INTO restock VALUES (" + parseInt(parseInt(query_res.rows[0].max) + 1) + ",'11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
     })
 
 })
