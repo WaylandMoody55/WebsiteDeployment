@@ -26,7 +26,9 @@ process.on('SIGINT', function() {
   console.log('Application successfully shutdown');
   process.exit(0);
 });
-
+app.use((req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+});
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
