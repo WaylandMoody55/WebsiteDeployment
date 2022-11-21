@@ -69,6 +69,7 @@ app.post("/login", (req, res) => {
 
               else {
                 console.log('bad')
+                res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com/' )
                 res.send(query_res.rows[i])
               }
           }
