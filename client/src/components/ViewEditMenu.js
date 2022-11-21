@@ -54,13 +54,12 @@ function ViewEditMenu(){
     }
 
 
-    test();
-    /*
+    //test();
     useEffect(()=>{
         //console.log("hello from view Edit Menu");
         test();
     })
-    */
+
 
 
     return(

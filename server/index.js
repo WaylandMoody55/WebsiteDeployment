@@ -62,6 +62,14 @@ app.post("/login", (req, res) => {
       });
 })
 
+app.post("/restockTable", (req,res) => {
+  pool
+    .query("SELECT * FROM restock")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 app.post("/menuTable", (req,res) => {
   pool 
     .query("SELECT * FROM foodbev")

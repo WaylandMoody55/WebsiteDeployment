@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import "./modalResize.css"
+
 
 function RestockHistory(){
     const [show, setShow] = useState(false);
@@ -8,7 +10,7 @@ function RestockHistory(){
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
+    /*
     const restockHistory = [
         {restockID: "1", date:"01/01/2022", ingredient: "ingredient1", vendor:"vendor1", quantity: "quantity1"},
         {restockID: "2", date:"01/02/2022", ingredient: "ingredient2", vendor:"vendor2", quantity: "quantity2"},
@@ -18,9 +20,44 @@ function RestockHistory(){
         {restockID: "6", date:"01/06/2022", ingredient: "ingredient6", vendor:"vendor6", quantity: "quantity6"},
         {restockID: "7", date:"01/07/2022", ingredient: "ingredient7", vendor:"vendor7", quantity: "quantity7"},
     ]
+    */
+
+    const[restockHistory, setRestockHistory] = useState([]);
+
+    async function getRestockTable(){
+        try {
+            const res = await fetch("/restockTable", {
+              method: "post",
+              mode : "cors",
+              // cache: 'no-cache',
+              headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+              }
+            });
+            if (!res.ok) {
+                const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json();
+            setRestockHistory(data);
+
+        }
+        catch (err) {
+            console.log(err.messeage);
+        }
+    }
+
+    useEffect(()=>{
+        //console.log("hello from view Edit Menu");
+        getRestockTable();
+    })
 
     return(
         <>
+        <div className="width-90vm height-90vm">
         <Button variant="primary" onClick={handleShow}>
                     Restock History
         </Button>
@@ -36,7 +73,7 @@ function RestockHistory(){
                     </Modal.Header>
                     <Modal.Body>
                         <div class ="px-2 flex justify-center items-center space-x-2">
-                            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 space-x-2">
+                            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-5 px-2 space-x-2 border-spacing-x-50">
                                 <thead>
                                     <tr>
                                     <th>Restock ID</th>
@@ -50,11 +87,11 @@ function RestockHistory(){
                                     {restockHistory.map(item => {
                                     return (
                                         <tr>
-                                        <td>{item.restockID}</td>
-                                        <td>{item.date}</td>
-                                        <td>{item.ingredient}</td>
+                                        <td>{item.restockid}</td>
+                                        <td>{item.orderdate}</td>
+                                        <td>{item.item}</td>
                                         <td>{item.vendor}</td>
-                                        <td>{item.quantity}</td>
+                                        <td>{item.amount}</td>
                                         </tr>
                                     );
                                     })}
@@ -68,6 +105,7 @@ function RestockHistory(){
                     </Button>
                     </Modal.Footer>
                 </Modal>
+                </div>
         </>
 
     );
