@@ -15,7 +15,7 @@ function Login() {
         };
     
         try {
-          const res = await fetch("/login", {
+          const res = await fetch("https://websitebackendtest.onrender.com/login", {
             method: "post",
             mode : "cors",
             // cache: 'no-cache',
