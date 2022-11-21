@@ -11,11 +11,22 @@ function RestockForm(){
     
 
     //Three functions, one for ID, one for quantity, one for update
-
+    const item = useRef(null);
+    const vendor = useRef(null);
+    const quantity = useRef(null);
     
-
+    var id = 0;
+    
     //getting restockID, 
     async function getRestockID(){//<-- This function successfully updates restockID variable defined on line 7
+        
+        const postData = {
+            name: item.current.value,
+            vendor: vendor.current.value,
+            quantity: quantity.current.value
+        };
+        
+        
         try {
             const res = await fetch("/restockID", {
                 method: "post",
@@ -25,9 +36,9 @@ function RestockForm(){
                 "Content-Type": "application/json",
                 "x-access-token": "token-value",
                 // "Accept": "application/json"
-                }
+                },
+                body: JSON.stringify(postData),
             });
-    
             if (!res.ok) {
                 const message = `An error has occured: ${res.status} - ${res.statusText}`;
                 throw new Error(message);
@@ -35,36 +46,44 @@ function RestockForm(){
     
             // grabs data from server response 
             const data = await res.json()
-            console.log(data)
+            //console.log(data.max)
             
-            const updateID = data
-            console.log(updateID);
-            setRestockID(updateID);
-            
+            //const updateID = data.max
+            //console.log(updateID);
+            //setRestockID(updateID);
+            //id = data.max;
+            //console.log("ID inside get ID is :: "+id);
 
         }
         catch (err) {
             console.log(err.messeage);
         }
     }
-
-    const item = useRef(null);
-    const vendor = useRef(null);
-    const quantity = useRef(null);
+    //const id = restockID
+    
 
 
     //Inserting into restock table
     //CANNOT GET THIS TO WORK, CAN GET THE RESTOCK ID FROM FUCNTION ABOVE BUT CANNOT INSERT INTO TABLE
-    async function completeRestockForm(){
+    /*
+    async function completeRestockForm(rid){
 
+        console.log("ID inside restock form is :: "+rid);
+
+        
         const postData = {
-            restockID: restockID,
+            restockID: rid,
             name: item.current.value,
             vendor: vendor.current.value,
             quantity: quantity.current.value
         };
 
+        console.log("ID ISSSS::::: "+ rid);
+        //console.log(item.current.value);
+        //console.log(vendor.current.value);
+        //console.log(quantity.current.value);
 
+        
         try{
             const res = await fetch("/insertRestockForm",{
                 method: "post",
@@ -85,7 +104,12 @@ function RestockForm(){
         catch(err){
             console.log(err.message);
         }
+        
+        
+        
+        
     }
+    */
     
 
 
@@ -109,7 +133,7 @@ function RestockForm(){
                             handleClose();
                             e.preventDefault();
                             getRestockID();
-                            //completeRestockForm();
+                            //completeRestockForm(id);
                         }}
                         id="restockForm" className="w-full max-w-sm">
                             <div className="md:flex md:items-center mb-6">

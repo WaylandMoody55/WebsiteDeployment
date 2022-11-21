@@ -105,14 +105,24 @@ app.post("/newIngredient", (req,res) =>{
 
 
 //THIS COrrectly returns the max restock ID
+
 app.post("/restockID", (req,res) => {
+  const item = req.body.name
+  const vendor = req.body.vendor
+  const quantity = req.body.quantity
+  //var id = 0
   pool
     .query("SELECT MAX(restockid) FROM restock")
     .then(query_res => {
-      console.log(query_res.rows[0].max)
-      res.send(query_res.rows[0].max)
+      //console.log(query_res.rows[0].max);
+      //id = query_res.rows[0].max;
+      pool
+        //String sqlStatement = "INSERT INTO restock VALUES ("+restock_id+",'10/12/2022','"+item+"','"+vendor+"',"+amnt+")";
+        .query("INSERT INTO restock VALUES (" + query_res.rows[0].max + ",'11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
     })
+
 })
+
 
 //COULD NOT GET THIS TO WORK
 /*
@@ -121,7 +131,7 @@ app.post("/insertRestockForm", (req,res)=>{
   //const item = req.body.name
   //const vendor = req.body.vendor
   //const quantity = req.body.quantity
-  console.log(req.body.restockID);
+  console.log("id Inside server is:: " + req.body.restockID);
   console.log(req.body.name);
   console.log(req.body.vendor);
   console.log(req.body.quantity);
@@ -130,6 +140,7 @@ app.post("/insertRestockForm", (req,res)=>{
   //  .query("INSERT INTO restock VALUES (" + id + ", '11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
 })
 */
+
 
 app.post("/restockTable", (req,res) => {
   pool
