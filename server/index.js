@@ -28,7 +28,7 @@ process.on('SIGINT', function() {
   process.exit(0);
 });
 app.use(cors({
-    origin: 'https://testlaunch.onrender.com/'
+    origin: 'https://testlaunch.onrender.com'
 }));
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
