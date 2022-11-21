@@ -21,8 +21,6 @@
     "eject": "react-scripts eject"
   },
   
-   "proxy": "https://websitebackendtest.onrender.com",
-
   "eslintConfig": {
     "extends": [
       "react-app",
