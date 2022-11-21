@@ -35,7 +35,7 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com/' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
   console.log("hello");
   res.send({ message: "Hello fdfja server!" });
 });
@@ -60,7 +60,7 @@ app.use(express.json())
 app.post("/login", (req, res) => {
   const val = req.body.title
   console.log(req.body.title)
-    res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com/' )
+    res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
     pool
       .query("Select ismanager From employees where id = " + val)
       .then(query_res => {
