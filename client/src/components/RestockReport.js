@@ -11,7 +11,7 @@ function RestockReport(){
 
     async function getRestockReportArray(){
         try {
-            const res = await fetch("/restockReport", {
+            const res = await fetch("https://websitebackendtest.onrender.com/restockReport", {
                 method: "post",
                 mode : "cors",
                 // cache: 'no-cache',

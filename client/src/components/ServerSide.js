@@ -107,7 +107,7 @@ function ServerSide(){
         };
             
         try{
-            const res = await fetch("/updateO",{
+            const res = await fetch("https://websitebackendtest.onrender.com/updateO",{
             method: "post",
             mode: "cors",
             headers: {
@@ -139,7 +139,7 @@ function ServerSide(){
         };
             
         try{
-            const res = await fetch("/updateOPT",{
+            const res = await fetch("https://websitebackendtest.onrender.com/updateOPT",{
             method: "post",
             mode: "cors",
             headers: {

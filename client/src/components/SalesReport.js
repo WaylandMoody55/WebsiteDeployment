@@ -23,7 +23,7 @@ function SalesReport(){
         console.log(toDate.current.value)
     
         try {
-            const res = await fetch("/salesReport", {
+            const res = await fetch("https://websitebackendtest.onrender.com/salesReport", {
                 method: "post",
                 mode : "cors",
                 // cache: 'no-cache',
