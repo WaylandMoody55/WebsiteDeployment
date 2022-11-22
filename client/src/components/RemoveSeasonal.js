@@ -18,7 +18,7 @@ function RemoveSeasonal(){
         };
 
         try{
-            const res = await fetch("/removeSeasonal",{
+            const res = await fetch("https://websitebackendtest.onrender.com/removeSeasonal",{
                 method: "post",
                 mode: "cors",
                 headers: {

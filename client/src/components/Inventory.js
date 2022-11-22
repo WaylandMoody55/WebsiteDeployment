@@ -23,7 +23,7 @@ function Inventory(){
     async function inventoryTable(){
         //console.log("test async inside effect");
         try {
-            const res = await fetch("/ingredientTable", {
+            const res = await fetch("https://websitebackendtest.onrender.com/ingredientTable", {
                 method: "post",
                 mode : "cors",
                 // cache: 'no-cache',

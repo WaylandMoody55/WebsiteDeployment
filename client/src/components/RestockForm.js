@@ -28,7 +28,7 @@ function RestockForm(){
         
         
         try {
-            const res = await fetch("/restockID", {
+            const res = await fetch("https://websitebackendtest.onrender.com/restockID", {
                 method: "post",
                 mode : "cors",
                 // cache: 'no-cache',

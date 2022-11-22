@@ -22,7 +22,7 @@ function AddMenuItem(){
         };
 
         try{
-            const res = await fetch("/newMenuItem",{
+            const res = await fetch("https://websitebackendtest.onrender.com/newMenuItem",{
                 method: "post",
                 mode: "cors",
                 headers: {

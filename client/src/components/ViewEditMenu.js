@@ -21,7 +21,7 @@ function ViewEditMenu(){
     async function test(){
         //console.log("test async inside effect");
         try {
-            const res = await fetch("/menuTable", {
+            const res = await fetch("https://websitebackendtest.onrender.com/menuTable", {
               method: "post",
               mode : "cors",
               // cache: 'no-cache',

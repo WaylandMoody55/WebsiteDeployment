@@ -23,7 +23,7 @@ function AddSeasonalItem(){
         };
 
         try{
-            const res = await fetch("/addSeasonal",{
+            const res = await fetch("https://websitebackendtest.onrender.com/addSeasonal",{
                 method: "post",
                 mode: "cors",
                 headers: {

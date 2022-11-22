@@ -18,7 +18,7 @@ function EditInventory(){
         };
 
         try{
-            const res = await fetch("/editInventory",{
+            const res = await fetch("https://websitebackendtest.onrender.com/editInventory",{
                 method: "post",
                 mode: "cors",
                 headers: {

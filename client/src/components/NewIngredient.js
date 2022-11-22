@@ -24,7 +24,7 @@ function NewIngredient(){
             storage: storage.current.value
         };
         try{
-            const res = await fetch("/newIngredient",{
+            const res = await fetch("https://websitebackendtest.onrender.com/newIngredient",{
                 method: "post",
                 mode: "cors",
                 headers: {

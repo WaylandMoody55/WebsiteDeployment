@@ -26,7 +26,7 @@ function RestockHistory(){
 
     async function getRestockTable(){
         try {
-            const res = await fetch("/restockTable", {
+            const res = await fetch("https://websitebackendtest.onrender.com/restockTable", {
               method: "post",
               mode : "cors",
               // cache: 'no-cache',

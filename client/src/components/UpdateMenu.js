@@ -21,7 +21,7 @@ function UpdateMenu(){
         };
 
         try{
-            const res = await fetch("/updatePrice",{
+            const res = await fetch("https://websitebackendtest.onrender.com/updatePrice",{
                 method: "post",
                 mode: "cors",
                 headers: {
