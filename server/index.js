@@ -227,6 +227,17 @@ app.post("/updateO", (req,res) => {
     .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
 })
 
+app.post("/restockReport", (req,res) => {
+  const individualMinimum = 100;
+  const poundsMinimum = 10;
+
+  pool
+    .query("SELECT name, quantity, units FROM ingredients WHERE (quantity < " + individualMinimum + " AND units = 'individual') OR (quantity < " + poundsMinimum + " AND units = 'pounds')")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
