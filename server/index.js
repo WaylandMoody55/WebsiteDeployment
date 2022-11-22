@@ -219,7 +219,12 @@ app.post("/updateOPT", (req,res) => {
   const date = req.body.date;
   pool
     .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
+  res.send({response: "item entered into orders_pair_table"})
 })
+
+app.get("/updateO", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
 
 app.post("/updateO", (req,res) => {
   const onum = req.body.onum;
@@ -227,6 +232,8 @@ app.post("/updateO", (req,res) => {
   const date = req.body.date;
   pool
     .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
+
+  res.send({response: "item entered into orders"})
 })
 
 app.post("/restockReport", (req,res) => {
