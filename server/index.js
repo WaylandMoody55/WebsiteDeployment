@@ -28,18 +28,22 @@ process.on('SIGINT', function() {
   process.exit(0);
 });
 
+app.use(cors({
+  origin: 'https://testlaunch.onrender.com'
+}));
+
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
 app.get("/login", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
   console.log("hello");
   res.send({ message: "Hello fdfja server!" });
 });
 
 app.get("/ServerSide", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com')
   console.log("serverSide get requested");
   pool
     .query("SELECT MAX(ordernumber) FROM orders")
@@ -59,6 +63,7 @@ app.use(express.json())
 app.post("/login", (req, res) => {
   const val = req.body.title
   console.log(req.body.title)
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
     pool
       .query("Select ismanager From employees where id = " + val)
       .then(query_res => {
