@@ -4,7 +4,8 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const { urlencoded } = require("body-parser");
 const PORT = process.env.PORT || 3001;
-
+const cors = require('cors')
+const axios = require('axios')
 
 
 // Create express app
@@ -49,6 +50,7 @@ app.get("/ServerSide", (req, res) => {
       }
   });
 });
+
 
 // allows for parsing of request body 
 app.use(express.json())
