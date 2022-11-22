@@ -83,6 +83,17 @@ app.post("/ingredientTable", (req,res) => {
     })
 })
 
+app.post("/salesReport", (req, res) => {
+  const fDate = req.body.fDate
+  const tDate = req.body.tDate
+  pool
+    .query( "SELECT foodbev.name, COUNT(*) FROM foodbev INNER JOIN orders_pair_table ON orders_pair_table.item = foodbev.name WHERE date BETWEEN '"+fDate+"' AND '"+tDate+"' GROUP BY name ORDER BY count DESC")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+
+})
+
 
 app.post("/editInventory", (req,res) =>{
   const name = req.body.name
@@ -199,6 +210,23 @@ app.post("/removeSeasonal", (req,res) => {
     pool
       .query("DELETE FROM foodbev WHERE name = 's*" + name + "'")
 })
+
+app.post("/updateOPT", (req,res) => {
+  const onum = req.body.onum;
+  const oitem = req.body.oitem;
+  const date = req.body.date;
+  pool
+    .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
+})
+
+app.post("/updateO", (req,res) => {
+  const onum = req.body.onum;
+  const price = req.body.price;
+  const date = req.body.date;
+  pool
+    .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
