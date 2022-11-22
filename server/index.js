@@ -70,6 +70,7 @@ app.post("/login", (req, res) => {
           for (let i = 0; i < query_res.rowCount; i++) {
               console.log(query_res.rows[i]);
               if (query_res.rows[i].ismanager === true) {
+                console.log(query_res.rowCount);
                 console.log('good')
                 res.send(query_res.rows[i])
               }
