@@ -3,19 +3,60 @@ import NewIngredient from "./NewIngredient";
 import RestockForm from "./RestockForm";
 import RestockHistory from "./RestockHistory";
 import Button from 'react-bootstrap/Button';
+import { useState, useEffect } from "react";
 
 function Inventory(){
-    const inventoryItems = [
-        {name: "Ingredient1", quantity:"Quantity1", individualPrice: "Price1", units: "unit1", storage: "storage1"},
-        {name: "Ingredient2", quantity:"Quantity2", individualPrice: "Price2", units: "unit2", storage: "storage2"},
-        {name: "Ingredient3", quantity:"Quantity3", individualPrice: "Price3", units: "unit3", storage: "storage3"},
-        {name: "Ingredient4", quantity:"Quantity4", individualPrice: "Price4", units: "unit4", storage: "storage4"},
-        {name: "Ingredient5", quantity:"Quantity5", individualPrice: "Price5", units: "unit5", storage: "storage5"},
-        {name: "Ingredient6", quantity:"Quantity6", individualPrice: "Price6", units: "unit6", storage: "storage6"},
-        {name: "Ingredient7", quantity:"Quantity7", individualPrice: "Price7", units: "unit7", storage: "storage7"},
-        {name: "Ingredient8", quantity:"Quantity8", individualPrice: "Price8", units: "unit8", storage: "storage8"},
-        {name: "Ingredient9", quantity:"Quantity9", individualPrice: "Price9", units: "unit9", storage: "storage9"},
-      ]
+
+    
+    const [inventoryItems, setInventoryItems] = useState([/*        
+    {name: "Ingredient1", quantity:"Quantity1", individualPrice: "Price1", units: "unit1", storage: "storage1"},
+    {name: "Ingredient2", quantity:"Quantity2", individualPrice: "Price2", units: "unit2", storage: "storage2"},
+    {name: "Ingredient3", quantity:"Quantity3", individualPrice: "Price3", units: "unit3", storage: "storage3"},
+    {name: "Ingredient4", quantity:"Quantity4", individualPrice: "Price4", units: "unit4", storage: "storage4"},
+    {name: "Ingredient5", quantity:"Quantity5", individualPrice: "Price5", units: "unit5", storage: "storage5"},
+    {name: "Ingredient6", quantity:"Quantity6", individualPrice: "Price6", units: "unit6", storage: "storage6"},
+    {name: "Ingredient7", quantity:"Quantity7", individualPrice: "Price7", units: "unit7", storage: "storage7"},
+    {name: "Ingredient8", quantity:"Quantity8", individualPrice: "Price8", units: "unit8", storage: "storage8"},
+    {name: "Ingredient9", quantity:"Quantity9", individualPrice: "Price9", units: "unit9", storage: "storage9"}, 
+    */]);
+
+    async function inventoryTable(){
+        //console.log("test async inside effect");
+        try {
+            const res = await fetch("/ingredientTable", {
+                method: "post",
+                mode : "cors",
+                // cache: 'no-cache',
+                headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+                }
+            });
+    
+            if (!res.ok) {
+                const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+    
+            // grabs data from server response 
+            const data = await res.json()
+            console.log(data)
+            
+            const newInventory = data;
+
+            setInventoryItems(newInventory);
+
+        }
+        catch (err) {
+            console.log(err.messeage);
+        }
+    }
+
+    useEffect(() => {
+        inventoryTable();
+    })
+    
 
     return(
         <>
@@ -50,7 +91,7 @@ function Inventory(){
                         <tr>
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.individualPrice}</td>
+                        <td>{item.individualprice}</td>
                         <td>{item.units}</td>
                         <td>{item.storage}</td>
                         </tr>

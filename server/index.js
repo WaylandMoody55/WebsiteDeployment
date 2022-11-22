@@ -77,6 +77,84 @@ app.post("/login", (req, res) => {
       });
 })
 
+app.post("/ingredientTable", (req,res) => {
+  pool
+    .query("SELECT * FROM ingredients")
+    .then(query_res => {
+      res.send(query_res.rows);
+    })
+})
+
+
+app.post("/editInventory", (req,res) =>{
+  const name = req.body.name
+  const quantity = req.body.amount
+  pool
+    //String sqlstatement1 = "UPDATE ingredients SET quantity = " + inventory_quantity + " WHERE name = '" + inventory_name + "'";
+    .query("UPDATE ingredients SET quantity = " + quantity + " WHERE name = '" + name + "'")
+})
+
+app.post("/newIngredient", (req,res) =>{
+  const name = req.body.name
+  const quantity = req.body.amount
+  const price = req.body.price
+  const units = req.body.units
+  const storage = req.body.storage
+  pool
+    //String sqlStatement = "INSERT INTO ingredients VALUES ('" + itemName + "', " + quantity + "," + individualPrice + ", '" + units + "', '" + storage + "')";
+    .query("INSERT INTO ingredients VALUES ('" + name + "' ," + quantity + "," + price + ", '" + units + "' , '" + storage + "')")
+})
+
+
+//THIS COrrectly returns the max restock ID
+
+app.post("/restockID", (req,res) => {
+  const item = req.body.name
+  const vendor = req.body.vendor
+  const quantity = req.body.quantity
+  //var id = 0
+  pool
+    .query("SELECT MAX(restockid) FROM restock")
+    .then(query_res => {
+      //console.log(query_res.rows[0].max);
+      //id = query_res.rows[0].max;
+      pool
+        //String sqlStatement = "INSERT INTO restock VALUES ("+restock_id+",'10/12/2022','"+item+"','"+vendor+"',"+amnt+")";
+        .query("INSERT INTO restock VALUES (" + parseInt(parseInt(query_res.rows[0].max) + 1) + ",'11/21/2022','" + item + "','" + vendor + "'," + quantity + ")")
+    })
+
+})
+
+
+
+app.post("/updateRestock", (req,res) =>{
+  const item = req.body.name
+  const q = req.body.quantity
+  console.log(item)
+  console.log(q)
+  //String sqlStatement = "SELECT quantity FROM ingredients WHERE name = '" + item+"'";
+  
+  pool 
+    .query("SELECT quantity FROM ingredients WHERE name = '" + item + "'")
+    .then(query_res => {
+      console.log(query_res.rows[0].quantity)
+      pool
+      //sqlStatement = "UPDATE ingredients SET quantity = " + new_quantity + " WHERE name = '" + item+"'";
+        .query("UPDATE ingredients SET quantity = " + parseInt(parseInt(q) + parseInt(query_res.rows[0].quantity)) + "WHERE name = '" + item + "'")
+    })
+
+    
+})
+
+
+app.post("/restockTable", (req,res) => {
+  pool
+    .query("SELECT * FROM restock")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 app.post("/menuTable", (req,res) => {
   pool 
     .query("SELECT * FROM foodbev")

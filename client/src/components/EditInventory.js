@@ -1,12 +1,47 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function EditInventory(){
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const itemName = useRef(null);
+    const quantity = useRef(null);
+
+    async function editIneventory(){
+        const postData = {
+            name: itemName.current.value,
+            amount: quantity.current.value
+        };
+
+        try{
+            const res = await fetch("/editInventory",{
+                method: "post",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                },
+                body: JSON.stringify(postData),
+            });
+
+            if(!res.ok){
+                const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+        }
+        catch(err){
+            console.log(err.message);
+        }
+
+
+    }
+
+
     return(
         <>
         <Button variant="primary" onClick={handleShow}>
@@ -26,6 +61,7 @@ function EditInventory(){
                         <form onSubmit={(e) =>{
                             handleClose();
                             e.preventDefault();
+                            editIneventory();
                         }}
                         id="editInventory" className="w-full max-w-sm">
                             <div className="md:flex md:items-center mb-6">
@@ -35,7 +71,7 @@ function EditInventory(){
                                     </label>
                                 </div>
                                 <div className="md:w-2/3">
-                                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="ingredientName" type="text" defaultValue="" placeholder="Ingreident Name"/>
+                                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="ingredientName" type="text" defaultValue="" placeholder="Ingreident Name" ref={itemName}/>
                                 </div>
                             </div>
                             <div className="md:flex md:items-center mb-6">
@@ -45,7 +81,7 @@ function EditInventory(){
                                     </label>
                                 </div>
                                 <div className="md:w-2/3">
-                                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="newQuantity" type="text" defaultValue="" placeholder="0.00"/>
+                                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="newQuantity" type="text" defaultValue="" placeholder="0.00" ref={quantity}/>
                                 </div>
                             </div>
                         </form>
