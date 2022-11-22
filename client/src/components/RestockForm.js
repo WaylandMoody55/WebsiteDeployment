@@ -18,7 +18,7 @@ function RestockForm(){
     var id = 0;
     
     //getting restockID, 
-    async function getRestockID(){//<-- This function successfully updates restockID variable defined on line 7
+    async function getRestockID(){
         
         const postData = {
             name: item.current.value,
@@ -63,7 +63,36 @@ function RestockForm(){
     
 
 
-    
+    async function updateRestock(){
+        const postData = {
+            name: item.current.value,
+            quantity: quantity.current.value
+        };
+        
+        console.log("sending name: " + item.current.value)
+        console.log("sending q: " + quantity.current.value)
+
+        try {
+            const res = await fetch("/updateRestock", {
+                method: "post",
+                mode : "cors",
+                // cache: 'no-cache',
+                headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+                },
+                body: JSON.stringify(postData),
+            });
+            if (!res.ok) {
+                const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+        }
+        catch (err) {
+            console.log(err.messeage);
+        }
+    }
     
 
 
@@ -87,7 +116,7 @@ function RestockForm(){
                             handleClose();
                             e.preventDefault();
                             getRestockID();
-                            //completeRestockForm(id);
+                            updateRestock();
                         }}
                         id="restockForm" className="w-full max-w-sm">
                             <div className="md:flex md:items-center mb-6">
