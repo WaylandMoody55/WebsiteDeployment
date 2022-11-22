@@ -233,7 +233,7 @@ app.post("/updateO", (req,res) => {
   pool
     .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
 
-  res.send({response: "item entered into orders"})
+  res.send({response: "price entered into orders"})
 })
 
 app.post("/restockReport", (req,res) => {
