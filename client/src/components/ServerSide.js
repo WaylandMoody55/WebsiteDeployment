@@ -121,6 +121,9 @@ function ServerSide(){
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
                 throw new Error(message);
             }
+
+            const data = await res.json()
+            console.log(data)
             
         }
         catch(err){
@@ -153,6 +156,8 @@ function ServerSide(){
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
                 throw new Error(message);
             }
+            const data = await res.json()
+            console.log(data)
             
         }
         catch(err){
