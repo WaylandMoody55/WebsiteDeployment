@@ -18,8 +18,8 @@ Authors: Nazar Oladepo, Brian Nguyen, Bryan Mendlovitz, Riley Szecsy, Vinny LoBe
 `Our application has a server and client interaction, to run the application locally need to split and link two terminals.`
 
 **SERVER** \
-`In the outermost directory calling "npm start" will start the server, where the server will began listening.` 
-**Client** \
+`In the outermost directory calling "npm start" will start the server, where the server will began listening.` <br>
+**CLIENT** \
 `First need to cd into the client directory, once inside running "npm" start will load and launch the application.` 
   
 This will run a GUI for a Point of Sales System for Rev's American Grill as part of a project in CSCE 315. 
