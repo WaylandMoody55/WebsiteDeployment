@@ -1,20 +1,64 @@
 import Button from 'react-bootstrap/Button';
+import './Format.css'
+import React, { useRef, useState, useEffect } from 'react';
+import TableScrollbar from 'react-table-scrollbar';
 
 function ManagerSide(){
 
     const managerName = "John Doe";
 
-    const orderHistory = [
-        {orderNum: "1",date: "01/01/2022", finalPrice: "20.00"},
-        {orderNum: "2",date: "01/02/2022", finalPrice: "20.00"},
-        {orderNum: "3",date: "01/03/2022", finalPrice: "20.00"},
-        {orderNum: "4",date: "01/04/2022", finalPrice: "20.00"},
-        {orderNum: "5",date: "01/05/2022", finalPrice: "20.00"},
-        {orderNum: "6",date: "01/06/2022", finalPrice: "20.00"},
-        {orderNum: "7",date: "01/07/2022", finalPrice: "20.00"},
-        {orderNum: "8",date: "01/08/2022", finalPrice: "20.00"},
-        {orderNum: "9",date: "01/09/2022", finalPrice: "20.00"},
-      ]
+     const [orderHistory, setHistory] = useState([]);
+    // const orderHistory = [
+    //     {orderNum: "1",date: "01/01/2022", finalPrice: "20.00"},
+    //     {orderNum: "2",date: "01/02/2022", finalPrice: "20.00"},
+    //     {orderNum: "3",date: "01/03/2022", finalPrice: "20.00"},
+    //     {orderNum: "4",date: "01/04/2022", finalPrice: "20.00"},
+    //     {orderNum: "5",date: "01/05/2022", finalPrice: "20.00"},
+    //     {orderNum: "6",date: "01/06/2022", finalPrice: "20.00"},
+    //     {orderNum: "7",date: "01/07/2022", finalPrice: "20.00"},
+    //     {orderNum: "8",date: "01/08/2022", finalPrice: "20.00"},
+    //     {orderNum: "9",date: "01/09/2022", finalPrice: "20.00"},
+    //   ]
+
+    async function getHist(){
+        //console.log("test async inside effect");
+        try {
+            const res = await fetch("/orderHistory", {
+              method: "post",
+              mode : "cors",
+              // cache: 'no-cache',
+              headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+              }
+            });
+  
+            if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+            }
+  
+            // grabs data from server response 
+            const data = await res.json()
+            console.log(data)
+            
+            const newHist = data;
+
+            setHistory(newHist);
+
+      }
+  
+      catch (err) {
+          console.log(err.messeage);
+      }
+
+    }
+
+    useEffect(()=>{
+        //console.log("hello from view Edit Menu");
+        getHist();
+    })
 
     return(
         <>
@@ -26,7 +70,10 @@ function ManagerSide(){
         <div class = "flex justify-center items-center">
             <h3>Manager: {managerName}</h3>
         </div>
-        <div class ="px-5 flex justify-center items-center">
+        {/* <div class ="px-5" style={{width: 'auto'}}>
+        
+        </div> */}
+        <div class ="px-5" style={{width: 'auto'}}>
             <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
                 <thead>
                     <tr>
@@ -35,18 +82,29 @@ function ManagerSide(){
                     <th>Final Price</th>
                     </tr>
                 </thead>
+        </table>
+            <TableScrollbar height="300px" >
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
+                {/* <thead class = "sticky top-0">
+                    <tr>
+                    <th>Order Number</th>
+                    <th>Date</th>
+                    <th>Final Price</th>
+                    </tr>
+                </thead> */}
                 <tbody>
                     {orderHistory.map(item => {
                     return (
                         <tr>
-                        <td>{item.orderNum}</td>
+                        <td>{item.ordernumber}</td>
                         <td>{item.date}</td>
-                        <td>{item.finalPrice}</td>
+                        <td>{item.finalprice}</td>
                         </tr>
                     );
                     })}
                 </tbody>
             </table>
+            </TableScrollbar>
         </div>
         <div className="d-grid gap-2 px-5 py-6">
             <Button variant="primary" size="lg" href="/Inventory">
