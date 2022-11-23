@@ -23,7 +23,7 @@ function ManagerSide(){
     async function getHist(){
         //console.log("test async inside effect");
         try {
-            const res = await fetch("/orderHistory", {
+            const res = await fetch("https://websitebackendtest.onrender.com/orderHistory", {
               method: "post",
               mode : "cors",
               // cache: 'no-cache',
