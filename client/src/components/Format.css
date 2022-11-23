@@ -18,11 +18,12 @@
     grid-row-start: 2;
     height: 50px;
     grid-area: h2;
+    display: fixed;
 }
 
 .box3 {
     grid-row-start: 3;
-    height: 750px;
+    height: 1000px;
     display: block;
     grid-area: ord;
 }
@@ -34,4 +35,18 @@
 
 .box5{
     grid-area: cat;
+}
+
+.table{
+    width: 700px;
+}
+
+th {
+    background: white;
+    position: sticky;
+    top: 0;
+}
+table {
+    /* text-align: center; */
+    position: static;
 }

@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3001;
 const cors = require('cors')
 
 
-
 // Create express app
 const app = express();
 // const port = 3000;
@@ -175,6 +174,14 @@ app.post("/restockTable", (req,res) => {
 app.post("/menuTable", (req,res) => {
   pool 
     .query("SELECT * FROM foodbev")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+app.post("/orderHistory", (req,res) => {
+  pool 
+    .query("SELECT * FROM orders")
     .then(query_res => {
       res.send(query_res.rows);
     });

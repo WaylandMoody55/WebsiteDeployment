@@ -292,6 +292,7 @@ function ServerSide(){
         {/* End of Cart */}
             
             <div className="box5">
+                {/*
                 <Burgers function={addToCart}/>
                 <Chicken function={addToCart}/>
                 <Desserts function ={addToCart}/>
@@ -299,9 +300,68 @@ function ServerSide(){
                 <Salads function = {addToCart}/>
                 <Seasonal />
                 <Add function={addToCart}/>
+                */}
+                {/* <Burgers function={addToCart}/> */}
+                <div style = {styles.space}>Burgers</div>
+                <Button style = {styles.catag} name="classicBurger" value = "6.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Classic Burger
+                </Button>
+                <Button style = {styles.catag} name="cheeseBurger" value = "6.99" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Cheese Burger
+                </Button>
+                <Button style = {styles.catag} name="baconBurger" value = "7.89" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Bacon Burger
+                </Button>
+                <Button style = {styles.catag} name="blackBeanBurger" value = "7.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Black-Bean Burger
+                </Button>
+                <Button style = {styles.catag} name="gigemPattyMelt" value = "7.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Gig Em Patty Melt
+                </Button>
+                <div style = {styles.space}>Chicken</div>
+                {/* <Chicken function={addToCart}/> */}
+                <Button style = {styles.catag} name="chickenSandwich" value = "7.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Chicken Sandwich
+                </Button>
+                <Button style = {styles.catag} name="spicyChickenSandwich" value = "7.99" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Spicy Chicken Sandwich
+                </Button>
+                <Button style = {styles.catag} name="chickenTender" value = "7.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Chicken Tenders
+                </Button>
+                <div style = {styles.space}>Desserts</div>
+                {/* <Desserts function ={addToCart}/> */}
+                <Button style = {styles.catag} name="aggieShakeVanilla" value = "4.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Vanilla Shake
+                </Button>
+                <Button style = {styles.catag} name="aggieShakeChocolate" value = "4.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Chocolate Shake
+                </Button>
+                <Button style = {styles.catag} name="aggieShakeStrawberry" value = "4.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Strawberry Shake
+                </Button>
+                <Button style = {styles.catag} name="iceCreamCupVanilla" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Vanilla Ice Cream
+                </Button>
+                <Button style = {styles.catag} name="iceCreamCupChocolate" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Chocolate Ice Cream
+                </Button>
+                <Button style = {styles.catag} name="iceCreamCupStrawberry" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Strawberry Ice Cream
+                </Button>
+                <Button style = {styles.catag} name="cookieSandwich" value = "4.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Cookie Sandwich
+                </Button>
+                <div style = {styles.space}> Misc. </div>
 
-                <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                <Button style = {styles.catag} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
                     Combo Charge
+                </Button>
+                <Button style = {styles.catag} name="comboCharge" value = "2.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Fries
+                </Button>
+                <Button style = {styles.catag} name="comboCharge" value = "7.29" onClick={e => addToCart(e.target.name,e.target.value)}>
+                    Loaded Fries
                 </Button>
 
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
@@ -351,5 +411,17 @@ const styles = {
         fontSize: '24px',
         fontWeight: 'bold',
         marginLeft: '60px',
+    },
+    catag:{
+        width: '150px',
+        height: '150px',
+        marginLeft: '20px',
+        marginTop: '20px',
+    },
+    space:{
+        height: '20px',
+        marginLeft: '30px',
+        marginTop: '20px',
+        fontWeight: 'bold',
     },
 };
