@@ -18,11 +18,12 @@
     grid-row-start: 2;
     height: 50px;
     grid-area: h2;
+    display: fixed;
 }
 
 .box3 {
     grid-row-start: 3;
-    height: 750px;
+    height: 1000px;
     display: block;
     grid-area: ord;
 }
