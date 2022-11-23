@@ -1,10 +1,48 @@
 import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect} from 'react';
 
 function RestockReport(){
 
-    const restockReportArray = [
+    /*const restockReportArray = [
         {name: "napkins", quantity: "2", units: "pounds"}
       ]
+    */
+    const[restockReportArray, setRestockReportArray] = useState([]);
+
+    async function getRestockReportArray(){
+        try {
+            const res = await fetch("/restockReport", {
+                method: "post",
+                mode : "cors",
+                // cache: 'no-cache',
+                headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+                // "Accept": "application/json"
+                },
+            });
+    
+            if (!res.ok) {
+                const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+    
+            // grabs data from server response 
+            const data = await res.json()
+            
+            console.log(data)
+
+            setRestockReportArray(data);
+
+        }
+        catch (err) {
+            console.log(err.messeage);
+        }
+    }
+
+    useEffect(() => {
+        getRestockReportArray();
+    })
 
     return(
         <>

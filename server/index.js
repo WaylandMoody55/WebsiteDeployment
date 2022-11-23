@@ -4,7 +4,8 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const { urlencoded } = require("body-parser");
 const PORT = process.env.PORT || 3001;
-
+const cors = require('cors')
+const axios = require('axios')
 
 
 // Create express app
@@ -50,6 +51,7 @@ app.get("/ServerSide", (req, res) => {
   });
 });
 
+
 // allows for parsing of request body 
 app.use(express.json())
 
@@ -81,6 +83,17 @@ app.post("/ingredientTable", (req,res) => {
     .then(query_res => {
       res.send(query_res.rows);
     })
+})
+
+app.post("/salesReport", (req, res) => {
+  const fDate = req.body.fDate
+  const tDate = req.body.tDate
+  pool
+    .query( "SELECT foodbev.name, COUNT(*) FROM foodbev INNER JOIN orders_pair_table ON orders_pair_table.item = foodbev.name WHERE date BETWEEN '"+fDate+"' AND '"+tDate+"' GROUP BY name ORDER BY count DESC")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+
 })
 
 
@@ -207,6 +220,41 @@ app.post("/removeSeasonal", (req,res) => {
     pool
       .query("DELETE FROM foodbev WHERE name = 's*" + name + "'")
 })
+
+app.post("/updateOPT", (req,res) => {
+  const onum = req.body.onum;
+  const oitem = req.body.oitem;
+  const date = req.body.date;
+  pool
+    .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
+  res.send({response: "item entered into orders_pair_table"})
+})
+
+app.get("/updateO", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
+
+app.post("/updateO", (req,res) => {
+  const onum = req.body.onum;
+  const price = req.body.price;
+  const date = req.body.date;
+  pool
+    .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
+
+  res.send({response: "price entered into orders"})
+})
+
+app.post("/restockReport", (req,res) => {
+  const individualMinimum = 100;
+  const poundsMinimum = 10;
+
+  pool
+    .query("SELECT name, quantity, units FROM ingredients WHERE (quantity < " + individualMinimum + " AND units = 'individual') OR (quantity < " + poundsMinimum + " AND units = 'pounds')")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

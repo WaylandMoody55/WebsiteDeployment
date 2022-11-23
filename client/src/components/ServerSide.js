@@ -16,7 +16,7 @@ import Beverages from './popups/Beverages';
 function ServerSide(){
 
     const serverName = "Jane Doe";
-
+    const date = "01/01/1999"
     const testName = "test";
     const testAmount = 1000000;
 
@@ -44,14 +44,14 @@ function ServerSide(){
   
             // grabs data from server response 
             const data = await res.json()
-            console.log(data)
-            setOrderNum(data.max)
+            //console.log(data)
+            setOrderNum(data.max +1)
         }
 
             catch (err) {
                 console.log(err.messeage);
             }
-            }
+    }
 
     const addToCart = async(menuName,menuPrice) => {
     
@@ -94,8 +94,94 @@ function ServerSide(){
 
     const clear = async() => {
         const newCart = cart.filter(cartItem => cartItem [0]);
-        setCart(newCart);
+        setCart([]);
         setTotalAmount(0);
+    };
+
+    async function Oinsert(price){
+        
+        const postData = {
+            onum: show,
+            price: price,
+            date: date
+        };
+            
+        try{
+            const res = await fetch("/updateO",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    async function OPTitem(item){
+        
+        const postData = {
+            onum: show,
+            oitem: item,
+            date: date
+
+            
+        };
+            
+        try{
+            const res = await fetch("/updateOPT",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    function fillOPT(){
+        cart.map(item => {
+            for (let i = 0; i < item.quantity; i++){
+                console.log(item.name);
+                OPTitem(item.name);
+            }
+        })
+    };
+
+    function fillO(){
+        Oinsert(totalAmount);
+    }
+    async function processOrder(){
+        fillOPT();
+        //something bad happens
+        fillO();
+        clear();
     };
 
     const remove = async(product) => {
@@ -191,7 +277,7 @@ function ServerSide(){
 
             <div>
                 { totalAmount !== 0 ? <div>
-                  <Button style = {styles.pay} onClick ={() => clear()}>
+                  <Button style = {styles.pay} onClick ={processOrder}>
                     Pay Now
                 </Button>
 
