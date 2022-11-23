@@ -83,7 +83,7 @@ function ManagerSide(){
                     </tr>
                 </thead>
         </table>
-            {/* <TableScrollbar height="300px" > */}
+            <TableScrollbar height="300px" >
             <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
                 {/* <thead class = "sticky top-0">
                     <tr>
@@ -104,7 +104,7 @@ function ManagerSide(){
                     })}
                 </tbody>
             </table>
-            {/* </TableScrollbar> */}
+            </TableScrollbar>
         </div>
         <div className="d-grid gap-2 px-5 py-6">
             <Button variant="primary" size="lg" href="/Inventory">
