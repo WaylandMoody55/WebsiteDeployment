@@ -35,3 +35,17 @@
 .box5{
     grid-area: cat;
 }
+
+.table{
+    width: 700px;
+}
+
+th {
+    background: white;
+    position: sticky;
+    top: 0;
+}
+table {
+    /* text-align: center; */
+    position: static;
+}

@@ -161,6 +161,14 @@ app.post("/menuTable", (req,res) => {
     });
 })
 
+app.post("/orderHistory", (req,res) => {
+  pool 
+    .query("SELECT * FROM orders")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 app.post("/updatePrice", (req,res)=>{
   const name = req.body.name
   const price = req.body.price
