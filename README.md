@@ -13,7 +13,7 @@ Authors: Nazar Oladepo, Brian Nguyen, Bryan Mendlovitz, Riley Szecsy, Vinny LoBe
 
 `Our application starts on the customer UI, however the employee login button brings up the login screen. Depending on the ID the user is either prompted to the manager or the server side. From each of the respected sides the user should be able to do the functions outlined. On the login screen there are also buttons to directly access the manager and cutomer interface.`
 
-**Steps for Compiling and Running GUI:** 
+**Steps for Compiling and Running GUI Locally:** 
 
 `Our application has a server and client interaction, to run the application locally need to split and link two terminals.`
 
