@@ -28,5 +28,9 @@ This will run a GUI for a Point of Sales System for Rev's American Grill as part
 In order to get to the server and manager side, an ID will need to be provided. For the manager, the ID is 100. For the server, the ID is 101.
   
   **Links To Hosted Application** <br>
+  "Client" hosts our web application, the client link gives access to our P.O.S. "Server" handles transfering information from the database to our client application. The link provided just displays the console log for the server depending on the route provided in the url. <br>
+  
+  **THE SERVER LINK DOES NOT NEED TO BE ACTIVE TO ACCESS THE P.O.S. ON THE WEB** <br>
+  
   `Server:` https://websitebackendtest.onrender.com/ <br>
   `Client:` https://testlaunch.onrender.com/
