@@ -13,7 +13,7 @@ Authors: Nazar Oladepo, Brian Nguyen, Bryan Mendlovitz, Riley Szecsy, Vinny LoBe
 
 `Our application starts on the customer UI, however the employee login button brings up the login screen. Depending on the ID the user is either prompted to the manager or the server side. From each of the respected sides the user should be able to do the functions outlined. On the login screen there are also buttons to directly access the manager and cutomer interface.`
 
-**Steps for Compiling and Running GUI:** 
+**Steps for Compiling and Running GUI Locally:** 
 
 `Our application has a server and client interaction, to run the application locally need to split and link two terminals.`
 
@@ -28,5 +28,9 @@ This will run a GUI for a Point of Sales System for Rev's American Grill as part
 In order to get to the server and manager side, an ID will need to be provided. For the manager, the ID is 100. For the server, the ID is 101.
   
   **Links To Hosted Application** <br>
+  "Client" hosts our web application, the client link gives access to our P.O.S. "Server" handles transfering information from the database to our client application. The link provided just displays the console log for the server depending on the route provided in the url. <br>
+  
+  **THE SERVER LINK DOES NOT NEED TO BE ACTIVE TO ACCESS THE P.O.S. ON THE WEB** <br>
+  
   `Server:` https://websitebackendtest.onrender.com/ <br>
   `Client:` https://testlaunch.onrender.com/
