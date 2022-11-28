@@ -11,7 +11,7 @@ import Salads from './popups/Salads';
 import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
-
+import NewItems from './popups/NewItems';
 // import Modal from 'react-bootstrap/Modal';
 
 function CustomerSide(){
@@ -291,7 +291,8 @@ function CustomerSide(){
                 <Desserts function ={addToCart}/>
                 <Beverages function ={addToCart}/>
                 <Salads function = {addToCart}/>
-                <Seasonal />
+                <Seasonal function = {addToCart}/>
+                <NewItems function = {addToCart}/>
                 <Add function={addToCart}/>
 
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
