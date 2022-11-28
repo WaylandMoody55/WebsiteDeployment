@@ -16,7 +16,9 @@ import Beverages from './popups/Beverages';
 function ServerSide(){
 
     // const serverName = "Jane Doe";
-    const date = "01/01/1999"
+    let today = new Date();
+    const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
+    console.log(date)
     const testName = "test";
     const testAmount = 1000000;
 
