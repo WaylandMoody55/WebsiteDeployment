@@ -199,7 +199,7 @@ app.post("/newMenuItem",(req,res) =>{
   console.log(req.body.price)
   //String sqlStatement = "INSERT INTO foodbev (name, price) VALUES ('" + itemName + "', " + newPrice + ")";
     pool
-      .query("INSERT INTO foodbev (name, price) VALUES ('"+ name+ "', " + price + ")")
+      .query("INSERT INTO foodbev (name, price) VALUES ('n*"+ name+ "', " + price + ")")
 })
 
 app.post("/addSeasonal",(req,res)=>{
@@ -258,6 +258,14 @@ app.post("/restockReport", (req,res) => {
 
   pool
     .query("SELECT name, quantity, units FROM ingredients WHERE (quantity < " + individualMinimum + " AND units = 'individual') OR (quantity < " + poundsMinimum + " AND units = 'pounds')")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+app.post("/seasonalItems",(req,res) => {
+  pool
+    .query("SELECT * FROM foodbev WHERE name LIKE 's*%'")
     .then(query_res => {
       res.send(query_res.rows);
     });
