@@ -37,9 +37,9 @@ app.get("/login", (req, res) => {
   res.send({ message: "Hello fdfja server!" });
 });
 
-app.get("/ServerSide", (req, res) => {
+app.get("/orderNumber", (req, res) => {
   res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
-  console.log("serverSide get requested");
+  console.log("orderNumber get requested");
   pool
     .query("SELECT MAX(ordernumber) FROM orders")
     .then(query_res => {
