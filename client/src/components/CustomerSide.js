@@ -14,18 +14,43 @@ import Beverages from './popups/Beverages';
 // import Modal from 'react-bootstrap/Modal';
 
 function CustomerSide(){
-    const [show, setShow] = useState(false);
-
+    const [orderNum, setOrderNum] = useState(0);
     const serverName = "Jane Doe";
-    const OrderNum = '001';
-
+    const date = "01/01/1999"
     const testName = "test";
     const testAmount = 1000000;
 
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
- 
+    async function orderNumber() {
+        try {
+          const res = await fetch("/orderNumber", {
+            method: "get",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            },
+          });
+
+          if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+          }
+
+          // grabs data from server response 
+          const data = await res.json()
+          //console.log(data)
+          setOrderNum(data.max +1)
+      }
+
+          catch (err) {
+              console.log(err.messeage);
+          }
+  }
     const addToCart = async(menuName,menuPrice) => {
     
         //Checks if item is already in cart
@@ -71,6 +96,92 @@ function CustomerSide(){
         setTotalAmount(0);
     };
 
+    async function Oinsert(price){
+        
+        const postData = {
+            onum: orderNum,
+            price: price,
+            date: date
+        };
+            
+        try{
+            const res = await fetch("/updateO",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    async function OPTitem(item){
+        
+        const postData = {
+            onum: orderNum,
+            oitem: item,
+            date: date
+
+            
+        };
+            
+        try{
+            const res = await fetch("/updateOPT",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    function fillOPT(){
+        cart.map(item => {
+            for (let i = 0; i < item.quantity; i++){
+                console.log(item.name);
+                OPTitem(item.name);
+            }
+        })
+    };
+
+    function fillO(){
+        Oinsert(totalAmount);
+    }
+    async function processOrder(){
+        fillOPT();
+        //something bad happens
+        fillO();
+        clear();
+    };
+
     const remove = async(product) => {
         // if duplicate only remove 1
         // const newCart =cart.filter(cartItem => cartItem.id !== product.id);
@@ -111,6 +222,7 @@ function CustomerSide(){
 
     };
 
+    orderNumber();
     //This is where you would get the list of all the items and prices
     return(
     <>
@@ -121,7 +233,7 @@ function CustomerSide(){
 
             <div className="box2">
             
-            <label style = {styles.name} >Order #: {OrderNum} </label>
+            <label style = {styles.name} >Order #: {orderNum} </label>
             </div>
             <Search />
             <Order cart = {addToCart}/>
@@ -156,7 +268,7 @@ function CustomerSide(){
 
             <div>
                 { totalAmount !== 0 ? <div>
-                  <Button style = {styles.pay} onClick ={() => clear()}>
+                  <Button style = {styles.pay} onClick ={() => processOrder()}>
                     Pay Now
                 </Button>
 

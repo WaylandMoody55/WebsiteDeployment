@@ -27,7 +27,7 @@ function ServerSide(){
     const serverID = sessionStorage.getItem('loginNum')
     async function orderNumber() {
           try {
-            const res = await fetch("/ServerSide", {
+            const res = await fetch("/orderNumber", {
               method: "get",
               mode : "cors",
               // cache: 'no-cache',
