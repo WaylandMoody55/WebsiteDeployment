@@ -15,7 +15,7 @@ import Beverages from './popups/Beverages';
 
 function ServerSide(){
 
-    const serverName = "Jane Doe";
+    // const serverName = "Jane Doe";
     const date = "01/01/1999"
     const testName = "test";
     const testAmount = 1000000;
@@ -23,7 +23,8 @@ function ServerSide(){
     const [cart, setCart] = useState([]);
     const [show, setOrderNum] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
-
+    const [serverName, setName] = useState("employee")
+    const serverID = sessionStorage.getItem('loginNum')
     async function orderNumber() {
           try {
             const res = await fetch("/ServerSide", {
@@ -51,6 +52,37 @@ function ServerSide(){
             catch (err) {
                 console.log(err.messeage);
             }
+    }
+
+    async function getServerName() {
+        const postData = {
+            employeeID: serverID
+        };
+        try{
+            const res = await fetch("/getEmployeeName",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            setName(data.firstname + " " + data.lastname)
+            
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
     }
 
     const addToCart = async(menuName,menuPrice) => {
@@ -223,7 +255,7 @@ function ServerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
-
+    getServerName();
     orderNumber();
     //This is where you would get the list of all the items and prices
     return(

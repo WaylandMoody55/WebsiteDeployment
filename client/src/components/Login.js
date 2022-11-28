@@ -1,15 +1,17 @@
 import Button from "react-bootstrap/Button";
 import logo  from './Images/logo.png';
 
-import React, {useRef} from 'react'
-
+import React, {useRef} from 'react';
+var exportLoginNum = 0;
 function Login() {
   // allows you to use value from html 
     const loginNum = useRef(null);
-
     // function for handling login 
     async function handleLogin() {
       console.log(loginNum.current.value)
+        exportLoginNum = loginNum.current.value
+        sessionStorage.setItem('loginNum', loginNum.current.value)
+        console.log(exportLoginNum)
         const postData = {
           title: loginNum.current.value
         };
@@ -89,5 +91,5 @@ function Login() {
         </div>
       );
     }
-
+export {exportLoginNum}
 export default Login;

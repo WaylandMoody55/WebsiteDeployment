@@ -220,6 +220,15 @@ app.post("/removeSeasonal", (req,res) => {
       .query("DELETE FROM foodbev WHERE name = 's*" + name + "'")
 })
 
+// get employee name from sql
+app.post("/getEmployeeName", (req,res) => {
+  const id = req.body.employeeID;
+  pool
+      .query("SELECT firstname, lastname FROM employees WHERE id = " + id)
+      .then(query_res => {
+        res.send(query_res.rows[0]);
+      });
+})
 app.post("/updateOPT", (req,res) => {
   const onum = req.body.onum;
   const oitem = req.body.oitem;

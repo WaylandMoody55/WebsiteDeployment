@@ -4,10 +4,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import TableScrollbar from 'react-table-scrollbar';
 
 function ManagerSide(){
-
-    const managerName = "John Doe";
-
-     const [orderHistory, setHistory] = useState([]);
+    const [managerName, setManagerName] = useState("employee")
+    const [orderHistory, setHistory] = useState([]);
+    const managerID = sessionStorage.getItem("loginNum")
     // const orderHistory = [
     //     {orderNum: "1",date: "01/01/2022", finalPrice: "20.00"},
     //     {orderNum: "2",date: "01/02/2022", finalPrice: "20.00"},
@@ -52,11 +51,42 @@ function ManagerSide(){
       catch (err) {
           console.log(err.messeage);
       }
+    }
 
+      async function getManagerName() {
+        const postData = {
+            employeeID: managerID
+        };
+        try{
+            const res = await fetch("/getEmployeeName",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            setManagerName(data.firstname + " " + data.lastname)
+            
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
     }
 
     useEffect(()=>{
         //console.log("hello from view Edit Menu");
+        getManagerName();
         getHist();
     })
 
