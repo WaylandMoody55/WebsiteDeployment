@@ -30,7 +30,7 @@ function Seasonal(props) {
       const data = await res.json();
       setSeasonal(data);
 
-  }
+    } 
   catch (err) {
       console.log(err.messeage);
   }
@@ -54,7 +54,11 @@ function Seasonal(props) {
         <Modal.Body>Select:
           {seasonal.map(item => {
             return(
-              <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value)}>{item.name} </button>
+              <>
+              <div class = "relative py-2">
+                <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value)}>{item.name} </button>
+              </div>
+              </>
             );
           })
           }

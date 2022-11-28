@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -25,6 +25,8 @@ function ServerSide(){
     const [totalAmount, setTotalAmount] = useState(0);
     const [serverName, setName] = useState("employee")
     const serverID = sessionStorage.getItem('loginNum')
+    const [seasonal,setSeasonal] = useState([])
+    const [newItems, setNewItems] = useState([])
     async function orderNumber() {
           try {
             const res = await fetch("/orderNumber", {
@@ -84,6 +86,63 @@ function ServerSide(){
             console.log(err.message);
         }
     }
+
+
+    async function getNewItems(){
+        try {
+          const res = await fetch("/newItems", {
+            method: "post",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            }
+          });
+          if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+          }
+    
+          const data = await res.json();
+          setNewItems(data);
+    
+        }
+        catch (err) {
+          console.log(err.messeage);
+        } 
+      }
+
+      async function getSeasonalItems(){
+        try {
+          const res = await fetch("/seasonalItems", {
+            method: "post",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            }
+          });
+          if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+          }
+    
+          const data = await res.json();
+          setSeasonal(data);
+    
+        } 
+      catch (err) {
+          console.log(err.messeage);
+      }
+      }
+
+    
+
+
 
     const addToCart = async(menuName,menuPrice) => {
     
@@ -255,6 +314,12 @@ function ServerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
+
+    useEffect(()=>{
+        getNewItems();
+        getSeasonalItems();
+    })
+
     getServerName();
     orderNumber();
     //This is where you would get the list of all the items and prices
@@ -396,7 +461,24 @@ function ServerSide(){
                     Loaded Fries
                 </Button>
 
-                {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
+                <div style = {styles.space}>New Items</div>
+                {newItems.map(item => {
+                    return(
+                        <Button style = {styles.catag} name= {item.name} value = {item.price} onClick={e => addToCart(e.target.name,e.target.value)}>
+                        {item.name}
+                        </Button>
+                    )
+                })}
+
+                <div style = {styles.space}>Seasonal Items</div>
+                {seasonal.map(item => {
+                    return(
+                        <Button style = {styles.catag} name= {item.name} value = {item.price} onClick={e => addToCart(e.target.name,e.target.value)}>
+                        {item.name}
+                        </Button>
+                    )
+                })}
+
             </div> 
         </div>
     </>

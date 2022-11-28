@@ -271,6 +271,14 @@ app.post("/seasonalItems",(req,res) => {
     });
 })
 
+app.post("/newItems",(req,res)=>{
+  pool
+    .query("SELECT * FROM foodbev WHERE name LIKE 'n*%'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
