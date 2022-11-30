@@ -13,6 +13,18 @@ import Add from './popups/Add';
 import Beverages from './popups/Beverages';
 import NewItems from './popups/NewItems';
 // import Modal from 'react-bootstrap/Modal';
+import { GoogleMap, useJsApiLoader, LoadScript, useLoadScript } from '@react-google-maps/api';
+
+var exportLoginNum = 0;
+const containerStyle = {
+  width: '400px',
+  height: '400px'
+};
+
+const center = {
+  lat: 30.61257,
+  lng: -96.34074
+};
 
 function CustomerSide(){
     const [orderNum, setOrderNum] = useState(0);
@@ -224,6 +236,11 @@ function CustomerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
+    const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.REACT_APP_SECRET_GoogleMapsAPIKey})
+
+    if (!isLoaded) {
+      return <div>Loading...</div>
+    }
 
     orderNumber();
     //This is where you would get the list of all the items and prices
@@ -300,7 +317,13 @@ function CustomerSide(){
                 </Button>
 
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
-            </div> 
+            </div>
+            <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={18}
+            >
+            </GoogleMap>
         </div>
     </>
 
