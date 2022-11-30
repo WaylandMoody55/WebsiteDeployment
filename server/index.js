@@ -42,7 +42,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/orderNumber", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
   console.log("orderNumber get requested");
   pool
     .query("SELECT MAX(ordernumber) FROM orders")
