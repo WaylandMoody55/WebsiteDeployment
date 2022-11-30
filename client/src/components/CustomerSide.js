@@ -258,7 +258,7 @@ function CustomerSide(){
                         <tr key = {item.name}>
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.totalAmount}</td>
+                        <td>{parseFloat(item.totalAmount).toFixed(2)}</td>
                         <td>
                             <Button variant='danger' onClick={() => remove(item)}> Remove</Button>
                         </td>
@@ -267,7 +267,7 @@ function CustomerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount}</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount.toFixed(2)}</h2>
 
             <div>
                 { totalAmount !== 0 ? <div>
