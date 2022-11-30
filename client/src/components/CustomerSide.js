@@ -18,7 +18,9 @@ import { GoogleMap, useJsApiLoader, LoadScript, useLoadScript } from '@react-goo
 var exportLoginNum = 0;
 const containerStyle = {
   width: '400px',
-  height: '400px'
+  height: '400px',
+  marginLeft: '300px',
+  marginTop: '20px',
 };
 
 const center = {
@@ -247,8 +249,9 @@ function CustomerSide(){
     return(
     <>
         <div className="wrapper">
-            <div className="box1">
-            <Button variant="primary" href="/Login">Employee Login</Button>
+            
+             <div className="box1">
+            <Button variant="primary" href="/Login" style = {{marginLeft: '130px', marginTop: '10px'}}>Employee Login</Button>
             </div>
 
             <div className="box2">
@@ -316,14 +319,18 @@ function CustomerSide(){
                     Combo Charge
                 </Button>
 
+                <h3>Current Location: </h3>
+
+                <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={18}
+                >
+                </GoogleMap>
+
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
             </div>
-            <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={18}
-            >
-            </GoogleMap>
+            
         </div>
     </>
 
@@ -365,9 +372,9 @@ const styles = {
         marginLeft: '5px',
     },
     name:{
-        marginTop: '2px',
+         marginTop: '2px',
         fontSize: '24px',
         fontWeight: 'bold',
-        marginLeft: '60px',
+        marginLeft: '130px',
     },
 };

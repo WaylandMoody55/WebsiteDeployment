@@ -5,6 +5,20 @@
             'h2 h2 cat cat cat cat'
             'ord ord cat cat cat cat';
 }
+ 
+th,
+td {
+    padding: 0px;
+    border: solid 1px;
+    text-align: center;
+    width: 65px;
+}
+
+h3{
+    text-align: center;
+    margin-right: 100px;
+    padding-top: 30px;
+}
 
 .box1 {
     grid-column-start: 1;
@@ -23,7 +37,7 @@
 
 .box3 {
     grid-row-start: 3;
-    height: 1000px;
+    height: 1400px;
     display: block;
     grid-area: ord;
 }
