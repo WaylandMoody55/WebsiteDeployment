@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function Seasonal(props) {
+function NewItems(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const[seasonal,setSeasonal] = useState([])
+  const [newItems, setNewItems] = useState([]);
 
-  async function getSeasonalItems(){
+  async function getNewItems(){
     try {
-      const res = await fetch("/seasonalItems", {
+      const res = await fetch("/newItems", {
         method: "post",
         mode : "cors",
         // cache: 'no-cache',
@@ -28,40 +28,39 @@ function Seasonal(props) {
       }
 
       const data = await res.json();
-      setSeasonal(data);
+      setNewItems(data);
 
-    } 
-  catch (err) {
+    }
+    catch (err) {
       console.log(err.messeage);
+    } 
   }
-  }
-
-
+  
   useEffect(()=>{
-    getSeasonalItems();
+    getNewItems();
   })
 
   return (
     <>
       <Button style = {styles.catagory} onClick={handleShow}>
-        Seasonal Items
+        New Items
      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Seasonal Options</Modal.Title>
+          <Modal.Title>New Items</Modal.Title>
         </Modal.Header>
         <Modal.Body>Select:
-          {seasonal.map(item => {
+          {newItems.map(item => {
             return(
               <>
-              <div class = "relative py-2">
+              <p>
                 <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value)}>{item.name} </button>
-              </div>
+              </p>
               </>
+              
             );
-          })
-          }
+          })}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -73,7 +72,7 @@ function Seasonal(props) {
   );
 }
 
-export default Seasonal;
+export default NewItems;
 
 const styles = {
     container:{

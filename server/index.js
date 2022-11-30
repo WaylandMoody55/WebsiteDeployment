@@ -41,9 +41,9 @@ app.get("/login", (req, res) => {
   res.send({ message: "Hello fdfja server!" });
 });
 
-app.get("/ServerSide", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com')
-  console.log("serverSide get requested");
+app.get("/orderNumber", (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  console.log("orderNumber get requested");
   pool
     .query("SELECT MAX(ordernumber) FROM orders")
     .then(query_res => {
@@ -205,7 +205,7 @@ app.post("/newMenuItem",(req,res) =>{
   console.log(req.body.price)
   //String sqlStatement = "INSERT INTO foodbev (name, price) VALUES ('" + itemName + "', " + newPrice + ")";
     pool
-      .query("INSERT INTO foodbev (name, price) VALUES ('"+ name+ "', " + price + ")")
+      .query("INSERT INTO foodbev (name, price) VALUES ('n*"+ name+ "', " + price + ")")
 })
 
 app.post("/addSeasonal",(req,res)=>{
@@ -226,6 +226,15 @@ app.post("/removeSeasonal", (req,res) => {
       .query("DELETE FROM foodbev WHERE name = 's*" + name + "'")
 })
 
+// get employee name from sql
+app.post("/getEmployeeName", (req,res) => {
+  const id = req.body.employeeID;
+  pool
+      .query("SELECT firstname, lastname FROM employees WHERE id = " + id)
+      .then(query_res => {
+        res.send(query_res.rows[0]);
+      });
+})
 app.post("/updateOPT", (req,res) => {
   const onum = req.body.onum;
   const oitem = req.body.oitem;
@@ -255,6 +264,22 @@ app.post("/restockReport", (req,res) => {
 
   pool
     .query("SELECT name, quantity, units FROM ingredients WHERE (quantity < " + individualMinimum + " AND units = 'individual') OR (quantity < " + poundsMinimum + " AND units = 'pounds')")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+app.post("/seasonalItems",(req,res) => {
+  pool
+    .query("SELECT * FROM foodbev WHERE name LIKE 's*%'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+app.post("/newItems",(req,res)=>{
+  pool
+    .query("SELECT * FROM foodbev WHERE name LIKE 'n*%'")
     .then(query_res => {
       res.send(query_res.rows);
     });

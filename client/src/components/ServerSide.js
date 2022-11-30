@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -15,18 +15,23 @@ import Beverages from './popups/Beverages';
 
 function ServerSide(){
 
-    const serverName = "Jane Doe";
-    const date = "01/01/1999"
+    // const serverName = "Jane Doe";
+    let today = new Date();
+    const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
+    console.log(date)
     const testName = "test";
     const testAmount = 1000000;
 
     const [cart, setCart] = useState([]);
     const [show, setOrderNum] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
-
+    const [serverName, setName] = useState("employee")
+    const serverID = sessionStorage.getItem('loginNum')
+    const [seasonal,setSeasonal] = useState([])
+    const [newItems, setNewItems] = useState([])
     async function orderNumber() {
           try {
-            const res = await fetch("https://websitebackendtest.onrender.com/ServerSide", {
+            const res = await fetch("https://websitebackendtest.onrender.com/orderNumber", {
               method: "get",
               mode : "cors",
               // cache: 'no-cache',
@@ -52,6 +57,94 @@ function ServerSide(){
                 console.log(err.messeage);
             }
     }
+
+    async function getServerName() {
+        const postData = {
+            employeeID: serverID
+        };
+        try{
+            const res = await fetch("/getEmployeeName",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            setName(data.firstname + " " + data.lastname)
+            
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+
+    async function getNewItems(){
+        try {
+          const res = await fetch("/newItems", {
+            method: "post",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            }
+          });
+          if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+          }
+    
+          const data = await res.json();
+          setNewItems(data);
+    
+        }
+        catch (err) {
+          console.log(err.messeage);
+        } 
+      }
+
+      async function getSeasonalItems(){
+        try {
+          const res = await fetch("/seasonalItems", {
+            method: "post",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            }
+          });
+          if (!res.ok) {
+              const message = `An error has occured: ${res.status} - ${res.statusText}`;
+              throw new Error(message);
+          }
+    
+          const data = await res.json();
+          setSeasonal(data);
+    
+        } 
+      catch (err) {
+          console.log(err.messeage);
+      }
+      }
+
+    
+
+
 
     const addToCart = async(menuName,menuPrice) => {
     
@@ -224,6 +317,12 @@ function ServerSide(){
 
     };
 
+    useEffect(()=>{
+        getNewItems();
+        getSeasonalItems();
+    })
+
+    getServerName();
     orderNumber();
     //This is where you would get the list of all the items and prices
     return(
@@ -364,7 +463,24 @@ function ServerSide(){
                     Loaded Fries
                 </Button>
 
-                {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
+                <div style = {styles.space}>New Items</div>
+                {newItems.map(item => {
+                    return(
+                        <Button style = {styles.catag} name= {item.name} value = {item.price} onClick={e => addToCart(e.target.name,e.target.value)}>
+                        {item.name}
+                        </Button>
+                    )
+                })}
+
+                <div style = {styles.space}>Seasonal Items</div>
+                {seasonal.map(item => {
+                    return(
+                        <Button style = {styles.catag} name= {item.name} value = {item.price} onClick={e => addToCart(e.target.name,e.target.value)}>
+                        {item.name}
+                        </Button>
+                    )
+                })}
+
             </div> 
         </div>
     </>

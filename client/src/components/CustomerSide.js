@@ -11,21 +11,61 @@ import Salads from './popups/Salads';
 import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
+import NewItems from './popups/NewItems';
 // import Modal from 'react-bootstrap/Modal';
+import { GoogleMap, useJsApiLoader, LoadScript, useLoadScript } from '@react-google-maps/api';
+
+var exportLoginNum = 0;
+const containerStyle = {
+  width: '400px',
+  height: '400px'
+};
+
+const center = {
+  lat: 30.61257,
+  lng: -96.34074
+};
 
 function CustomerSide(){
-    const [show, setShow] = useState(false);
-
+    const [orderNum, setOrderNum] = useState(0);
     const serverName = "Jane Doe";
-    const OrderNum = '001';
-
+    let today = new Date();
+    const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
+    console.log(date)
     const testName = "test";
     const testAmount = 1000000;
 
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
- 
+    async function orderNumber() {
+        try {
+          const res = await fetch("https://websitebackendtest.onrender.com/orderNumber", {
+            method: "get",
+            mode : "cors",
+            // cache: 'no-cache',
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": "token-value",
+              // "Accept": "application/json"
+            },
+          });
+
+          if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+          }
+
+          // grabs data from server response 
+          const data = await res.json()
+          //console.log(data)
+          setOrderNum(data.max +1)
+      }
+
+          catch (err) {
+              console.log(err.messeage);
+          }
+  }
     const addToCart = async(menuName,menuPrice) => {
     
         //Checks if item is already in cart
@@ -71,6 +111,92 @@ function CustomerSide(){
         setTotalAmount(0);
     };
 
+    async function Oinsert(price){
+        
+        const postData = {
+            onum: orderNum,
+            price: price,
+            date: date
+        };
+            
+        try{
+            const res = await fetch("https://websitebackendtest.onrender.com/updateO",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    async function OPTitem(item){
+        
+        const postData = {
+            onum: orderNum,
+            oitem: item,
+            date: date
+
+            
+        };
+            
+        try{
+            const res = await fetch("https://websitebackendtest.onrender.com/updateOPT",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
+    function fillOPT(){
+        cart.map(item => {
+            for (let i = 0; i < item.quantity; i++){
+                console.log(item.name);
+                OPTitem(item.name);
+            }
+        })
+    };
+
+    function fillO(){
+        Oinsert(totalAmount);
+    }
+    async function processOrder(){
+        fillOPT();
+        //something bad happens
+        fillO();
+        clear();
+    };
+
     const remove = async(product) => {
         // if duplicate only remove 1
         // const newCart =cart.filter(cartItem => cartItem.id !== product.id);
@@ -110,7 +236,13 @@ function CustomerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
+    const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.REACT_APP_SECRET_GoogleMapsAPIKey})
 
+    if (!isLoaded) {
+      return <div>Loading...</div>
+    }
+
+    orderNumber();
     //This is where you would get the list of all the items and prices
     return(
     <>
@@ -121,7 +253,7 @@ function CustomerSide(){
 
             <div className="box2">
             
-            <label style = {styles.name} >Order #: {OrderNum} </label>
+            <label style = {styles.name} >Order #: {orderNum} </label>
             </div>
             <Search />
             <Order cart = {addToCart}/>
@@ -156,7 +288,7 @@ function CustomerSide(){
 
             <div>
                 { totalAmount !== 0 ? <div>
-                  <Button style = {styles.pay} onClick ={() => clear()}>
+                  <Button style = {styles.pay} onClick ={() => processOrder()}>
                     Pay Now
                 </Button>
 
@@ -176,7 +308,8 @@ function CustomerSide(){
                 <Desserts function ={addToCart}/>
                 <Beverages function ={addToCart}/>
                 <Salads function = {addToCart}/>
-                <Seasonal />
+                <Seasonal function = {addToCart}/>
+                <NewItems function = {addToCart}/>
                 <Add function={addToCart}/>
 
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
@@ -184,7 +317,13 @@ function CustomerSide(){
                 </Button>
 
                 {/*<button name="test" value = "20000" onClick={e => addToCart(e.target.name,e.target.value)}>TEST</button> */}
-            </div> 
+            </div>
+            <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={18}
+            >
+            </GoogleMap>
         </div>
     </>
 
