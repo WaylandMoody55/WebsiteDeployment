@@ -2,7 +2,9 @@ import Button from "react-bootstrap/Button";
 import logo  from './Images/logo.png';
 
 import React, {useRef} from 'react';
+
 var exportLoginNum = 0;
+
 function Login() {
   // allows you to use value from html 
     const loginNum = useRef(null);
@@ -52,6 +54,7 @@ function Login() {
         console.log(err.messeage);
     }
     }
+
     return (
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
             <img src={logo} alt="Logo" />
@@ -88,6 +91,7 @@ function Login() {
                 </Button>
             </div>
             </form>
+
         </div>
       );
     }
