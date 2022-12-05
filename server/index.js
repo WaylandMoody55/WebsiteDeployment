@@ -37,6 +37,8 @@ app.get("/login", (req, res) => {
   res.send({ message: "Hello fdfja server!" });
 });
 
+// I think there is sometimes a delay when entering new order into database which could cause issues when 
+// fetching the ordernumber in the future 
 app.get("/orderNumber", (req, res) => {
   res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
   console.log("orderNumber get requested");
@@ -235,11 +237,33 @@ app.post("/updateOPT", (req,res) => {
   const date = req.body.date;
   pool
     .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
-  res.send({response: "item entered into orders_pair_table"})
+       res.send({response: "item entered into orders_pair_table"})
 })
 
 app.get("/updateO", (req, res) => {
   res.json({ message: "Hello from server!" });
+});
+
+app.post("/updateIngredients", (req,res) => {
+  const onum = req.body.onum
+  pool
+    .query("SELECT * FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food WHERE ordernumber = " + onum)
+    .then(query_res => {
+      console.log(onum)
+      for ( let i = 0; i < query_res.rowCount; i++)  {
+        if (query_res.rows[i].units === "individual") {
+          console.log(query_res.rows[i].name)
+          // pool 
+          //   .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + query_res.rows[i].name + "' AND units = 'individual'")          
+        }
+
+        if (query_res.rows[i].units === "pounds") {
+          console.log("pounds")
+          console.log(query_res.rows[i].name)
+        }
+      }
+      res.send({respone: "updated inventory"})
+    });
 });
 
 app.post("/updateO", (req,res) => {
@@ -275,6 +299,7 @@ app.post("/newItems",(req,res)=>{
   pool
     .query("SELECT * FROM foodbev WHERE name LIKE 'n*%'")
     .then(query_res => {
+      console.log("yes")
       res.send(query_res.rows);
     });
 })

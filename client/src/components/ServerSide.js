@@ -14,11 +14,11 @@ import Beverages from './popups/Beverages';
 // import Modal from 'react-bootstrap/Modal';
 
 function ServerSide(){
-
+    let numberReady = true
+    let nameReady = false
     // const serverName = "Jane Doe";
     let today = new Date();
     const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
-    console.log(date)
     const testName = "test";
     const testAmount = 1000000;
 
@@ -49,7 +49,7 @@ function ServerSide(){
   
             // grabs data from server response 
             const data = await res.json()
-            //console.log(data)
+            // console.log(data)
             setOrderNum(data.max +1)
         }
 
@@ -79,7 +79,6 @@ function ServerSide(){
             }
 
             const data = await res.json()
-            console.log(data)
             setName(data.firstname + " " + data.lastname)
             
             
@@ -258,6 +257,36 @@ function ServerSide(){
         }
     }
 
+    async function updateIngredients(){
+        
+        const postData = {
+            onum: show
+        };
+            
+        try{
+            const res = await fetch("/updateIngredients",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
+
     function fillOPT(){
         cart.map(item => {
             for (let i = 0; i < item.quantity; i++){
@@ -274,7 +303,10 @@ function ServerSide(){
         fillOPT();
         //something bad happens
         fillO();
+        // updateIngredients()
+        updateIngredients();
         clear();
+        orderNumber()
     };
 
     const remove = async(product) => {
@@ -318,12 +350,14 @@ function ServerSide(){
     };
 
     useEffect(()=>{
-        getNewItems();
-        getSeasonalItems();
-    })
-
-    getServerName();
-    orderNumber();
+            getNewItems();
+            getSeasonalItems();
+            getServerName();
+            orderNumber();
+    },[])
+    useEffect(() => {
+        setOrderNum(show)
+    },[show])
     //This is where you would get the list of all the items and prices
     return(
     <>

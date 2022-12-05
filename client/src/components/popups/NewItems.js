@@ -38,7 +38,7 @@ function NewItems(props) {
   
   useEffect(()=>{
     getNewItems();
-  })
+  }, [])
 
   return (
     <>
