@@ -39,7 +39,7 @@ function Seasonal(props) {
 
   useEffect(()=>{
     getSeasonalItems();
-  })
+  }, [])
 
   return (
     <>
