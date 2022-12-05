@@ -93,7 +93,7 @@ function ManagerSide(){
     return(
         <>
         <div class = "px-5 py-2">
-            <Button variant="danger" href="/">
+            <Button variant="danger" href="/Login">
                 Logout
             </Button>
         </div>
@@ -114,7 +114,7 @@ function ManagerSide(){
                 </thead>
         </table>
             <TableScrollbar height="300px" >
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2" id = 't'>
                 {/* <thead class = "sticky top-0">
                     <tr>
                     <th>Order Number</th>
