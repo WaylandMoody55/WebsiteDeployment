@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect} from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -197,6 +197,7 @@ function CustomerSide(){
         //something bad happens
         fillO();
         clear();
+        orderNumber();
     };
 
     const remove = async(product) => {
@@ -238,13 +239,16 @@ function CustomerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
+    useEffect(()=>{
+        orderNumber();
+    },[orderNum])
+
     const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.REACT_APP_SECRET_GoogleMapsAPIKey})
 
     if (!isLoaded) {
       return <div>Loading...</div>
     }
 
-    orderNumber();
     //This is where you would get the list of all the items and prices
     return(
     <>
