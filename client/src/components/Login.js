@@ -59,6 +59,52 @@ function Login() {
     }
 
     //Below is OAuth code
+
+
+    async function oauthLogin(name){
+      console.log("First name is: " + name);
+      const postData = {
+        firstName: name
+      };
+      try{
+        const res = await fetch("/oauthLogin",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "token-value",
+            },
+            body: JSON.stringify(postData),
+        });
+
+        if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+        }
+
+
+        const data = await res.json()
+        console.log(data.ismanager)
+
+        if (data.ismanager === true) {
+          window.location.href = 'http://localhost:3000/ManagerSide'
+        }
+
+        if (data.ismanager === false) {
+          window.location.href = 'http://localhost:3000/ServerSide'
+        }
+
+
+
+      }
+      catch(err){
+          console.log(err.message);
+      }
+
+
+
+
+    }
     
     const [ user, setUser ] = useState({});
 
@@ -68,6 +114,9 @@ function Login() {
       console.log(userObj);
       setUser(userObj);
       document.getElementById("signInDiv").hidden = true;
+      console.log(userObj.given_name);
+      oauthLogin(userObj.given_name)
+
     }
   
     

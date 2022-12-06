@@ -121,11 +121,12 @@ function CustomerSide(){
         });
       }
 
+      
       const handleChange = event => {
         console.log(event.target.value);
         setNewLang(event.target.value);
       };
-
+      
     
     async function translateCustomerSide(){
         //forceUpdate();
@@ -141,8 +142,10 @@ function CustomerSide(){
         changeLanguage(newLang,reqRemoveText,setRemoveText);
         changeLanguage(newLang,reqCurrentLocationText,setCurrentLocationText);
         changeLanguage(newLang,reqComboChargeText,setComboChargeText);
+        
 
-
+        
+        
         setNewLang("en")
     }
 
@@ -400,7 +403,7 @@ function CustomerSide(){
                 <Button variant="primary" href="/Login">Employee Login</Button>
             </div>
             <div className='px-4 py-2 space-x-2'>
-                <select data-placeholder="Choose a Language..." onChange={handleChange}>
+                <select id="selectLang" data-placeholder="Choose a Language..." onChange={handleChange}>
                     <option value="AF">Afrikaans</option>
                     <option value="SQ">Albanian</option>
                     <option value="AR">Arabic</option>
