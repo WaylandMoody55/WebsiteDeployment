@@ -8,8 +8,15 @@ import {useEffect, useState} from 'react';
 
 var exportLoginNum = 0;
 
+/**
+ * Test text for Login, notice how it doesn't document the loginNum variable
+ * 
+ */
 function Login() {
-  // allows you to use value from html 
+    /**
+     * Allows you to use value from HTML
+     * 
+     */
     const loginNum = useRef(null);
     // function for handling login 
     async function handleLogin() {
@@ -108,6 +115,9 @@ function Login() {
     
     const [ user, setUser ] = useState({});
 
+    /**
+     * @function handleCallbackResponse
+     */
     function handleCallbackResponse(response){
       console.log("Encoded JWT ID token = " + response.credential);
       var userObj = jwt_decode(response.credential);
