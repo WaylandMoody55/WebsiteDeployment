@@ -66,7 +66,7 @@ function Login() {
     }
 
     //Below is OAuth code
-
+    
     const [ user, setUser ] = useState({});
 
     /**
@@ -80,6 +80,7 @@ function Login() {
       document.getElementById("signInDiv").hidden = true;
     }
   
+    
     useEffect(() => {
       /* global google */
       google.accounts.id.initialize({
@@ -96,6 +97,7 @@ function Login() {
       );
   
     }, []);
+    
 
     return (
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
