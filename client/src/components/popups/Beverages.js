@@ -24,7 +24,7 @@ function Beverages(props) {
         <>
         <div class="relative">
             <img class="scale-75" src={drink} alt="drink"></img>
-            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="fountainDrink" value = "2.45" onClick={e => props.function(e.target.name,e.target.value)}>Fountain Drink</button>
+            <button style = {styles.btn} class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" name="fountainDrink" value = "2.45" onClick={e => props.function(e.target.name,e.target.value)}>Fountain Drink</button>
         </div>
         </>
         </Modal.Body>
@@ -53,5 +53,14 @@ const styles = {
         height: '200px',
         marginLeft: '20px',
         marginTop: '20px',
+    },
+    btn:{
+      marginTop: '150px',
+    },
+     btn2:{
+      marginTop: '140px',
+    },
+    img:{
+
     }
 };

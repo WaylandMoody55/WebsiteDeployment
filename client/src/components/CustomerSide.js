@@ -266,7 +266,7 @@ function CustomerSide(){
             
             <label style = {styles.name} >Order #: {orderNum} </label>
             </div>
-            <Search />
+            {/* <Search /> */}
             <Order cart = {addToCart}/>
             {/* Start Of Cart */}
             <div className="box3">

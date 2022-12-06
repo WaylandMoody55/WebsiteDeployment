@@ -1,7 +1,7 @@
 .wrapper {
     display: grid;
     grid-template-areas:
-            'h1 h1 srch srch srch srch'
+            'h1 h1 cat cat cat cat'
             'h2 h2 cat cat cat cat'
             'ord ord cat cat cat cat';
 }
