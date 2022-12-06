@@ -291,13 +291,78 @@ function ServerSide(){
         }
     }
 
-    function fillOPT(){
+    async function fillOPT(){
         cart.map(item => {
             for (let i = 0; i < item.quantity; i++){
                 console.log(item.name);
                 OPTitem(item.name);
+                const [items, setItems] = useState([]);
+
+                const postData2 = {
+                    name: item.name
+                }
+                try {
+                    const res = await fetch("/getIng", {
+                        method: "post",
+                        mode : "cors",
+                        // cache: 'no-cache',
+                        headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": "token-value",
+                        // "Accept": "application/json"
+                        },
+                        body: JSON.stringify(postData2)
+                    });
+            
+                    if (!res.ok) {
+                        const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                        throw new Error(message);
+                    }
+            
+                    // grabs data from server response 
+                    const data = await res.json()
+                    
+                    console.log(data)
+        
+                    setItems(data);
+                }
+                catch (err) {
+                    console.log(err.messeage);
+                }
+                items.map( ing => {
+                    const postData3 =  {
+                        name: ing.name
+                    }
+                    try {
+                        const res = await fetch("/rmItem", {
+                            method: "post",
+                            mode : "cors",
+                            // cache: 'no-cache',
+                            headers: {
+                            "Content-Type": "application/json",
+                            "x-access-token": "token-value",
+                            // "Accept": "application/json"
+                            },
+                            body: JSON.stringify(postData3)
+                        });
+                
+                        if (!res.ok) {
+                            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                            throw new Error(message);
+                        }
+                
+                        // grabs data from server response 
+                        const data = await res.json()
+                        
+                        console.log(data)
+                    }
+                    catch (err) {
+                        console.log(err.messeage);
+                    }
+                })
             }
         })
+    
     };
 
     function fillO(){
@@ -310,8 +375,6 @@ function ServerSide(){
         // updateIngredients()
         updateIngredients();
         clear();
-        orderNumber()
-        orderNumber()
         orderNumber()
     };
 
@@ -361,6 +424,9 @@ function ServerSide(){
             getServerName();
             orderNumber();
     },[])
+    useEffect(() => {
+        setOrderNum(show)
+    },[show])
     //This is where you would get the list of all the items and prices
     return(
     <>
