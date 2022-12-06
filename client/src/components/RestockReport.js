@@ -42,7 +42,7 @@ function RestockReport(){
 
     useEffect(() => {
         getRestockReportArray();
-    })
+    }, [])
 
     return(
         <>

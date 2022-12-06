@@ -4,7 +4,8 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const { urlencoded } = require("body-parser");
 const PORT = process.env.PORT || 3001;
-const cors = require('cors')
+const cors = require('cors');
+// const { default: PairSales } = require("../client/src/components/PairSales");
 
 
 // Create express app
@@ -52,9 +53,134 @@ app.get("/orderNumber", (req, res) => {
   });
 });
 
-
 // allows for parsing of request body 
 app.use(express.json())
+
+app.post("/pairSales", (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  var nameArray = new Array()
+  var rowDat = new Array()
+  var minOrder = 0
+  var maxOrder = 0
+  var initialDate = req.body.initial
+  var endingDate = req.body.ending
+  console.log(initialDate)
+  console.log(endingDate)
+
+  // get min and max ordernumbers based on dates
+    getOrderNumbers = () => {
+     return new Promise((resolve, reject) => { // promising allows you to wait for request to finish before you move on next part of code
+      pool
+        .query("SELECT MIN(ordernumber), MAX(ordernumber) FROM orders WHERE date = '" + initialDate + "' OR date = '" + endingDate + "'",  (error, results) => {
+          if (error) return reject (error);
+          else {
+          return resolve(results)
+        }
+      })
+    })
+  }
+
+
+ 
+  // grab names from foodbev
+   getNames = () => {
+    return new Promise((resolve, reject) => {
+  pool
+    .query("SELECT name FROM foodbev", (error, results) => {
+      if (error) return reject(error);
+      else {
+        return resolve(results)
+      }
+    })
+  })
+}
+
+      // Get item from the orders from min order to max order 
+      pairInfo = (i) => {
+        return new Promise((resolve, reject) => {
+      pool
+        .query("SELECT item FROM orders_pair_table WHERE ordernumber = " + (i + 1), (error, results) => {
+          if (error) return reject(error)
+          else {
+            return resolve(results)
+          }
+      })
+    })
+  }
+  // how the code is run in sequential order 
+  async function sequentialQueries() {
+    try {
+     const result1 = await getOrderNumbers()
+     minOrder = result1.rows[0].min
+     maxOrder = result1.rows[0].max
+     const result2 = await getNames()
+    for (let i = 0; i < result2.rowCount; i++) {
+      nameArray.push(result2.rows[i].name);
+    }
+    var countArray = new Array(nameArray.length)
+    for (var i = 0; i < countArray.length; i++) {
+      countArray[i] = new Array(nameArray.length)
+      for (var j = 0; j < nameArray.length; j++) {
+        countArray[i][j] = 0
+      }
+    }
+    for (var i = minOrder; i < maxOrder + 1; i++) {
+      var subArray = new Array()
+      const result3 = await pairInfo(i)
+      for (var l = 0; l < result3.rowCount; l++) {
+        if (subArray.includes(result3.rows[l].item) === false) {
+          subArray.push(result3.rows[l].item)
+        }
+      }
+
+      // add pairing into 2d array [j][f] and [f][j]
+      for (var j = 0; j < subArray.length; j++) {
+        for (var f = j + 1; f < subArray.length; f++) {
+          var index1 = nameArray.indexOf(subArray[j])
+          var index2 = nameArray.indexOf(subArray[f])
+          countArray[index1][index2] = countArray[index1][index2] + 1;
+        }
+      }
+    }
+      var iMenuItem = 0
+      var jMenuItem = 0
+
+      var pairCount = 1
+
+      while (pairCount < 5) {
+        var max = 0
+
+        for (var i = 0; i < countArray.length; i++) {
+          for (var j = i + 1; j < countArray.length; j++) {
+            if (countArray[i][j] + countArray[j][i] > max) {
+              max = countArray[i][j] + countArray[j][i]
+              iMenuItem = i
+              jMenuItem = j
+            }
+          }
+        }
+
+        if (nameArray[iMenuItem] === "comboCharge" || nameArray[jMenuItem] === "comboCharge") {
+          countArray[iMenuItem][jMenuItem] = 0
+          countArray[jMenuItem][iMenuItem] = 0
+          continue
+        }
+
+        rowDat.push({ item1: nameArray[iMenuItem], item2: nameArray[jMenuItem], amount: max })
+
+        countArray[iMenuItem][jMenuItem] = 0
+        countArray[jMenuItem][iMenuItem] = 0
+        pairCount += 1
+      }
+      console.log(rowDat)
+      res.send(rowDat)
+  }
+  catch(error) {
+    console.log(error)
+  }
+  }
+  sequentialQueries()
+})
 
 // handle post for login
 app.post("/login", (req, res) => {
@@ -96,7 +222,6 @@ app.post("/salesReport", (req, res) => {
     });
 
 })
-
 
 app.post("/editInventory", (req,res) =>{
   const name = req.body.name

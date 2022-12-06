@@ -32,7 +32,11 @@ function CustomerSide(){
     const [orderNum, setOrderNum] = useState(0);
     const serverName = "Jane Doe";
     let today = new Date();
-    const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
+    let day = ""
+    if (today.getDate() < 10) {
+        day = "0" + today.getDate()
+    }
+    const date = (today.getMonth() + 1) + "/" + day + "/" + today.getFullYear()
     console.log(date)
     const testName = "test";
     const testAmount = 1000000;

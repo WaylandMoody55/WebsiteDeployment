@@ -18,7 +18,11 @@ function ServerSide(){
     let nameReady = false
     // const serverName = "Jane Doe";
     let today = new Date();
-    const date = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear()
+    let day = ""
+    if (today.getDate() < 10) {
+        day = "0" + today.getDate()
+    }
+    const date = (today.getMonth() + 1) + "/" + day + "/" + today.getFullYear()
     const testName = "test";
     const testAmount = 1000000;
 
@@ -49,7 +53,7 @@ function ServerSide(){
   
             // grabs data from server response 
             const data = await res.json()
-            // console.log(data)
+            console.log(data)
             setOrderNum(data.max +1)
         }
 
