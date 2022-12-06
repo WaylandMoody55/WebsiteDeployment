@@ -429,6 +429,53 @@ app.post("/newItems",(req,res)=>{
     });
 })
 
+app.post("/excessReport1", (req,res) => {
+  const name = req.body.name;
+  pool
+    .query("Select quantity,units from ingredients where name = '" + item + "'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    })
+})
+
+app.post("/excessReport", (req,res)=>{
+  const Tdate = req.body.Tdate;
+  const Fdate = req.body.Fdate;
+  pool
+  .query("SELECT ingredients.name, COUNT(*) FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food Where date BETWEEN '" + Tdate + "' AND '"+  Fdate +"' Group by name Order by name")
+  .then(query_res => {
+    res.send(query_res.rows);
+  })
+})
+
+app.post( "/getIng", (req, res) => {
+  const name = req.body.name
+
+  pool
+  .query("SELECT ingredient FROM ingredient_pair_table WHERE food = '" + name  + "' ")
+  .then(query_res => {
+    res.send(query_res.rows);
+  });
+})
+
+app.post("/rmItem", (req,res) => {
+  const name = req.body.name
+  
+
+  pool
+    .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + name + "' AND units = 'individual'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+  pool
+    .query("UPDATE ingredients SET quantity = quantity - .125 WHERE name = '" + name + "' AND units = 'pounds'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
