@@ -148,7 +148,7 @@ function CustomerSide(){
 
 
 
-
+    
     const [orderNum, setOrderNum] = useState(0);
     const serverName = "Jane Doe";
     let today = new Date();
@@ -316,6 +316,9 @@ function CustomerSide(){
         })
     };
 
+
+
+
     function fillO(){
         Oinsert(totalAmount);
     }
@@ -323,6 +326,9 @@ function CustomerSide(){
         fillOPT();
         //something bad happens
         fillO();
+
+
+        
         clear();
         orderNumber();
         orderNumber();
@@ -533,13 +539,14 @@ function CustomerSide(){
                 <Desserts function ={addToCart} translate={changeLanguage} language = {newLang}/>
                 <Beverages function ={addToCart} translate={changeLanguage} language = {newLang}/>
                 <Salads function = {addToCart} translate={changeLanguage} language = {newLang}/>
-                <NewItems function = {addToCart}/>
-                <Seasonal function = {addToCart}/>
                 <Add function={addToCart}  translate={changeLanguage} language = {newLang}/>
-
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29"  onClick={e => addToCart(e.target.name,e.target.value,comboChargeText)}>
                     {comboChargeText}
                 </Button>
+                <NewItems function = {addToCart} translate={changeLanguage} language = {newLang}/>
+                <Seasonal function = {addToCart} translate={changeLanguage} language = {newLang}/>
+
+
 
                 <h3>{currentLocationText}: </h3>
 
