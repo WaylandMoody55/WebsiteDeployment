@@ -3,6 +3,9 @@ import logo  from './Images/logo.png';
 
 import React, {useRef} from 'react';
 
+import jwt_decode from "jwt-decode";
+import {useEffect, useState} from 'react';
+
 var exportLoginNum = 0;
 
 function Login() {
@@ -55,8 +58,38 @@ function Login() {
     }
     }
 
+    //Below is OAuth code
+
+    const [ user, setUser ] = useState({});
+
+    function handleCallbackResponse(response){
+      console.log("Encoded JWT ID token = " + response.credential);
+      var userObj = jwt_decode(response.credential);
+      console.log(userObj);
+      setUser(userObj);
+      document.getElementById("signInDiv").hidden = true;
+    }
+  
+    useEffect(() => {
+      /* global google */
+      google.accounts.id.initialize({
+        client_id: "362665886730-fnk59acdlntvhdi3or07tajtjoe27qi4.apps.googleusercontent.com",
+        callback: handleCallbackResponse
+      });
+  
+      google.accounts.id.renderButton(
+        document.getElementById("signInDiv"),
+        {
+          theme: "outline",
+          size: "large"
+        }
+      );
+  
+    }, []);
+
     return (
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
+          <div id = "signInDiv"></div>
             <img src={logo} alt="Logo" />
             <form id="login" className="w-full max-w-sm">
             <div className="md:flex md:items-center mb-6">
