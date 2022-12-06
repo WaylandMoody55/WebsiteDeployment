@@ -202,6 +202,10 @@ function CustomerSide(){
         fillO();
         clear();
         orderNumber();
+        orderNumber();
+        orderNumber();
+        orderNumber();
+        
     };
 
     const remove = async(product) => {
@@ -245,7 +249,7 @@ function CustomerSide(){
     };
     useEffect(()=>{
         orderNumber();
-    },[orderNum])
+    },[])
 
     const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.REACT_APP_SECRET_GoogleMapsAPIKey})
 

@@ -311,6 +311,8 @@ function ServerSide(){
         updateIngredients();
         clear();
         orderNumber()
+        orderNumber()
+        orderNumber()
     };
 
     const remove = async(product) => {
@@ -359,9 +361,6 @@ function ServerSide(){
             getServerName();
             orderNumber();
     },[])
-    useEffect(() => {
-        setOrderNum(show)
-    },[show])
     //This is where you would get the list of all the items and prices
     return(
     <>
