@@ -452,7 +452,7 @@ function CustomerSide(){
                 <Button variant="primary" href="/Login">Employee Login</Button>
             </div>
             <div className='px-4 py-2 space-x-2'>
-                <select id="selectLang" data-placeholder="Choose a Language..." onChange={handleChange}>
+                <select id="selectLang" data-placeholder="Choose a Language..." onChange={handleChange} class="bg-gray-500">
                     <option value="AF">Afrikaans</option>
                     <option value="SQ">Albanian</option>
                     <option value="AR">Arabic</option>
