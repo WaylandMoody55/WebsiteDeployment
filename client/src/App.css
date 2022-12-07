@@ -12,6 +12,7 @@
     background-color: #181818;
     text-decoration: white;
     color: white;
+    height: 100vh;
 }
 
 #light .switch label{
