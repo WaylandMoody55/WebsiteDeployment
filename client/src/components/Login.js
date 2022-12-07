@@ -64,11 +64,11 @@ function Login() {
 
           // check if it is a manager or server 
           if (data.ismanager === true) {
-            window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
+            window.location.href = 'https://testlaunch.onrender.com/ManagerSide'
           }
 
           if (data.ismanager === false) {
-            window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
+            window.location.href = 'https://testlaunch.onrender.com/ServerSide'
           }
     }
 
