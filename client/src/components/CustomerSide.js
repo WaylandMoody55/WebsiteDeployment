@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect, useReducer} from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -29,6 +29,129 @@ const center = {
 };
 
 function CustomerSide(){
+
+    
+    //Translate Stuff
+
+    //State Variables(need one state and one to translate)
+    const[newLang, setNewLang] = useState("EN")
+    const[counter, setCounter] = useState(0);
+    //Old Variables
+    const[ogtext, setOGText] = useState("something to translate") //what is displayed
+    let testText = "something to translate" //what actually is being requested
+
+
+
+    //New Variables
+    const[cartText,setCartText] = useState("Cart");
+    let reqCartText = "Cart";
+
+    const[orderNumText, setOrderNumText] = useState("Order");
+    let reqOrderNumText = "Order";
+
+    const[itemText, setItemText] = useState("Item");
+    let reqItemText = "Item";
+
+    const[qtyText, setQTYText] = useState("QTY");
+    let reqQTYText = "QTY";
+
+    const[priceText, setPriceText] = useState("Price")
+    let reqPriceText = "Price";
+
+    const[actionText, setActionText] = useState("Action");
+    let reqActionText = "Action"
+
+    const[totalAmountText, setTotalAmountText] = useState("Total Amount");
+    let reqTotalAmountText = "Total Amount";
+
+    const[firstPayNowText, setFirstPayNowText] = useState("Pay Now");
+    let reqFirstPayNowText = "Pay Now";
+
+    const[secondPayNowText, setSecondPayNowText] = useState("Pay Now");
+    let reqSecondPayNowText = "Pay Now";
+
+    const[removeText, setRemoveText] = useState("Remove");
+    let reqRemoveText = "Remove";
+
+    const[currentLocationText, setCurrentLocationText] = useState("Current Location");
+    let reqCurrentLocationText = "Current Location";
+
+
+    //Two sets for every menu item
+        //one for the button name
+        //one for the cart name(maybe, might be able to just use the button name inside the cart)
+    const[comboChargeText, setComboChargeText] = useState("Combo Charge");
+    let reqComboChargeText = "Combo Charge";
+
+    const[quantityText, setQuantityText] = useState(0); 
+
+
+
+
+    //Functions
+    async function changeLanguage(toLang,text,setter){
+        //Actual fetching
+        let fromLang = 'en';  
+        //let toLang = 'no'; // translate to norwegian
+        //let text = 'something to translate';
+        console.log("Translating: " + text + " TO: " + toLang)
+    
+        const API_KEY = [process.env.REACT_APP_GOOGLE_TRANSLATE_API_KEY];
+    
+        let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
+        url += '&q=' + encodeURI(text);
+        url += `&source=${fromLang}`;
+        url += `&target=${toLang}`;
+    
+        fetch(url, { 
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          }
+        })
+        .then(res => res.json())
+        .then((response) => {
+          //console.log(response);
+          console.log("response from google: ", response.data.translations[0].translatedText);
+          setter(response.data.translations[0].translatedText)
+        })
+        .catch(error => {
+          console.log("There was an error with the translation request: ", error);
+        });
+      }
+
+      
+      const handleChange = event => {
+        console.log(event.target.value);
+        setNewLang(event.target.value);
+      };
+      
+    
+    async function translateCustomerSide(){
+        //forceUpdate();
+        changeLanguage(newLang,reqCartText,setCartText);
+        changeLanguage(newLang,reqOrderNumText,setOrderNumText);
+        changeLanguage(newLang,reqItemText,setItemText);
+        changeLanguage(newLang,reqQTYText,setQTYText);
+        changeLanguage(newLang,reqPriceText,setPriceText);
+        changeLanguage(newLang,reqActionText,setActionText);
+        changeLanguage(newLang,reqTotalAmountText,setTotalAmountText);
+        changeLanguage(newLang,reqFirstPayNowText,setFirstPayNowText);
+        changeLanguage(newLang,reqSecondPayNowText,setSecondPayNowText);
+        changeLanguage(newLang,reqRemoveText,setRemoveText);
+        changeLanguage(newLang,reqCurrentLocationText,setCurrentLocationText);
+        changeLanguage(newLang,reqComboChargeText,setComboChargeText);
+        
+
+        
+        
+        setNewLang("en")
+    }
+
+
+
+    
     const [orderNum, setOrderNum] = useState(0);
     const serverName = "Jane Doe";
     let today = new Date();
@@ -72,7 +195,8 @@ function CustomerSide(){
               console.log(err.messeage);
           }
   }
-    const addToCart = async(menuName,menuPrice) => {
+    const addToCart = async(menuName,menuPrice,translatedName) => {
+        console.log(translatedName)
     
         //Checks if item is already in cart
         let findProductInCart = await cart.find(i=>{
@@ -91,6 +215,7 @@ function CustomerSide(){
                     'name': menuName,
                     'quantity': cartItem.quantity + 1,
                     'totalAmount': menuPrice * (cartItem.quantity + 1),
+                    'translatedName' : translatedName
                 }
                 newCart.push(newItem);
                 }else{
@@ -105,6 +230,7 @@ function CustomerSide(){
                 'name': menuName,
                 'quantity': 1,
                 'totalAmount': menuPrice,
+                'translatedName' : translatedName
             }
             setCart([...cart, addingProduct]);
         }
@@ -271,6 +397,7 @@ function CustomerSide(){
                     'name': product.name,
                     'quantity': cartItem.quantity - 1,
                     'totalAmount': product.totalAmount - (product.totalAmount/cartItem.quantity),
+                    'translatedName': product.translatedName
                 }
                 newCart.push(newItem);
                 }else{
@@ -292,9 +419,13 @@ function CustomerSide(){
         //console.log(product.totalAmount/product.quantity); //total amount is the overall price per catagory need to somehow find the quantity 
 
     };
+    /*
     useEffect(()=>{
         orderNumber();
-    },[])
+    },[orderNum])
+    */
+
+    orderNumber();
 
     const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.REACT_APP_SECRET_GoogleMapsAPIKey})
 
@@ -307,53 +438,135 @@ function CustomerSide(){
     <>
         <div className="wrapper">
             
-             <div className="box1">
-            <Button variant="primary" href="/Login" style = {{marginLeft: '130px', marginTop: '10px'}}>Employee Login</Button>
+            <div className='px-4 py-2'>
+                <Button variant="primary" href="/Login">Employee Login</Button>
+            </div>
+            <div className='px-4 py-2 space-x-2'>
+                <select id="selectLang" data-placeholder="Choose a Language..." onChange={handleChange}>
+                    <option value="AF">Afrikaans</option>
+                    <option value="SQ">Albanian</option>
+                    <option value="AR">Arabic</option>
+                    <option value="HY">Armenian</option>
+                    <option value="EU">Basque</option>
+                    <option value="BN">Bengali</option>
+                    <option value="BG">Bulgarian</option>
+                    <option value="CA">Catalan</option>
+                    <option value="KM">Cambodian</option>
+                    <option value="ZH">Chinese (Mandarin)</option>
+                    <option value="HR">Croatian</option>
+                    <option value="CS">Czech</option>
+                    <option value="DA">Danish</option>
+                    <option value="NL">Dutch</option>
+                    <option value="ET">Estonian</option>
+                    <option value="FI">Finnish</option>
+                    <option value="FR">French</option>
+                    <option value="KA">Georgian</option>
+                    <option value="DE">German</option>
+                    <option value="EL">Greek</option>
+                    <option value="GU">Gujarati</option>
+                    <option value="HE">Hebrew</option>
+                    <option value="HI">Hindi</option>
+                    <option value="HU">Hungarian</option>
+                    <option value="IS">Icelandic</option>
+                    <option value="ID">Indonesian</option>
+                    <option value="GA">Irish</option>
+                    <option value="IT">Italian</option>
+                    <option value="JA">Japanese</option>
+                    <option value="JW">Javanese</option>
+                    <option value="KO">Korean</option>
+                    <option value="LA">Latin</option>
+                    <option value="LV">Latvian</option>
+                    <option value="LT">Lithuanian</option>
+                    <option value="MK">Macedonian</option>
+                    <option value="MS">Malay</option>
+                    <option value="ML">Malayalam</option>
+                    <option value="MT">Maltese</option>
+                    <option value="MI">Maori</option>
+                    <option value="MR">Marathi</option>
+                    <option value="MN">Mongolian</option>
+                    <option value="NE">Nepali</option>
+                    <option value="NO">Norwegian</option>
+                    <option value="FA">Persian</option>
+                    <option value="PL">Polish</option>
+                    <option value="PT">Portuguese</option>
+                    <option value="PA">Punjabi</option>
+                    <option value="QU">Quechua</option>
+                    <option value="RO">Romanian</option>
+                    <option value="RU">Russian</option>
+                    <option value="SM">Samoan</option>
+                    <option value="SR">Serbian</option>
+                    <option value="SK">Slovak</option>
+                    <option value="SL">Slovenian</option>
+                    <option value="ES">Spanish</option>
+                    <option value="SW">Swahili</option>
+                    <option value="SV">Swedish </option>
+                    <option value="TA">Tamil</option>
+                    <option value="TT">Tatar</option>
+                    <option value="TE">Telugu</option>
+                    <option value="TH">Thai</option>
+                    <option value="BO">Tibetan</option>
+                    <option value="TO">Tonga</option>
+                    <option value="TR">Turkish</option>
+                    <option value="UK">Ukrainian</option>
+                    <option value="UR">Urdu</option>
+                    <option value="UZ">Uzbek</option>
+                    <option value="VI">Vietnamese</option>
+                    <option value="CY">Welsh</option>
+                    <option value="XH">Xhosa</option>
+                </select>
+            <Button variant="primary" onClick={() => translateCustomerSide()}>
+                Translate
+            </Button>
+            <Button variant="primary" onClick={() => window.location.reload(false)}>
+                English
+            </Button>
+
             </div>
 
             <div className="box2">
             
-            <label style = {styles.name} >Order #: {orderNum} </label>
+            <label style = {styles.name} >{orderNumText} #: {orderNum} </label>
             </div>
             {/* <Search /> */}
             <Order cart = {addToCart}/>
             {/* Start Of Cart */}
             <div className="box3">
-            <h5 style={styles.catg}>Cart</h5 >
+            <h5 style={styles.catg}>{cartText}</h5 >
             <table className='table table-light'>
                 <thead>
                     <tr>
-                        <td>Item</td>
-                        <td>QTY</td>
-                        <td>Price</td>
-                        <td>Action</td>
+                        <td>{itemText}</td>
+                        <td>{qtyText}</td>
+                        <td>{priceText}</td>
+                        <td>{actionText}</td>
                     </tr>
                 </thead>
                 <tbody>
                     {cart.map(item => {
+                        console.log(item.name)
                     return (
                         <tr key = {item.name}>
-                        <td>{item.name}</td>
+                        <td>{item.translatedName}</td>
                         <td>{item.quantity}</td>
                         <td>{parseFloat(item.totalAmount).toFixed(2)}</td>
                         <td>
-                            <Button variant='danger' onClick={() => remove(item)}> Remove</Button>
+                            <Button variant='danger' onClick={() => remove(item)}> {removeText}</Button>
                         </td>
                         </tr>
                     );
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${totalAmount.toFixed(2)}</h2>
+            <h2 className='px-2 text-black' style={styles.amnt}>{totalAmountText}: ${totalAmount.toFixed(2)}</h2>
 
             <div>
                 { totalAmount !== 0 ? <div>
                   <Button style = {styles.pay} onClick ={() => processOrder()}>
-                    Pay Now
+                    {secondPayNowText}
                 </Button>
 
                 </div> : <Button style = {styles.pay}  disabled >
-                    Pay Now
+                    {firstPayNowText}
                 </Button>
 
                 }
@@ -363,20 +576,21 @@ function CustomerSide(){
         {/* End of Cart */}
             
             <div className="box5">
-                <Burgers function={addToCart}/>
-                <Chicken function={addToCart}/>
-                <Desserts function ={addToCart}/>
-                <Beverages function ={addToCart}/>
-                <Salads function = {addToCart}/>
-                <Seasonal function = {addToCart}/>
-                <NewItems function = {addToCart}/>
-                <Add function={addToCart}/>
-
-                <Button style = {styles.catagory} name="comboCharge" value = "3.29" onClick={e => addToCart(e.target.name,e.target.value)}>
-                    Combo Charge
+                <Burgers function={addToCart} translate={changeLanguage} language = {newLang}/>
+                <Chicken function={addToCart} translate={changeLanguage} language = {newLang}/>
+                <Desserts function ={addToCart} translate={changeLanguage} language = {newLang}/>
+                <Beverages function ={addToCart} translate={changeLanguage} language = {newLang}/>
+                <Salads function = {addToCart} translate={changeLanguage} language = {newLang}/>
+                <Add function={addToCart}  translate={changeLanguage} language = {newLang}/>
+                <Button style = {styles.catagory} name="comboCharge" value = "3.29"  onClick={e => addToCart(e.target.name,e.target.value,comboChargeText)}>
+                    {comboChargeText}
                 </Button>
+                <NewItems function = {addToCart} translate={changeLanguage} language = {newLang}/>
+                <Seasonal function = {addToCart} translate={changeLanguage} language = {newLang}/>
 
-                <h3>Current Location: </h3>
+
+
+                <h3>{currentLocationText}: </h3>
 
                 <GoogleMap
                 mapContainerStyle={containerStyle}

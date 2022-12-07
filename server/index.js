@@ -204,6 +204,23 @@ app.post("/login", (req, res) => {
       });
 })
 
+
+
+app.post("/oauthLogin", (req,res) =>{
+  const loginName = req.body.firstName
+  console.log(req.body.firstName);
+
+  pool  
+    .query("Select ismanager From employees where firstname = " + "'" + loginName + "'")
+    .then(query_res => {
+      console.log(query_res.rows[0]);
+      res.send(query_res.rows[0]);
+    })
+
+
+})
+
+
 app.post("/ingredientTable", (req,res) => {
   pool
     .query("SELECT * FROM ingredients")
