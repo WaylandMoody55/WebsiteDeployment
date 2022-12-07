@@ -1,49 +1,52 @@
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect, useRef} from 'react';
+//only works for items that have sold at least once within the time period.
 
 function ExcessReport(){
 
-      const date = "10/20/2022";
+      const date = "12/06/2022";
       const fDate = useRef(null)
       const[excessReportArray, setExcessReportArray] = useState([]);
-      const[invArray, setTempArray] = useState([]);
+
       async function getFArray(){
+            //console.log("here")
+            const postData = {
+                Fdate: fDate.current.value,
+                Tdate: date
+            };
 
-        const postData = {
-            Fdate: fDate,
-            Tdate: date
-        };
+            try {
+                const res = await fetch("/excessReport", {
+                    method: "post",
+                    mode : "cors",
+                    // cache: 'no-cache',
+                    headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    // "Accept": "application/json"
+                    },
+                    body: JSON.stringify(postData)
+                });
+        
+                if (!res.ok) {
+                    const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                    throw new Error(message);
+                }
+        
+                // grabs data from server response 
+                const data = await res.json()
+                
+                //console.log(data)
+                console.log("done")
+                console.log(data)
+                setExcessReportArray(data);
 
-        try {
-            const res = await fetch("/excessReport", {
-                method: "post",
-                mode : "cors",
-                // cache: 'no-cache',
-                headers: {
-                "Content-Type": "application/json",
-                "x-access-token": "token-value",
-                // "Accept": "application/json"
-                },
-                body: JSON.stringify(postData)
-            });
-    
-            if (!res.ok) {
-                const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
             }
-    
-            // grabs data from server response 
-            const data = await res.json()
-            
-            console.log(data)
-
-            setTempArray(data);
-
-        }
-        catch (err) {
-            console.log(err.messeage);
-        }
+            catch (err) {
+                console.log(err.messeage);
+            }
     }
+    /*
     async function getItems(i) {
 
             const postData1 = {
@@ -72,6 +75,7 @@ function ExcessReport(){
                 const data = await res.json()
                 
                 console.log(data)
+                console.log("done")
     
                 setTempArray(data);
     
@@ -81,16 +85,22 @@ function ExcessReport(){
             }
             
     }
+   
 
     async function getExcessReportArray() {
         getFArray();
+
         invArray.map( item => {
 
             getItems(item.name);
+            var num = item.count;
+            
+
 
         })
 
     }
+    */
 
     return(
         <>
@@ -103,7 +113,7 @@ function ExcessReport(){
             <div class="form-group">
                 <label for="excessReportDate">Date</label>
                 <input type="email" class="form-control" id="excessReportInput" placeholder="MM/DD/YYYY" ref = {fDate} ></input>
-                <Button variant="primary">
+                <Button variant="primary" onClick={e => getFArray()}>
                     Submit
                 </Button>
             </div>
@@ -113,13 +123,15 @@ function ExcessReport(){
                 <thead>
                     <tr>
                     <th>Item</th>
+                    <th> Units</th>
                     </tr>
                 </thead>
                 <tbody>
                     {excessReportArray.map(item => {
                     return (
                         <tr>
-                        <td>{item.item}</td>
+                        <td>{item[0]}</td>
+                        <td>{item[1]}</td>
                         </tr>
                     );
                     })}
