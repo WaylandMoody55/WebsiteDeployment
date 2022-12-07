@@ -40,22 +40,42 @@ function NewItems(props) {
     getNewItems();
   }, [])
 
+  //Translate Stuff
+  const[buttonText, setButtonText] = useState("New Items");
+  let reqButtonText = "New Items";
+
+  const[modalTitleText, setModalTitleText] = useState("New Options");
+  let reqModalTitleText = "New Options";
+
+  const[selectText, setSelectText] = useState("Select");
+  let reqSelectText = "Select";
+
+  const[closeText, setCloseText] = useState("Close");
+  let reqCloseText = "Close";
+
+  if(props.language != "EN"){
+    props.translate(props.language,reqButtonText,setButtonText);
+    props.translate(props.language,reqModalTitleText,setModalTitleText);
+    props.translate(props.language,reqSelectText,setSelectText);
+    props.translate(props.language,reqCloseText,setCloseText);
+  }
+
   return (
     <>
       <Button style = {styles.catagory} onClick={handleShow}>
-        New Items
+      {buttonText}
      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton style={styles.headFoot}>
-          <Modal.Title>New Items</Modal.Title>
+          <Modal.Title>{buttonText}</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={styles.back}>Select:
+        <Modal.Body style={styles.back}>{selectText}:
           {newItems.map(item => {
             return(
               <>
               <p>
-                <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value)}>{item.name} </button>
+                <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value,item.name)}>{item.name} </button>
               </p>
               </>
               
@@ -64,7 +84,7 @@ function NewItems(props) {
         </Modal.Body>
         <Modal.Footer style={styles.headFoot}>
           <Button variant="secondary" onClick={handleClose} style={styles.close}>
-            Close
+          {closeText}
           </Button>
         </Modal.Footer>
       </Modal>

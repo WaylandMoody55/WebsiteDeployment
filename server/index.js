@@ -4,7 +4,8 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const { urlencoded } = require("body-parser");
 const PORT = process.env.PORT || 3001;
-const cors = require('cors')
+const cors = require('cors');
+// const { default: PairSales } = require("../client/src/components/PairSales");
 
 
 // Create express app
@@ -52,9 +53,134 @@ app.get("/orderNumber", (req, res) => {
   });
 });
 
-
 // allows for parsing of request body 
 app.use(express.json())
+
+app.post("/pairSales", (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  var nameArray = new Array()
+  var rowDat = new Array()
+  var minOrder = 0
+  var maxOrder = 0
+  var initialDate = req.body.initial
+  var endingDate = req.body.ending
+  console.log(initialDate)
+  console.log(endingDate)
+
+  // get min and max ordernumbers based on dates
+    getOrderNumbers = () => {
+     return new Promise((resolve, reject) => { // promising allows you to wait for request to finish before you move on next part of code
+      pool
+        .query("SELECT MIN(ordernumber), MAX(ordernumber) FROM orders WHERE date = '" + initialDate + "' OR date = '" + endingDate + "'",  (error, results) => {
+          if (error) return reject (error);
+          else {
+          return resolve(results)
+        }
+      })
+    })
+  }
+
+
+ 
+  // grab names from foodbev
+   getNames = () => {
+    return new Promise((resolve, reject) => {
+  pool
+    .query("SELECT name FROM foodbev", (error, results) => {
+      if (error) return reject(error);
+      else {
+        return resolve(results)
+      }
+    })
+  })
+}
+
+      // Get item from the orders from min order to max order 
+      pairInfo = (i) => {
+        return new Promise((resolve, reject) => {
+      pool
+        .query("SELECT item FROM orders_pair_table WHERE ordernumber = " + (i + 1), (error, results) => {
+          if (error) return reject(error)
+          else {
+            return resolve(results)
+          }
+      })
+    })
+  }
+  // how the code is run in sequential order 
+  async function sequentialQueries() {
+    try {
+     const result1 = await getOrderNumbers()
+     minOrder = result1.rows[0].min
+     maxOrder = result1.rows[0].max
+     const result2 = await getNames()
+    for (let i = 0; i < result2.rowCount; i++) {
+      nameArray.push(result2.rows[i].name);
+    }
+    var countArray = new Array(nameArray.length)
+    for (var i = 0; i < countArray.length; i++) {
+      countArray[i] = new Array(nameArray.length)
+      for (var j = 0; j < nameArray.length; j++) {
+        countArray[i][j] = 0
+      }
+    }
+    for (var i = minOrder; i < maxOrder + 1; i++) {
+      var subArray = new Array()
+      const result3 = await pairInfo(i)
+      for (var l = 0; l < result3.rowCount; l++) {
+        if (subArray.includes(result3.rows[l].item) === false) {
+          subArray.push(result3.rows[l].item)
+        }
+      }
+
+      // add pairing into 2d array [j][f] and [f][j]
+      for (var j = 0; j < subArray.length; j++) {
+        for (var f = j + 1; f < subArray.length; f++) {
+          var index1 = nameArray.indexOf(subArray[j])
+          var index2 = nameArray.indexOf(subArray[f])
+          countArray[index1][index2] = countArray[index1][index2] + 1;
+        }
+      }
+    }
+      var iMenuItem = 0
+      var jMenuItem = 0
+
+      var pairCount = 1
+
+      while (pairCount < 5) {
+        var max = 0
+
+        for (var i = 0; i < countArray.length; i++) {
+          for (var j = i + 1; j < countArray.length; j++) {
+            if (countArray[i][j] + countArray[j][i] > max) {
+              max = countArray[i][j] + countArray[j][i]
+              iMenuItem = i
+              jMenuItem = j
+            }
+          }
+        }
+
+        if (nameArray[iMenuItem] === "comboCharge" || nameArray[jMenuItem] === "comboCharge") {
+          countArray[iMenuItem][jMenuItem] = 0
+          countArray[jMenuItem][iMenuItem] = 0
+          continue
+        }
+
+        rowDat.push({ item1: nameArray[iMenuItem], item2: nameArray[jMenuItem], amount: max })
+
+        countArray[iMenuItem][jMenuItem] = 0
+        countArray[jMenuItem][iMenuItem] = 0
+        pairCount += 1
+      }
+      console.log(rowDat)
+      res.send(rowDat)
+  }
+  catch(error) {
+    console.log(error)
+  }
+  }
+  sequentialQueries()
+})
 
 // handle post for login
 app.post("/login", (req, res) => {
@@ -78,6 +204,23 @@ app.post("/login", (req, res) => {
       });
 })
 
+
+
+app.post("/oauthLogin", (req,res) =>{
+  const loginName = req.body.firstName
+  console.log(req.body.firstName);
+
+  pool  
+    .query("Select ismanager From employees where firstname = " + "'" + loginName + "'")
+    .then(query_res => {
+      console.log(query_res.rows[0]);
+      res.send(query_res.rows[0]);
+    })
+
+
+})
+
+
 app.post("/ingredientTable", (req,res) => {
   pool
     .query("SELECT * FROM ingredients")
@@ -96,7 +239,6 @@ app.post("/salesReport", (req, res) => {
     });
 
 })
-
 
 app.post("/editInventory", (req,res) =>{
   const name = req.body.name
@@ -231,50 +373,183 @@ app.post("/getEmployeeName", (req,res) => {
         res.send(query_res.rows[0]);
       });
 })
-app.post("/updateOPT", (req,res) => {
-  const onum = req.body.onum;
-  const oitem = req.body.oitem;
-  const date = req.body.date;
+app.get("/getMenuItemPrices", (req,res) => {
   pool
-    .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
-       res.send({response: "item entered into orders_pair_table"})
+      .query("SELECT name, price FROM foodbev")
+      .then(query_res => {
+        console.log(query_res.rows)
+        res.send(query_res.rows);
+      });
 })
 
-app.get("/updateO", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
+app.post("/sendOrder", (req, res) => {
+  const onum = req.body.onum;
+  const itemList = req.body.itemlist;
+  const date = req.body.date;
+  const price = req.body.price
+  var individualArray = new Array()
+  var poundsArray = new Array()
 
-app.post("/updateIngredients", (req,res) => {
-  const onum = req.body.onum
-  pool
-    .query("SELECT * FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food WHERE ordernumber = " + onum)
-    .then(query_res => {
-      console.log(onum)
-      for ( let i = 0; i < query_res.rowCount; i++)  {
-        if (query_res.rows[i].units === "individual") {
-          console.log(query_res.rows[i].name)
-          // pool 
-          //   .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + query_res.rows[i].name + "' AND units = 'individual'")          
-        }
+  // function for inserting to orders table
+  insertToOrders = () => {
+    return new Promise((resolve, reject) => {
+      pool
+        .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')", (error, results) => {
+          if (error) return reject(error);
+          else {
+            return resolve(results)
+          }
+        })
+    })
+  }
 
-        if (query_res.rows[i].units === "pounds") {
-          console.log("pounds")
-          console.log(query_res.rows[i].name)
+  // function for inserting into orders_pair_table
+  insertToOPT = (oitem) => {
+    return new Promise((resolve, reject) => {
+      pool
+        .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')", (error, results) => {
+          if (error) return reject(error);
+          else {
+            return resolve(results)
+          }
+        })
+    })
+  }
+
+  // function getting ingredients based on order 
+  ingredientList = () => {
+    return new Promise((resolve, reject) => { // promising allows you to wait for request to finish before you move on next part of code
+      pool
+        .query("SELECT * FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food WHERE ordernumber = " + onum, (error, results) => {
+          if (error) return reject(error);
+          else {
+            return resolve(results)
+          }
+        })
+    })
+  }
+
+  // allows you to use query sequentially (avoid race issues)
+  async function sequentialQueries() {
+    try {
+      console.log(itemList.length)
+      result1 = await insertToOrders();
+      for (let i = 0; i < itemList.length; i++) {
+        result2 = await insertToOPT(itemList[i])
+        console.log(itemList[i])
+        console.log(i)
+      }
+
+      // populate individual and pounds list 
+      result3 = await ingredientList()
+      for (let i = 0; i < result3.rowCount; i++) {
+        if (result3.rows[i].units === "individual") {
+          console.log(result3.rows[i].name)
+          individualArray.push(result3.rows[i].name)
+          if (result3.rows[i].units === "pounds") {
+            console.log(result3.rows[i].name)
+            poundsArray.push(result3.rows[i].name)
+          }
         }
       }
-      res.send({respone: "updated inventory"})
-    });
-});
+      
+      // updating inventory amounts 
+      for (let i = 0; i < individualArray.length; i++) {
+        pool
+          .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + individualArray[i] + "' AND units = 'individual'")
+        console.log({ message: individualArray[i] + " individual sent" });
+      }
 
-app.post("/updateO", (req,res) => {
-  const onum = req.body.onum;
-  const price = req.body.price;
-  const date = req.body.date;
-  pool
-    .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
+      for (let i = 0; i < poundsArray.length; i++) {
+        pool
+          .query("UPDATE ingredients SET quantity = quantity - .125 WHERE name = '" + poundsArray[i] + "' AND units = 'pounds'")
+        console.log({ message: poundsArray[i] + " pounds sent" });
+      }
 
-  res.send({response: "price entered into orders"})
+    }
+    catch (error) {
+
+    }
+  }
+  sequentialQueries()
+  res.send({message: "update order fully"})
 })
+
+// app.post("/updateOPT", (req,res) => {
+//   const onum = req.body.onum;
+//   const oitem = req.body.oitem;
+//   const date = req.body.date;
+//   pool
+//     .query("INSERT INTO orders_pair_table VALUES (" + onum + ", '" + date + "', '" + oitem + "')")
+//        res.send({response: "item entered into orders_pair_table"})
+// })
+
+// app.get("/updateO", (req, res) => {
+//   res.json({ message: "Hello from server!" });
+// });
+
+// app.post("/updateIngredients", (req,res) => {
+//   const onum = req.body.onum
+//   console.log(onum)
+//   var individualArray = new Array()
+//   var poundsArray = new Array()
+
+//   ingredientList = () => {
+//     return new Promise((resolve, reject) => { // promising allows you to wait for request to finish before you move on next part of code
+//      pool
+//        .query("SELECT * FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food WHERE ordernumber = " + onum,  (error, results) => {
+//          if (error) return reject (error);
+//          else {
+//          return resolve(results)
+//        }
+//      })
+//    })
+//  }
+
+//     async function sequentialQueries() {
+//       try {
+//         // populate individual and pounds list 
+//         result1 = await ingredientList()
+//         for ( let i = 0; i < result1.rowCount; i++)  {
+//           if (result1.rows[i].units === "individual") {
+//             console.log(result1.rows[i].name)
+//             individualArray.push(result1.rows[i].name)
+//             if (result1.rows[i].units === "pounds") {
+//               console.log(query_res.rows[i].name)
+//               poundsArray.push(result1.rows[i].name)
+//             }        
+//           }
+//       }
+
+//       for (let i = 0; i < individualArray.length; i++) {
+//         pool
+//           .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + individualArray[i] + "' AND units = 'individual'")
+//             console.log({message: individualArray[i] + " sent"});
+//       }
+
+//       for (let i = 0; i < poundsArray.length; i++) {
+//         pool
+//           .query("UPDATE ingredients SET quantity = quantity - .125 WHERE name = '" + poundsArray[i] + "' AND units = 'pounds'")
+//           console.log({message: poundsArray[i] + " sent"});
+//       }
+//     }
+//       catch(err) {
+
+//       }
+//     }
+//     sequentialQueries();
+//     res.send({message: "updated inventory"})
+// });
+
+// app.post("/updateO", (req,res) => {
+//   const onum = req.body.onum;
+//   const price = req.body.price;
+//   const date = req.body.date;
+//   pool
+//     .query("INSERT INTO orders VALUES (" + onum + ", '" + date + "', '" + price + "')")
+
+//   res.send({response: "price entered into orders"})
+// })
 
 app.post("/restockReport", (req,res) => {
   const individualMinimum = 100;
@@ -304,6 +579,103 @@ app.post("/newItems",(req,res)=>{
     });
 })
 
+/*
+app.post("/excessReport1", (req,res) => {
+  const name = req.body.name;
+  pool
+    .query("Select quantity,units from ingredients where name = '" + item + "'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    })
+})
+*/
+
+app.post("/excessReport", (req,res) => {
+    res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+    const Tdate = req.body.Tdate;
+    const Fdate = req.body.Fdate;
+    //console.log(Fdate)
+    //console.log(Tdate)
+    var array = new Array();
+    tempArray = () => {
+        return new Promise((resolve, reject) => {
+          pool
+            .query("SELECT ingredients.name, COUNT(*) FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food Where date BETWEEN '" + Fdate + "' AND '"+  Tdate +"' Group by name Order by name", (error, results) => {
+              if (error) return reject(error);
+              else {
+                return resolve(results)
+              }
+            })
+        })
+      }
+    getItems = (name) => {
+      return new Promise((resolve, reject) => {
+        pool
+          .query("Select quantity,units from ingredients where name = '" + name + "'", (error, results) => {
+            if (error) return reject(error);
+            else {
+              return resolve(results)
+            }
+          })
+      })
+      
+    }
+    
+    async function compare(){
+      result1 = await tempArray();
+      console.log(result1.rows)
+      for ( var i = 0 ; i < result1.rowCount; i++){
+        result2 = await getItems(result1.rows[i].name);
+     
+        var num = result1.rows[i].count;
+       
+        
+        console.log("in inventory: "+result2.rows[0].quantity)
+        if (result2.rows[0].units === "pounds"){
+            num *= .125;
+        }
+    
+  
+        if (1 - (result2.rows[0].quantity /(parseFloat(result2.rows[0].quantity) + parseFloat(num))) < .1){
+            
+            array.push([result1.rows[i].name, num])
+        }
+      }
+  
+      res.send(array);
+    }
+    compare();
+    
+  })
+
+app.post( "/getIng", (req, res) => {
+  const name = req.body.name
+
+  pool
+  .query("SELECT ingredient FROM ingredient_pair_table WHERE food = '" + name  + "' ")
+  .then(query_res => {
+    res.send(query_res.rows);
+  });
+})
+
+app.post("/rmItem", (req,res) => {
+  const name = req.body.name
+  
+
+  pool
+    .query("UPDATE ingredients SET quantity = quantity - 1 WHERE name = '" + name + "' AND units = 'individual'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+  pool
+    .query("UPDATE ingredients SET quantity = quantity - .125 WHERE name = '" + name + "' AND units = 'pounds'")
+    .then(query_res => {
+      res.send(query_res.rows);
+    });
+})
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
@@ -320,4 +692,3 @@ app.listen(PORT, () => {
 
 
 // test for riley
-// test for riley2
