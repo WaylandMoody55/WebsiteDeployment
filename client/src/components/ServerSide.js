@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 
 // import Header from './ServerHeader' //NOT USED CAN BE DELETED
 import Search from './SearchBar'
@@ -26,6 +26,7 @@ function ServerSide(){
     const testName = "test";
     const testAmount = 1000000;
 
+    const [menuItemPrices, setMenuPrices] = useState(true)
     const [cart, setCart] = useState([]);
     const [show, setOrderNum] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -61,6 +62,33 @@ function ServerSide(){
                 console.log(err.messeage);
             }
     }
+    // async function getMenuItemPrices() {
+    //     try{
+    //         const res = await fetch("/getMenuItemPrices",{
+    //         method: "get",
+    //         mode: "cors",
+    //         headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": "token-value",
+    //                 },
+    //         });
+            
+    //         if(!res.ok){
+    //         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+    //             throw new Error(message);
+    //         }
+
+    //         const data = await res.json()
+    //         // console.log(data)
+    //         setMenuPrices(data)
+    //         console.log(menuItemPrices)
+            
+            
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //     }
+    // }
 
     async function getServerName() {
         const postData = {
@@ -237,6 +265,7 @@ function ServerSide(){
 
 
     }
+
     // async function Oinsert(price){
         
     //     const postData = {
@@ -467,11 +496,17 @@ function ServerSide(){
     };
 
     useEffect(()=>{
+            // getMenuItemPrices();
             getNewItems();
             getSeasonalItems();
             getServerName();
             orderNumber();
     },[])
+
+    if (!menuItemPrices) {
+        return <div>Loading...</div>
+      }
+    
     //This is where you would get the list of all the items and prices
     return(
     <>
@@ -520,7 +555,7 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${Math.abs(totalAmount.toFixed(2))}</h2>
+            <label  style={styles.amnt}>Total amount: ${Math.abs(totalAmount.toFixed(2))}</label>
 
             <div>
                 { totalAmount !== 0 ? <div>
@@ -550,7 +585,7 @@ function ServerSide(){
                 */}
                 {/* <Burgers function={addToCart}/> */}
                 <div style = {styles.space}>Burgers</div>
-                <Button style = {styles.catag} name="classicBurger" value = "6.49" onClick={e => addToCart(e.target.name,e.target.value)}>
+                <Button style = {styles.catag} name="classicBurger" value = "6.5"  onClick={e => addToCart(e.target.name,e.target.value)}>
                     Classic Burger
                 </Button>
                 <Button style = {styles.catag} name="cheeseBurger" value = "6.99" onClick={e => addToCart(e.target.name,e.target.value)}>
@@ -657,10 +692,11 @@ const styles = {
         width: '400px'
     },
     amnt:{
-        marginLeft: '55px'
+        marginLeft: '55px',
+        fontWeight: 'bold',
+        fontSize: '30px',
     },
     catg:{
-        backgroundColor: '#eee',
         padding: '5px 5px 5px 5px',
         textAlign: 'center',
         fontWeight: 'bold',

@@ -12,6 +12,7 @@ import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
 import NewItems from './popups/NewItems';
+
 // import Modal from 'react-bootstrap/Modal';
 import { GoogleMap, useJsApiLoader, LoadScript, useLoadScript } from '@react-google-maps/api';
 
@@ -35,6 +36,7 @@ function CustomerSide(){
 
     //State Variables(need one state and one to translate)
     const[newLang, setNewLang] = useState("EN")
+    const[flagLang, setFlagLang] = useState("EN");
     const[counter, setCounter] = useState(0);
     //Old Variables
     const[ogtext, setOGText] = useState("something to translate") //what is displayed
@@ -127,7 +129,13 @@ function CustomerSide(){
         setNewLang(event.target.value);
       };
       
+      
     
+    async function translate(){
+        setFlagLang(newLang);
+        translateCustomerSide();
+    }
+
     async function translateCustomerSide(){
         //forceUpdate();
         changeLanguage(newLang,reqCartText,setCartText);
@@ -153,6 +161,7 @@ function CustomerSide(){
 
     
     const [orderNum, setOrderNum] = useState(0);
+
     const serverName = "Jane Doe";
     let today = new Date();
     let day = ""
@@ -243,95 +252,134 @@ function CustomerSide(){
         setTotalAmount(0);
     };
 
-    async function Oinsert(price){
-        
-        const postData = {
-            onum: orderNum,
-            price: price,
-            date: date
-        };
-            
-        try{
-            const res = await fetch("/updateO",{
-            method: "post",
-            mode: "cors",
-            headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": "token-value",
-                    },
-                body: JSON.stringify(postData),
-            });
-            
-            if(!res.ok){
-            const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
-            }
-
-            const data = await res.json()
-            console.log(data)
-            
-        }
-        catch(err){
-            console.log(err.message);
-        }
-    }
-
-    async function OPTitem(item){ //this is the actual querying
-        
-        const postData = {
-            onum: orderNum,
-            oitem: item,
-            date: date
-
-            
-        };
-            
-        try{
-            const res = await fetch("/updateOPT",{
-            method: "post",
-            mode: "cors",
-            headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": "token-value",
-                    },
-                body: JSON.stringify(postData),
-            });
-            
-            if(!res.ok){
-            const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
-            }
-            const data = await res.json()
-            console.log(data)
-            
-        }
-        catch(err){
-            console.log(err.message);
-        }
-    }
-
-    function fillOPT(){
+    // updated way to send order that fixes race issues
+    async function sendOrder(price) {
+        var itemArray = new Array()
         cart.map(item => {
             for (let i = 0; i < item.quantity; i++){
                 console.log(item.name);
-                OPTitem(item.name);
+                itemArray.push(item.name)
             }
-        })
-    };
+            })
+            console.log(itemArray)
+        const postData = {
+            onum: orderNum, 
+            price: price,
+            date: date,
+            itemlist: itemArray
+        }
+
+        try{
+            const res = await fetch("/sendOrder",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
 
 
-
-
-    function fillO(){
-        Oinsert(totalAmount);
     }
-    async function processOrder(){
-        fillOPT();
-        //something bad happens
-        fillO();
 
-
+    // async function Oinsert(price){
         
+    //     const postData = {
+    //         onum: orderNum,
+    //         price: price,
+    //         date: date
+    //     };
+            
+    //     try{
+    //         const res = await fetch("/updateO",{
+    //         method: "post",
+    //         mode: "cors",
+    //         headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": "token-value",
+    //                 },
+    //             body: JSON.stringify(postData),
+    //         });
+            
+    //         if(!res.ok){
+    //         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+    //             throw new Error(message);
+    //         }
+
+    //         const data = await res.json()
+    //         console.log(data)
+            
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //     }
+    // }
+
+    // async function OPTitem(item){
+        
+    //     const postData = {
+    //         onum: orderNum,
+    //         oitem: item,
+    //         date: date
+
+            
+    //     };
+            
+    //     try{
+    //         const res = await fetch("/updateOPT",{
+    //         method: "post",
+    //         mode: "cors",
+    //         headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": "token-value",
+    //                 },
+    //             body: JSON.stringify(postData),
+    //         });
+            
+    //         if(!res.ok){
+    //         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+    //             throw new Error(message);
+    //         }
+    //         const data = await res.json()
+    //         console.log(data)
+            
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //     }
+    // }
+
+    // function fillOPT(){
+    //     cart.map(item => {
+    //         for (let i = 0; i < item.quantity; i++){
+    //             console.log(item.name);
+    //             OPTitem(item.name);
+    //         }
+    //     })
+    // };
+
+    // function fillO(){
+    //     Oinsert(totalAmount);
+    // }
+    async function processOrder(){
+        // fillOPT();
+        // //something bad happens
+        // fillO();
+        sendOrder(totalAmount)
         clear();
         orderNumber();
         orderNumber();
@@ -396,6 +444,7 @@ function CustomerSide(){
 
     //This is where you would get the list of all the items and prices
     return(
+        
     <>
         <div className="wrapper">
             
@@ -475,7 +524,7 @@ function CustomerSide(){
                     <option value="CY">Welsh</option>
                     <option value="XH">Xhosa</option>
                 </select>
-            <Button variant="primary" onClick={() => translateCustomerSide()}>
+            <Button variant="primary" onClick={() => translate()}>
                 Translate
             </Button>
             <Button variant="primary" onClick={() => window.location.reload(false)}>
@@ -518,7 +567,7 @@ function CustomerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>{totalAmountText}: ${totalAmount.toFixed(2)}</h2>
+            <h2 className='px-2 text-grey' style={styles.amnt}>{totalAmountText}: ${totalAmount.toFixed(2)}</h2>
 
             <div>
                 { totalAmount !== 0 ? <div>
@@ -537,21 +586,25 @@ function CustomerSide(){
         {/* End of Cart */}
             
             <div className="box5">
-                <Burgers function={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Chicken function={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Desserts function ={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Beverages function ={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Salads function = {addToCart} translate={changeLanguage} language = {newLang}/>
-                <Add function={addToCart}  translate={changeLanguage} language = {newLang}/>
+                
+                <Burgers function={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Chicken function={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Desserts function ={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Beverages function ={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Salads function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Add function={addToCart}  translate={changeLanguage} language = {flagLang}/>
+                
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29"  onClick={e => addToCart(e.target.name,e.target.value,comboChargeText)}>
                     {comboChargeText}
                 </Button>
-                <NewItems function = {addToCart} translate={changeLanguage} language = {newLang}/>
-                <Seasonal function = {addToCart} translate={changeLanguage} language = {newLang}/>
+                
+                <NewItems function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Seasonal function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+            
 
 
 
-                <h3>{currentLocationText}: </h3>
+                <h3 style={styles.s}>{currentLocationText}: </h3>
 
                 <GoogleMap
                 mapContainerStyle={containerStyle}
@@ -590,10 +643,10 @@ const styles = {
         width: '400px'
     },
     amnt:{
-        marginLeft: '55px'
+        marginLeft: '55px',
     },
     catg:{
-        backgroundColor: '#eee',
+        // backgroundColor: '#eee',
         padding: '5px 5px 5px 5px',
         textAlign: 'center',
         fontWeight: 'bold',
@@ -604,9 +657,9 @@ const styles = {
         marginLeft: '5px',
     },
     name:{
-         marginTop: '2px',
+        marginTop: '2px',
         fontSize: '24px',
         fontWeight: 'bold',
         marginLeft: '130px',
-    },
+    }
 };

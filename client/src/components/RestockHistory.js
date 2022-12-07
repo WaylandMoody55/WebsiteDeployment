@@ -68,30 +68,30 @@ function RestockHistory(){
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style={styles.headFoot}>
                     <Modal.Title>Restock History</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={styles.back}>
                         <div class ="px-2 flex justify-center items-center space-x-2">
-                            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-5 px-2 space-x-2 border-spacing-x-50">
-                                <thead>
-                                    <tr>
-                                    <th>Restock ID</th>
-                                    <th>Order Date</th>
-                                    <th>Ingredient</th>
-                                    <th>Vendor</th>
-                                    <th>Quantity</th>
+                            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-5 px-2 space-x-2 border-spacing-x-50 bg-gray-500">
+                                <thead class="bg-gray-500">
+                                    <tr class="bg-gray-500">
+                                    <th class="bg-gray-500">Restock ID</th>
+                                    <th class="bg-gray-500">Order Date</th>
+                                    <th class="bg-gray-500">Ingredient</th>
+                                    <th class="bg-gray-500">Vendor</th>
+                                    <th class="bg-gray-500">Quantity</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="bg-gray-500">
                                     {restockHistory.map(item => {
                                     return (
-                                        <tr>
-                                        <td>{item.restockid}</td>
-                                        <td>{item.orderdate}</td>
-                                        <td>{item.item}</td>
-                                        <td>{item.vendor}</td>
-                                        <td>{item.amount}</td>
+                                        <tr class="bg-gray-500">
+                                        <td class="bg-gray-500">{item.restockid}</td>
+                                        <td class="bg-gray-500">{item.orderdate}</td>
+                                        <td class="bg-gray-500">{item.item}</td>
+                                        <td class="bg-gray-500">{item.vendor}</td>
+                                        <td class="bg-gray-500">{item.amount}</td>
                                         </tr>
                                     );
                                     })}
@@ -99,8 +99,8 @@ function RestockHistory(){
                             </table>
                         </div>
                     </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Modal.Footer style={styles.headFoot}>
+                    <Button variant="secondary" onClick={handleClose} style={styles.close}>
                         Close
                     </Button>
                     </Modal.Footer>
@@ -112,3 +112,18 @@ function RestockHistory(){
 }
 
 export default RestockHistory;
+
+const styles = {
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    }
+};

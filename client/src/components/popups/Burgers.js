@@ -9,7 +9,7 @@ import pattyMelt from './project3_foodpics/pattymelt.jpg'
 
 function Burgers(props) {
   const [show, setShow] = useState(false);
-
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -67,11 +67,11 @@ function Burgers(props) {
         {buttonText}
      </Button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+      <Modal show={show} onHide={handleClose} >
+        <Modal.Header closeButton style = {styles.headFoot}>
           <Modal.Title>{modalTitleText}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{selectText}:
+        <Modal.Body style = {styles.back}>{selectText}:
         <>
         <div class="relative">
             <img class="scale-75" src={burger} style = {styles.img} alt="burger"></img>
@@ -103,8 +103,8 @@ function Burgers(props) {
         </div>
         </>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer style = {styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style = {styles.close}>
             {closeText}
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
@@ -136,5 +136,17 @@ const styles = {
     },
     img:{
 
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };
