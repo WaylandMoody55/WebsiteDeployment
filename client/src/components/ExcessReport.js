@@ -104,6 +104,7 @@ function ExcessReport(){
 
     return(
         <>
+        <div className="login">
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
             <Button variant="danger" href="/ManagerSide">
                     Back
@@ -137,6 +138,7 @@ function ExcessReport(){
                     })}
                 </tbody>
             </table>
+        </div>
         </div>
         </>
     );
