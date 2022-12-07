@@ -270,7 +270,7 @@ function CustomerSide(){
         }
 
         try{
-            const res = await fetch("/sendOrder",{
+            const res = await fetch("https://websitebackendtest.onrender.com/sendOrder",{
             method: "post",
             mode: "cors",
             headers: {

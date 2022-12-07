@@ -95,7 +95,7 @@ function ServerSide(){
             employeeID: serverID
         };
         try{
-            const res = await fetch("/getEmployeeName",{
+            const res = await fetch("https://websitebackendtest.onrender.com/getEmployeeName",{
             method: "post",
             mode: "cors",
             headers: {
@@ -123,7 +123,7 @@ function ServerSide(){
 
     async function getNewItems(){
         try {
-          const res = await fetch("/newItems", {
+          const res = await fetch("https://websitebackendtest.onrender.com/newItems", {
             method: "post",
             mode : "cors",
             // cache: 'no-cache',
@@ -149,7 +149,7 @@ function ServerSide(){
 
       async function getSeasonalItems(){
         try {
-          const res = await fetch("/seasonalItems", {
+          const res = await fetch("https://websitebackendtest.onrender.com/seasonalItems", {
             method: "post",
             mode : "cors",
             // cache: 'no-cache',
@@ -240,7 +240,7 @@ function ServerSide(){
         }
 
         try{
-            const res = await fetch("/sendOrder",{
+            const res = await fetch("https://websitebackendtest.onrender.com/sendOrder",{
             method: "post",
             mode: "cors",
             headers: {
