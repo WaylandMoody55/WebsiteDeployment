@@ -42,7 +42,7 @@ function RestockReport(){
 
     useEffect(() => {
         getRestockReportArray();
-    })
+    }, [])
 
     return(
         <>
@@ -52,21 +52,21 @@ function RestockReport(){
             </Button>
         </div>
         <div class ="px-5 flex justify-center items-center">
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Ingredient Name</th>
-                    <th>Quantity</th>
-                    <th>Units</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class="bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Ingredient Name</th>
+                    <th class="bg-gray-500">Quantity</th>
+                    <th class="bg-gray-500">Units</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-500">
                     {restockReportArray.map(item => {
                     return (
-                        <tr>
-                        <td>{item.name}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.units}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.name}</td>
+                        <td class="bg-gray-500">{item.quantity}</td>
+                        <td class="bg-gray-500">{item.units}</td>
                         </tr>
                     );
                     })}

@@ -39,33 +39,53 @@ function Seasonal(props) {
 
   useEffect(()=>{
     getSeasonalItems();
-  })
+  }, [])
+
+  //Translate Stuff
+  const[buttonText, setButtonText] = useState("Seasonal Items");
+  let reqButtonText = "Seasonal Items";
+
+  const[modalTitleText, setModalTitleText] = useState("Seasonal Options");
+  let reqModalTitleText = "Seasonal Options";
+
+  const[selectText, setSelectText] = useState("Select");
+  let reqSelectText = "Select";
+
+  const[closeText, setCloseText] = useState("Close");
+  let reqCloseText = "Close";
+
+  if(props.language != "EN"){
+    props.translate(props.language,reqButtonText,setButtonText);
+    props.translate(props.language,reqModalTitleText,setModalTitleText);
+    props.translate(props.language,reqSelectText,setSelectText);
+    props.translate(props.language,reqCloseText,setCloseText);
+  }
 
   return (
     <>
       <Button style = {styles.catagory} onClick={handleShow}>
-        Seasonal Items
+        {buttonText}
      </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Seasonal Options</Modal.Title>
+        <Modal.Header closeButton style={styles.headFoot}>
+          <Modal.Title>{buttonText}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:
+        <Modal.Body style={styles.back}>{selectText}:
           {seasonal.map(item => {
             return(
               <>
               <div class = "relative py-2">
-                <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value)}>{item.name} </button>
+                <button class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name = {item.name} value = {item.price} onClick={e => props.function(e.target.name,e.target.value,item.name)}>{item.name} </button>
               </div>
               </>
             );
           })
           }
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+        <Modal.Footer style={styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style={styles.close}>
+            {closeText}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -84,5 +104,17 @@ const styles = {
         height: '200px',
         marginLeft: '20px',
         marginTop: '20px',
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };

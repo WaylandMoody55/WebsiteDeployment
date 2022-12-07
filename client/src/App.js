@@ -11,13 +11,31 @@ import PairSales from './components/PairSales';
 import SalesReport from './components/SalesReport';
 import CustomerSide from './components/CustomerSide';
 
+import { createContext } from "react";
+import { useState } from 'react';
+import ReactSwitch from 'react-switch';
+
+export const ThemeContext = createContext(null);
+
 function App() {
+  const [theme, setTheme] = useState("light")
+
+  const toggleTheme = () => {
+    setTheme((curr) => (curr === "light" ? "dark" : "light"));
+  }
+
   return (
-    <div className="App">
+    <ThemeContext.Provider value={{theme, toggleTheme}}>
+  
+    <div className="App" id={theme}>
+    <div className="switch">
+      <label>{theme === "light" ? "Light Mode" : "Dark Mode"}</label>
+    <ReactSwitch onChange={toggleTheme} checked={theme==="dark"} />
+    </div>
       <>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<CustomerSide/>}/>
+            <Route path='/' element={<Login/>}/>
             <Route path = '/ManagerSide' element ={<ManagerSide/>}/>
             <Route path='/Inventory' element={<Inventory/>}/>
             <Route path='/ViewEditMenu' element={<ViewEditMenu/>}/>
@@ -31,9 +49,10 @@ function App() {
           </Routes>
         </BrowserRouter>
       </>
-
     </div>
+    </ThemeContext.Provider>
   );
+  
 }
 
 export default App;

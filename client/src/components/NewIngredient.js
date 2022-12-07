@@ -58,10 +58,10 @@ function NewIngredient(){
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style={styles.headFoot}>
                     <Modal.Title>Add New Ingredient</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={styles.back}>
                         <form onSubmit={(e) =>{
                             handleClose();
                             e.preventDefault();
@@ -70,7 +70,7 @@ function NewIngredient(){
                         id="newIngredient" className="w-full max-w-sm">
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
+                                    <label className="block white font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
                                         New Ingredient Name
                                     </label>
                                 </div>
@@ -80,7 +80,7 @@ function NewIngredient(){
                             </div>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="quantity">
+                                    <label className="block white font-bold md:text-right mb-1 md:mb-0 pr-4" for="quantity">
                                         Quantity
                                     </label>
                                 </div>
@@ -90,7 +90,7 @@ function NewIngredient(){
                             </div>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="individualPrice">
+                                    <label className="block white font-bold md:text-right mb-1 md:mb-0 pr-4" for="individualPrice">
                                         Individual Price
                                     </label>
                                 </div>
@@ -100,7 +100,7 @@ function NewIngredient(){
                             </div>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="units">
+                                    <label className="block white font-bold md:text-right mb-1 md:mb-0 pr-4" for="units">
                                         Units
                                     </label>
                                 </div>
@@ -110,7 +110,7 @@ function NewIngredient(){
                             </div>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="units">
+                                    <label className="block white font-bold md:text-right mb-1 md:mb-0 pr-4" for="units">
                                         Storage
                                     </label>
                                 </div>
@@ -120,8 +120,8 @@ function NewIngredient(){
                             </div>
                         </form>
                     </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Modal.Footer style={styles.headFoot}>
+                    <Button variant="secondary" onClick={handleClose} style={styles.close}>
                         Close
                     </Button>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" form = "newIngredient">Add New Ingredient</button>
@@ -133,3 +133,18 @@ function NewIngredient(){
 }
 
 export default NewIngredient;
+
+const styles = {
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    }
+};

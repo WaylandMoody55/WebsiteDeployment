@@ -93,7 +93,7 @@ function ManagerSide(){
     return(
         <>
         <div class = "px-5 py-2">
-            <Button variant="danger" href="/">
+            <Button variant="danger" href="/Login">
                 Logout
             </Button>
         </div>
@@ -104,17 +104,17 @@ function ManagerSide(){
         
         </div> */}
         <div class ="px-5" style={{width: 'auto'}}>
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Order Number</th>
-                    <th>Date</th>
-                    <th>Final Price</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class = "bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Order Number</th>
+                    <th class="bg-gray-500">Date</th>
+                    <th class="bg-gray-500">Final Price</th>
                     </tr>
                 </thead>
         </table>
-            <TableScrollbar height="300px" >
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
+            <TableScrollbar height="300px">
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500" id = 't'>
                 {/* <thead class = "sticky top-0">
                     <tr>
                     <th>Order Number</th>
@@ -122,13 +122,13 @@ function ManagerSide(){
                     <th>Final Price</th>
                     </tr>
                 </thead> */}
-                <tbody>
+                <tbody class="bg-gray-500">
                     {orderHistory.map(item => {
                     return (
-                        <tr>
-                        <td>{item.ordernumber}</td>
-                        <td>{item.date}</td>
-                        <td>{item.finalprice}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.ordernumber}</td>
+                        <td class="bg-gray-500">{item.date}</td>
+                        <td class="bg-gray-500">{item.finalprice}</td>
                         </tr>
                     );
                     })}

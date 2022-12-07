@@ -1,0 +1,141 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="NAME">import</span><span class="WHIT"> </span><span class="NAME">Button</span><span class="WHIT"> </span><span class="NAME">from</span><span class="WHIT"> </span><span class="STRN">"react-bootstrap/Button"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="NAME">import</span><span class="WHIT"> </span><span class="NAME">logo</span><span class="WHIT">  </span><span class="NAME">from</span><span class="WHIT"> </span><span class="STRN">'./Images/logo.png'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  3</span> 
+<span class='line'>  4</span> </span><span class="NAME">import</span><span class="WHIT"> </span><span class="NAME">React</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">useRef</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="NAME">from</span><span class="WHIT"> </span><span class="STRN">'react'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> 
+<span class='line'>  6</span> </span><span class="NAME">import</span><span class="WHIT"> </span><span class="NAME">jwt_decode</span><span class="WHIT"> </span><span class="NAME">from</span><span class="WHIT"> </span><span class="STRN">"jwt-decode"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="NAME">import</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">useEffect</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">useState</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="NAME">from</span><span class="WHIT"> </span><span class="STRN">'react'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  8</span> 
+<span class='line'>  9</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exportLoginNum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 10</span> 
+<span class='line'> 11</span> </span><span class="COMM">/**
+<span class='line'> 12</span>  * Test text for Login, notice how it doesn't document the loginNum variable
+<span class='line'> 13</span>  * 
+<span class='line'> 14</span>  */</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Login</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 17</span>      * Allows you to use value from HTML
+<span class='line'> 18</span>      * 
+<span class='line'> 19</span>      */</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">    </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">loginNum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">useRef</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">    </span><span class="COMM">// function for handling login </span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">    </span><span class="NAME">async</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">handleLogin</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">loginNum.current.value</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">        </span><span class="NAME">exportLoginNum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">loginNum.current.value</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">        </span><span class="NAME">sessionStorage.setItem</span><span class="PUNC">(</span><span class="STRN">'loginNum'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">loginNum.current.value</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">exportLoginNum</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">        </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">postData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">          </span><span class="NAME">title</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">loginNum.current.value</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">    
+<span class='line'> 31</span>         </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">          </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">await</span><span class="WHIT"> </span><span class="NAME">fetch</span><span class="PUNC">(</span><span class="STRN">"/login"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">            </span><span class="NAME">method</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"post"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">            </span><span class="NAME">mode</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"cors"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">            </span><span class="COMM">// cache: 'no-cache',</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">            </span><span class="NAME">headers</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">              </span><span class="STRN">"Content-Type"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"application/json"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">              </span><span class="STRN">"x-access-token"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"token-value"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">              </span><span class="COMM">// "Accept": "application/json"</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">            </span><span class="NAME">body</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">postData</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> 
+<span class='line'> 44</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">res.ok</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">            </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">message</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="TOKN">`</span><span class="NAME">An</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="NAME">has</span><span class="WHIT"> </span><span class="NAME">occured</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">{</span><span class="NAME">res.status</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">{</span><span class="NAME">res.statusText</span><span class="PUNC">}</span><span class="TOKN">`</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">            </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 48</span> 
+<span class='line'> 49</span> </span><span class="WHIT">          </span><span class="COMM">// grabs data from server response </span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">          </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">await</span><span class="WHIT"> </span><span class="NAME">res.json</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">          </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 52</span> 
+<span class='line'> 53</span> </span><span class="WHIT">          </span><span class="COMM">// check if it is a manager or server </span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data.ismanager</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">            </span><span class="NAME">window.location.href</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://localhost:3000/ManagerSide'</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 57</span> 
+<span class='line'> 58</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data.ismanager</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">            </span><span class="NAME">window.location.href</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://localhost:3000/ServerSide'</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 62</span> 
+<span class='line'> 63</span> </span><span class="WHIT">    </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">err.messeage</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 67</span> 
+<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="COMM">//Below is OAuth code</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">    
+<span class='line'> 70</span>     </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">user</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">setUser</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">useState</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> 
+<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 73</span>      * @function handleCallbackResponse
+<span class='line'> 74</span>      */</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">handleCallbackResponse</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Encoded JWT ID token = "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">response.credential</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">userObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">jwt_decode</span><span class="PUNC">(</span><span class="NAME">response.credential</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">userObj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">      </span><span class="NAME">setUser</span><span class="PUNC">(</span><span class="NAME">userObj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">      </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="STRN">"signInDiv"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">hidden</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">  
+<span class='line'> 83</span>     
+<span class='line'> 84</span>     </span><span class="NAME">useEffect</span><span class="PUNC">(</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="PUNC">></span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">      </span><span class="COMM">/* global google */</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">      </span><span class="NAME">google.accounts.id.initialize</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">        </span><span class="NAME">client_id</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"362665886730-fnk59acdlntvhdi3or07tajtjoe27qi4.apps.googleusercontent.com"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">        </span><span class="NAME">callback</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">handleCallbackResponse</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">  
+<span class='line'> 91</span>       </span><span class="NAME">google.accounts.id.renderButton</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">        </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="STRN">"signInDiv"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">          </span><span class="NAME">theme</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"outline"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">          </span><span class="NAME">size</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"large"</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">      </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">  
+<span class='line'> 99</span>     </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">    
+<span class='line'>101</span> 
+<span class='line'>102</span>     </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">        </span><span class="PUNC">&lt;</span><span class="NAME">div</span><span class="WHIT"> </span><span class="NAME">class</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"flex flex-wrap justify-center space-x-5 px-5 py-5"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">          </span><span class="PUNC">&lt;</span><span class="NAME">div</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"signInDiv"</span><span class="PUNC">></span><span class="PUNC">&lt;</span><span class="REGX">/div>
+<span class='line'>105</span>             &lt;img src={logo} alt="Logo" /</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">            </span><span class="PUNC">&lt;</span><span class="NAME">form</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">=</span><span class="STRN">"login"</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"w-full max-w-sm"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">            </span><span class="PUNC">&lt;</span><span class="NAME">div</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"md:flex md:items-center mb-6"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="NAME">div</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"md:w-1/3"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="NAME">label</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">                    </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">                    </span><span class="KEYW">for</span><span class="PUNC">=</span><span class="STRN">"name"</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">                </span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">                    </span><span class="NAME">Enter</span><span class="WHIT"> </span><span class="NAME">Login</span><span class="WHIT"> </span><span class="NAME">Id</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="REGX">/label>
+<span class='line'>115</span>                 &lt;/</span><span class="NAME">div</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="NAME">div</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"md:w-2/3"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="NAME">input</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">                    </span><span class="NAME">className</span><span class="PUNC">=</span><span class="STRN">"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">                    </span><span class="NAME">id</span><span class="PUNC">=</span><span class="STRN">"loginVal"</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">                    </span><span class="NAME">type</span><span class="PUNC">=</span><span class="STRN">"text"</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">                    </span><span class="NAME">defaultValue</span><span class="PUNC">=</span><span class="STRN">"100"</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">                    </span><span class="NAME">placeholder</span><span class="PUNC">=</span><span class="STRN">""</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">                    </span><span class="NAME">ref</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">loginNum</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">                </span><span class="REGX">/>
+<span class='line'>125</span>                 &lt;/</span><span class="NAME">div</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">            </span><span class="PUNC">&lt;</span><span class="REGX">/div>
+<span class='line'>127</span>             &lt;div class = "flex flex-wrap justify-center space-x-5">
+<span class='line'>128</span>                 &lt;Button variant="primary" onClick={handleLogin}>
+<span class='line'>129</span>                                     Login
+<span class='line'>130</span>                 &lt;/</span><span class="NAME">Button</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="NAME">Button</span><span class="WHIT"> </span><span class="NAME">variant</span><span class="PUNC">=</span><span class="STRN">"primary"</span><span class="WHIT"> </span><span class="NAME">href</span><span class="PUNC">=</span><span class="STRN">"/ManagerSide"</span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">                                    </span><span class="NAME">Manager</span><span class="WHIT"> </span><span class="NAME">Override</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">                </span><span class="PUNC">&lt;</span><span class="REGX">/Button>
+<span class='line'>134</span>                 &lt;Button variant="primary" href="/</span><span class="NAME">CustomerSide</span><span class="TOKN"></span></pre></body></html>
