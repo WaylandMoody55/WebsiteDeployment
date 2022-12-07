@@ -356,6 +356,14 @@ app.post("/getEmployeeName", (req,res) => {
         res.send(query_res.rows[0]);
       });
 })
+app.get("/getMenuItemPrices", (req,res) => {
+  pool
+      .query("SELECT name, price FROM foodbev")
+      .then(query_res => {
+        console.log(query_res.rows)
+        res.send(query_res.rows);
+      });
+})
 
 app.post("/sendOrder", (req, res) => {
   const onum = req.body.onum;

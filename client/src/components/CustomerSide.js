@@ -117,89 +117,134 @@ function CustomerSide(){
         setTotalAmount(0);
     };
 
-    async function Oinsert(price){
-        
-        const postData = {
-            onum: orderNum,
-            price: price,
-            date: date
-        };
-            
-        try{
-            const res = await fetch("/updateO",{
-            method: "post",
-            mode: "cors",
-            headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": "token-value",
-                    },
-                body: JSON.stringify(postData),
-            });
-            
-            if(!res.ok){
-            const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
-            }
-
-            const data = await res.json()
-            console.log(data)
-            
-        }
-        catch(err){
-            console.log(err.message);
-        }
-    }
-
-    async function OPTitem(item){
-        
-        const postData = {
-            onum: orderNum,
-            oitem: item,
-            date: date
-
-            
-        };
-            
-        try{
-            const res = await fetch("/updateOPT",{
-            method: "post",
-            mode: "cors",
-            headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": "token-value",
-                    },
-                body: JSON.stringify(postData),
-            });
-            
-            if(!res.ok){
-            const message = `An error has occured: ${res.status} - ${res.statusText}`;
-                throw new Error(message);
-            }
-            const data = await res.json()
-            console.log(data)
-            
-        }
-        catch(err){
-            console.log(err.message);
-        }
-    }
-
-    function fillOPT(){
+    // updated way to send order that fixes race issues
+    async function sendOrder(price) {
+        var itemArray = new Array()
         cart.map(item => {
             for (let i = 0; i < item.quantity; i++){
                 console.log(item.name);
-                OPTitem(item.name);
+                itemArray.push(item.name)
             }
-        })
-    };
+            })
+            console.log(itemArray)
+        const postData = {
+            onum: orderNum, 
+            price: price,
+            date: date,
+            itemlist: itemArray
+        }
 
-    function fillO(){
-        Oinsert(totalAmount);
+        try{
+            const res = await fetch("/sendOrder",{
+            method: "post",
+            mode: "cors",
+            headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": "token-value",
+                    },
+                body: JSON.stringify(postData),
+            });
+            
+            if(!res.ok){
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+                throw new Error(message);
+            }
+
+            const data = await res.json()
+            console.log(data)
+            
+        }
+        catch(err){
+            console.log(err.message);
+        }
+
+
     }
+
+    // async function Oinsert(price){
+        
+    //     const postData = {
+    //         onum: orderNum,
+    //         price: price,
+    //         date: date
+    //     };
+            
+    //     try{
+    //         const res = await fetch("/updateO",{
+    //         method: "post",
+    //         mode: "cors",
+    //         headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": "token-value",
+    //                 },
+    //             body: JSON.stringify(postData),
+    //         });
+            
+    //         if(!res.ok){
+    //         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+    //             throw new Error(message);
+    //         }
+
+    //         const data = await res.json()
+    //         console.log(data)
+            
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //     }
+    // }
+
+    // async function OPTitem(item){
+        
+    //     const postData = {
+    //         onum: orderNum,
+    //         oitem: item,
+    //         date: date
+
+            
+    //     };
+            
+    //     try{
+    //         const res = await fetch("/updateOPT",{
+    //         method: "post",
+    //         mode: "cors",
+    //         headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": "token-value",
+    //                 },
+    //             body: JSON.stringify(postData),
+    //         });
+            
+    //         if(!res.ok){
+    //         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+    //             throw new Error(message);
+    //         }
+    //         const data = await res.json()
+    //         console.log(data)
+            
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //     }
+    // }
+
+    // function fillOPT(){
+    //     cart.map(item => {
+    //         for (let i = 0; i < item.quantity; i++){
+    //             console.log(item.name);
+    //             OPTitem(item.name);
+    //         }
+    //     })
+    // };
+
+    // function fillO(){
+    //     Oinsert(totalAmount);
+    // }
     async function processOrder(){
-        fillOPT();
-        //something bad happens
-        fillO();
+        // fillOPT();
+        // //something bad happens
+        // fillO();
+        sendOrder(totalAmount)
         clear();
         orderNumber();
         orderNumber();
