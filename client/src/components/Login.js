@@ -178,9 +178,9 @@ function Login() {
                 <Button variant="primary" onClick={handleLogin}>
                                     Login
                 </Button>
-                <Button variant="primary" href="/ManagerSide">
+                {/* <Button variant="primary" href="/ManagerSide">
                                     Manager Override
-                </Button>
+                </Button> */}
                 <Button variant="primary" href="/CustomerSide">
                                     Customer UI
                 </Button>

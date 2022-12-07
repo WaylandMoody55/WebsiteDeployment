@@ -35,7 +35,7 @@ function App() {
       <>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<CustomerSide/>}/>
+            <Route path='/' element={<Login/>}/>
             <Route path = '/ManagerSide' element ={<ManagerSide/>}/>
             <Route path='/Inventory' element={<Inventory/>}/>
             <Route path='/ViewEditMenu' element={<ViewEditMenu/>}/>
