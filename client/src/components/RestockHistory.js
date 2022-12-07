@@ -57,6 +57,7 @@ function RestockHistory(){
 
     return(
         <>
+        
         <div className="width-90vm height-90vm">
         <Button variant="primary" onClick={handleShow}>
                     Restock History

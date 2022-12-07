@@ -3,6 +3,8 @@ import logo  from './Images/logo.png';
 
 import React, {useRef} from 'react';
 
+import './Format.css';
+
 import jwt_decode from "jwt-decode";
 import {useEffect, useState} from 'react';
 
@@ -149,8 +151,8 @@ function Login() {
     
 
     return (
-
-        <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
+      <div className="login">
+        <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5" >
           <div id = "signInDiv"></div>
             <img src={logo} alt="Logo" />
             <form id="login" className="w-full max-w-sm">
@@ -187,6 +189,7 @@ function Login() {
             </div>
             </form>
 
+        </div>
         </div>
       );
     }

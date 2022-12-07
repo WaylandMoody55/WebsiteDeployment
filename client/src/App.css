@@ -6,14 +6,12 @@
     background-color: white;
     text-decoration: black;
     color: black;
-    height: 100vh;
 }
 
 #dark {
     background-color: #181818;
     text-decoration: white;
     color: white;
-    height: 100vh;
 }
 
 #light .switch label{
@@ -24,7 +22,10 @@
     color: white;
 }
 
-
+#dark .login{
+    /* background-color: black; */
+    height: 100vh;
+}
 
 .switch{
     display: flex;

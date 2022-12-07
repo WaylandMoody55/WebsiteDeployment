@@ -49,6 +49,7 @@ function PairSales(){
 
     return(
         <>
+        <div className="login">
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
             <Button variant="danger" href="/ManagerSide">
                     Back
@@ -86,6 +87,7 @@ function PairSales(){
                     })}
                 </tbody>
             </table>
+        </div>
         </div>
         </>
     );
