@@ -12,6 +12,7 @@ import Seasonal from './popups/Seasonal';
 import Add from './popups/Add';
 import Beverages from './popups/Beverages';
 import NewItems from './popups/NewItems';
+
 // import Modal from 'react-bootstrap/Modal';
 import { GoogleMap, useJsApiLoader, LoadScript, useLoadScript } from '@react-google-maps/api';
 
@@ -35,7 +36,7 @@ function CustomerSide(){
 
     //State Variables(need one state and one to translate)
     const[newLang, setNewLang] = useState("EN")
-    const[flagLang, setFlagLang] = useState("EN")
+    const[flagLang, setFlagLang] = useState("EN");
     const[counter, setCounter] = useState(0);
     //Old Variables
     const[ogtext, setOGText] = useState("something to translate") //what is displayed
@@ -127,12 +128,14 @@ function CustomerSide(){
         console.log(event.target.value);
         setNewLang(event.target.value);
       };
-
-      async function translate () {
-        setFlagLang(newLang)
-        translateCustomerSide()
-      }
+      
+      
     
+    async function translate(){
+        setFlagLang(newLang);
+        translateCustomerSide();
+    }
+
     async function translateCustomerSide(){
         //forceUpdate();
         changeLanguage(newLang,reqCartText,setCartText);
@@ -158,6 +161,7 @@ function CustomerSide(){
 
     
     const [orderNum, setOrderNum] = useState(0);
+
     const serverName = "Jane Doe";
     let today = new Date();
     let day = ""
@@ -440,6 +444,7 @@ function CustomerSide(){
 
     //This is where you would get the list of all the items and prices
     return(
+        
     <>
         <div className="wrapper">
             
@@ -562,7 +567,7 @@ function CustomerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>{totalAmountText}: ${totalAmount.toFixed(2)}</h2>
+            <h2 className='px-2 text-grey' style={styles.amnt}>{totalAmountText}: ${totalAmount.toFixed(2)}</h2>
 
             <div>
                 { totalAmount !== 0 ? <div>
@@ -581,21 +586,25 @@ function CustomerSide(){
         {/* End of Cart */}
             
             <div className="box5">
+                
                 <Burgers function={addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Chicken function={addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Desserts function ={addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Beverages function ={addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Salads function = {addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Add function={addToCart}  translate={changeLanguage} language = {flagLang}/>
+                
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29"  onClick={e => addToCart(e.target.name,e.target.value,comboChargeText)}>
                     {comboChargeText}
                 </Button>
+                
                 <NewItems function = {addToCart} translate={changeLanguage} language = {flagLang}/>
                 <Seasonal function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+            
 
 
 
-                <h3>{currentLocationText}: </h3>
+                <h3 style={styles.s}>{currentLocationText}: </h3>
 
                 <GoogleMap
                 mapContainerStyle={containerStyle}
@@ -634,10 +643,10 @@ const styles = {
         width: '400px'
     },
     amnt:{
-        marginLeft: '55px'
+        marginLeft: '55px',
     },
     catg:{
-        backgroundColor: '#eee',
+        // backgroundColor: '#eee',
         padding: '5px 5px 5px 5px',
         textAlign: 'center',
         fontWeight: 'bold',
@@ -648,9 +657,9 @@ const styles = {
         marginLeft: '5px',
     },
     name:{
-         marginTop: '2px',
+        marginTop: '2px',
         fontSize: '24px',
         fontWeight: 'bold',
         marginLeft: '130px',
-    },
+    }
 };

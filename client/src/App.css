@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#light {
+    background-color: white;
+    text-decoration: black;
+    color: black;
+}
+
+#dark {
+    background-color: #181818;
+    text-decoration: white;
+    color: white;
+}
+
+#light .switch label{
+    color: black;
+}
+
+#dark .switch label{
+    color: white;
+}
+
+
+
+.switch{
+    display: flex;
+    width: 100vw;
+    height: 100px;
+    justify-content: left;
+    align-items: center;
+}
