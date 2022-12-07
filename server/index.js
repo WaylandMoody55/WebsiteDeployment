@@ -61,7 +61,7 @@ app.get("/orderNumber", (req, res) => {
 app.use(express.json())
 
 app.post("/pairSales", (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+  res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
   var nameArray = new Array()
   var rowDat = new Array()
   var minOrder = 0
@@ -602,7 +602,7 @@ app.post("/excessReport1", (req,res) => {
 */
 
 app.post("/excessReport", (req,res) => {
-    res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+    res.set('Access-Control-Allow-Origin', 'https://testlaunch.onrender.com' )
     const Tdate = req.body.Tdate;
     const Fdate = req.body.Fdate;
     //console.log(Fdate)

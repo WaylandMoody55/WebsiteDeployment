@@ -18,7 +18,7 @@ function PairSales(){
             ending: endingDate.current.value
           };
           try {
-          const res = await fetch("/pairSales", {
+          const res = await fetch("https://websitebackendtest.onrender.com/pairSales", {
             method: "post",
             mode : "cors",
             // cache: 'no-cache',

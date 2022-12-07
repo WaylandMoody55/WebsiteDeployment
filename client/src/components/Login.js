@@ -52,11 +52,11 @@ function Login() {
 
           // check if it is a manager or server 
           if (data.ismanager === true) {
-            window.location.href = 'https://testlaunch.onrender.com/ManagerSide'
+            window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
           }
 
           if (data.ismanager === false) {
-            window.location.href = 'https://testlaunch.onrender.com/ServerSide'
+            window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
           }
     }
 
@@ -74,7 +74,7 @@ function Login() {
         firstName: name
       };
       try{
-        const res = await fetch("/oauthLogin",{
+        const res = await fetch("https://websitebackendtest.onrender.com/oauthLogin",{
             method: "post",
             mode: "cors",
             headers: {
@@ -94,11 +94,11 @@ function Login() {
         console.log(data.ismanager)
 
         if (data.ismanager === true) {
-          window.location.href = 'https://testlaunch.onrender.com/ManagerSide'
+          window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
         }
 
         if (data.ismanager === false) {
-          window.location.href = 'https://testlaunch.onrender.com/ServerSide'
+          window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
         }
 
 

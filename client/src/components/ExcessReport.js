@@ -16,7 +16,7 @@ function ExcessReport(){
             };
 
             try {
-                const res = await fetch("/excessReport", {
+                const res = await fetch("https://websitebackendtest.onrender.com/excessReport", {
                     method: "post",
                     mode : "cors",
                     // cache: 'no-cache',

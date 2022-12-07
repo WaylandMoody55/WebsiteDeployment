@@ -73,7 +73,7 @@ function RestockForm(){
         console.log("sending q: " + quantity.current.value)
 
         try {
-            const res = await fetch("/updateRestock", {
+            const res = await fetch("https://websitebackendtest.onrender.com/updateRestock", {
                 method: "post",
                 mode : "cors",
                 // cache: 'no-cache',

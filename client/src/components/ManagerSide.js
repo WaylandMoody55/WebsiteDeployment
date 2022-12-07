@@ -58,7 +58,7 @@ function ManagerSide(){
             employeeID: managerID
         };
         try{
-            const res = await fetch("/getEmployeeName",{
+            const res = await fetch("https://websitebackendtest.onrender.com/getEmployeeName",{
             method: "post",
             mode: "cors",
             headers: {
