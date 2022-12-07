@@ -35,6 +35,7 @@ function CustomerSide(){
 
     //State Variables(need one state and one to translate)
     const[newLang, setNewLang] = useState("EN")
+    const[flagLang, setFlagLang] = useState("EN")
     const[counter, setCounter] = useState(0);
     //Old Variables
     const[ogtext, setOGText] = useState("something to translate") //what is displayed
@@ -126,7 +127,11 @@ function CustomerSide(){
         console.log(event.target.value);
         setNewLang(event.target.value);
       };
-      
+
+      async function translate () {
+        setFlagLang(newLang)
+        translateCustomerSide()
+      }
     
     async function translateCustomerSide(){
         //forceUpdate();
@@ -514,7 +519,7 @@ function CustomerSide(){
                     <option value="CY">Welsh</option>
                     <option value="XH">Xhosa</option>
                 </select>
-            <Button variant="primary" onClick={() => translateCustomerSide()}>
+            <Button variant="primary" onClick={() => translate()}>
                 Translate
             </Button>
             <Button variant="primary" onClick={() => window.location.reload(false)}>
@@ -576,17 +581,17 @@ function CustomerSide(){
         {/* End of Cart */}
             
             <div className="box5">
-                <Burgers function={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Chicken function={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Desserts function ={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Beverages function ={addToCart} translate={changeLanguage} language = {newLang}/>
-                <Salads function = {addToCart} translate={changeLanguage} language = {newLang}/>
-                <Add function={addToCart}  translate={changeLanguage} language = {newLang}/>
+                <Burgers function={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Chicken function={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Desserts function ={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Beverages function ={addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Salads function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Add function={addToCart}  translate={changeLanguage} language = {flagLang}/>
                 <Button style = {styles.catagory} name="comboCharge" value = "3.29"  onClick={e => addToCart(e.target.name,e.target.value,comboChargeText)}>
                     {comboChargeText}
                 </Button>
-                <NewItems function = {addToCart} translate={changeLanguage} language = {newLang}/>
-                <Seasonal function = {addToCart} translate={changeLanguage} language = {newLang}/>
+                <NewItems function = {addToCart} translate={changeLanguage} language = {flagLang}/>
+                <Seasonal function = {addToCart} translate={changeLanguage} language = {flagLang}/>
 
 
 
