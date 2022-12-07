@@ -113,11 +113,11 @@ function Login() {
         console.log(data.ismanager)
 
         if (data.ismanager === true) {
-          window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
+          window.location.href = 'https://testlaunch.onrender.com/ManagerSide'
         }
 
         if (data.ismanager === false) {
-          window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
+          window.location.href = 'https://testlaunch.onrender.com/ServerSide'
         }
 
 

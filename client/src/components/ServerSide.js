@@ -26,7 +26,11 @@ function ServerSide(){
     else {
         day = today.getDate()
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 94e47397ae9f85ed085654042106acd0d4c7a621
     const date = (today.getMonth() + 1) + "/" + day + "/" + today.getFullYear()
     const testName = "test";
     const testAmount = 1000000;

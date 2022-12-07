@@ -168,11 +168,10 @@ function CustomerSide(){
     if (today.getDate() < 10) {
         day = "0" + today.getDate()
     }
-
     else {
         day = today.getDate()
     }
-    
+
     const date = (today.getMonth() + 1) + "/" + day + "/" + today.getFullYear()
     console.log(date)
     const testName = "test";
