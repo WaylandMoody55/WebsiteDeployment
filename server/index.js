@@ -579,6 +579,7 @@ app.post("/newItems",(req,res)=>{
     });
 })
 
+/*
 app.post("/excessReport1", (req,res) => {
   const name = req.body.name;
   pool
@@ -587,16 +588,65 @@ app.post("/excessReport1", (req,res) => {
       res.send(query_res.rows);
     })
 })
+*/
 
-app.post("/excessReport", (req,res)=>{
-  const Tdate = req.body.Tdate;
-  const Fdate = req.body.Fdate;
-  pool
-  .query("SELECT ingredients.name, COUNT(*) FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food Where date BETWEEN '" + Tdate + "' AND '"+  Fdate +"' Group by name Order by name")
-  .then(query_res => {
-    res.send(query_res.rows);
+app.post("/excessReport", (req,res) => {
+    res.set('Access-Control-Allow-Origin', 'http:localhost:3000' )
+    const Tdate = req.body.Tdate;
+    const Fdate = req.body.Fdate;
+    //console.log(Fdate)
+    //console.log(Tdate)
+    var array = new Array();
+    tempArray = () => {
+        return new Promise((resolve, reject) => {
+          pool
+            .query("SELECT ingredients.name, COUNT(*) FROM ingredients INNER JOIN ingredient_pair_table ON ingredient_pair_table.ingredient=ingredients.name INNER JOIN orders_pair_table ON orders_pair_table.item =  ingredient_pair_table.food Where date BETWEEN '" + Fdate + "' AND '"+  Tdate +"' Group by name Order by name", (error, results) => {
+              if (error) return reject(error);
+              else {
+                return resolve(results)
+              }
+            })
+        })
+      }
+    getItems = (name) => {
+      return new Promise((resolve, reject) => {
+        pool
+          .query("Select quantity,units from ingredients where name = '" + name + "'", (error, results) => {
+            if (error) return reject(error);
+            else {
+              return resolve(results)
+            }
+          })
+      })
+      
+    }
+    
+    async function compare(){
+      result1 = await tempArray();
+      console.log(result1.rows)
+      for ( var i = 0 ; i < result1.rowCount; i++){
+        result2 = await getItems(result1.rows[i].name);
+     
+        var num = result1.rows[i].count;
+       
+        
+        console.log("in inventory: "+result2.rows[0].quantity)
+        if (result2.rows[0].units === "pounds"){
+            num *= .125;
+        }
+    
+  
+        if (1 - (result2.rows[0].quantity /(parseFloat(result2.rows[0].quantity) + parseFloat(num))) < .1){
+            
+            array.push([result1.rows[i].name, num])
+        }
+      }
+  
+      res.send(array);
+    }
+    compare();
+    
   })
-})
 
 app.post( "/getIng", (req, res) => {
   const name = req.body.name
@@ -642,4 +692,3 @@ app.listen(PORT, () => {
 
 
 // test for riley
-// test for riley2
