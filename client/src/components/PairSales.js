@@ -25,21 +25,21 @@ function PairSales(){
             </div>
         </form>
         <div class ="px-5 flex justify-center items-center">
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Item 1</th>
-                    <th>Item 2</th>
-                    <th>Pair Sales</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class="bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Item 1</th>
+                    <th class="bg-gray-500">Item 2</th>
+                    <th class="bg-gray-500">Pair Sales</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-500">
                     {pairSalesArray.map(item => {
                     return (
-                        <tr>
-                        <td>{item.item1}</td>
-                        <td>{item.item2}</td>
-                        <td>{item.amount}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.item1}</td>
+                        <td class="bg-gray-500">{item.item2}</td>
+                        <td class="bg-gray-500">{item.amount}</td>
                         </tr>
                     );
                     })}

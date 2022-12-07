@@ -91,19 +91,19 @@ function SalesReport(){
             </div>
         </form>
         <div class ="px-5 flex justify-center items-center">
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Item</th>
-                    <th>Sales</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class="bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Item</th>
+                    <th class="bg-gray-500">Sales</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-500">
                     {salesReportArray.map(item => {
                     return (
-                        <tr>
-                        <td>{item.name}</td>
-                        <td>{item.count}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.name}</td>
+                        <td class="bg-gray-500">{item.count}</td>
                         </tr>
                     );
                     })}

@@ -48,10 +48,10 @@ function Seasonal(props) {
      </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={styles.headFoot}>
           <Modal.Title>Seasonal Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:
+        <Modal.Body style={styles.back}>Select:
           {seasonal.map(item => {
             return(
               <>
@@ -63,8 +63,8 @@ function Seasonal(props) {
           })
           }
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer style={styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style={styles.close}>
             Close
           </Button>
         </Modal.Footer>
@@ -84,5 +84,17 @@ const styles = {
         height: '200px',
         marginLeft: '20px',
         marginTop: '20px',
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };

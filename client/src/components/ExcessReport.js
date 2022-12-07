@@ -25,17 +25,17 @@ function ExcessReport(){
             </div>
         </form>
         <div class ="px-5 flex justify-center items-center">
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Item</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class="bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Item</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-500">
                     {excessReportArray.map(item => {
                     return (
-                        <tr>
-                        <td>{item.item}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.item}</td>
                         </tr>
                     );
                     })}

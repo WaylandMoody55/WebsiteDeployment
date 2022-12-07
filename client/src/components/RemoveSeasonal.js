@@ -53,10 +53,10 @@ function RemoveSeasonal(){
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style={styles.headFoot}>
                     <Modal.Title>Remove Seasonal Item</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={styles.back}>
                         <form onSubmit={(e) =>{
                             //console.log("clicked on remove");
                             handleClose();
@@ -66,7 +66,7 @@ function RemoveSeasonal(){
                         id="removeSeasonal" className="w-full max-w-sm">
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
+                                    <label className="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
                                         Seasonal Item
                                     </label>
                                 </div>
@@ -76,8 +76,8 @@ function RemoveSeasonal(){
                             </div>
                         </form>
                     </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Modal.Footer style={styles.headFoot}>
+                    <Button variant="secondary" onClick={handleClose} style={styles.close}>
                         Close
                     </Button>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" form = "removeSeasonal">Remove Seasonal Item</button>
@@ -89,3 +89,18 @@ function RemoveSeasonal(){
 }
 
 export default RemoveSeasonal;
+
+const styles = {
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    }
+};

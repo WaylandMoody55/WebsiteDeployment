@@ -11,16 +11,17 @@ function Beverages(props) {
   const handleShow = () => setShow(true);
 
   return (
+   
     <>
       <Button style = {styles.catagory} onClick={handleShow}>
         Beverages
      </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={styles.headFoot}>
           <Modal.Title>Beverage Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:
+        <Modal.Body style={styles.back}>Select:
         <>
         <div class="relative">
             <img class="scale-75" src={drink} alt="drink"></img>
@@ -28,8 +29,8 @@ function Beverages(props) {
         </div>
         </>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer style={styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style={styles.close}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
@@ -39,6 +40,7 @@ function Beverages(props) {
         </Modal.Footer>
       </Modal>
     </>
+
   );
 }
 
@@ -62,5 +64,17 @@ const styles = {
     },
     img:{
 
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };

@@ -18,10 +18,10 @@ function Salads(props) {
      </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={styles.headFoot}>
           <Modal.Title>Salad Options</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:
+        <Modal.Body style={styles.back}>Select:
         <>
         <div class="relative">
             <img class="scale-75" src={salad} alt="ceasarSalad"></img>
@@ -29,8 +29,8 @@ function Salads(props) {
         </div>
         </>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer style={styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style={styles.close}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
@@ -62,5 +62,17 @@ const styles = {
     },
     img:{
 
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };

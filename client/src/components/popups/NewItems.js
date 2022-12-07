@@ -47,10 +47,10 @@ function NewItems(props) {
      </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={styles.headFoot}>
           <Modal.Title>New Items</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select:
+        <Modal.Body style={styles.back}>Select:
           {newItems.map(item => {
             return(
               <>
@@ -62,8 +62,8 @@ function NewItems(props) {
             );
           })}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer style={styles.headFoot}>
+          <Button variant="secondary" onClick={handleClose} style={styles.close}>
             Close
           </Button>
         </Modal.Footer>
@@ -83,5 +83,17 @@ const styles = {
         height: '200px',
         marginLeft: '20px',
         marginTop: '20px',
+    },
+    back:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
+    },
+    headFoot:{
+      backgroundColor: '#6F7378',
+      color: 'white'
+    },
+    close:{
+      backgroundColor: '#4C4E52',
+      color: 'white'
     }
 };

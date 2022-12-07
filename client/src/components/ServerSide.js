@@ -406,7 +406,7 @@ function ServerSide(){
                     })} 
                 </tbody>
             </table>
-            <h2 className='px-2 text-black' style={styles.amnt}>Total amount: ${Math.abs(totalAmount.toFixed(2))}</h2>
+            <label  style={styles.amnt}>Total amount: ${Math.abs(totalAmount.toFixed(2))}</label>
 
             <div>
                 { totalAmount !== 0 ? <div>
@@ -543,10 +543,11 @@ const styles = {
         width: '400px'
     },
     amnt:{
-        marginLeft: '55px'
+        marginLeft: '55px',
+        fontWeight: 'bold',
+        fontSize: '30px',
     },
     catg:{
-        backgroundColor: '#eee',
         padding: '5px 5px 5px 5px',
         textAlign: 'center',
         fontWeight: 'bold',

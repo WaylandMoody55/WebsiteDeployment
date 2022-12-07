@@ -76,19 +76,19 @@ function ViewEditMenu(){
         </div>
         {/*Table*/}
         <div class ="px-5 flex justify-center items-center">
-            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2">
-                <thead>
-                    <tr>
-                    <th>Item Name</th>
-                    <th>Price</th>
+            <table class = "table-auto w-full shadow-md mt-5 rounded border-separate border-spacing-y-3 px-2 bg-gray-500">
+                <thead class="bg-gray-500">
+                    <tr class="bg-gray-500">
+                    <th class="bg-gray-500">Item Name</th>
+                    <th class="bg-gray-500">Price</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-500">
                     {menuItems.map(item => {
                     return (
-                        <tr>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
+                        <tr class="bg-gray-500">
+                        <td class="bg-gray-500">{item.name}</td>
+                        <td class="bg-gray-500">{item.price}</td>
 
                         </tr>
                     );
