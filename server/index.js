@@ -440,18 +440,23 @@ app.post("/sendOrder", (req, res) => {
         console.log(i)
       }
 
+    
       // populate individual and pounds list 
       result3 = await ingredientList()
+      console.log(result3.rows)
       for (let i = 0; i < result3.rowCount; i++) {
         if (result3.rows[i].units === "individual") {
           console.log(result3.rows[i].name)
           individualArray.push(result3.rows[i].name)
+        }
           if (result3.rows[i].units === "pounds") {
             console.log(result3.rows[i].name)
             poundsArray.push(result3.rows[i].name)
           }
-        }
       }
+
+      console.log(individualArray)
+      console.log(poundsArray)
       
       // updating inventory amounts 
       for (let i = 0; i < individualArray.length; i++) {
