@@ -1,9 +1,35 @@
-import Button from "react-bootstrap/Button";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Button from "react-bootstrap/Button";
 import logo  from './Images/logo.png';
 
 import React, {useRef} from 'react';
-
-import './Format.css';
 
 import jwt_decode from "jwt-decode";
 import {useEffect, useState} from 'react';
@@ -41,7 +67,7 @@ function Login() {
         };
     
         try {
-          const res = await fetch("https://websitebackendtest.onrender.com/login", {
+          const res = await fetch("/login", {
             method: "post",
             mode : "cors",
             // cache: 'no-cache',
@@ -64,11 +90,11 @@ function Login() {
 
           // check if it is a manager or server 
           if (data.ismanager === true) {
-            window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
+            window.location.href = 'http://localhost:3000/ManagerSide'
           }
 
           if (data.ismanager === false) {
-            window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
+            window.location.href = 'http://localhost:3000/ServerSide'
           }
     }
 
@@ -93,7 +119,7 @@ function Login() {
         firstName: name
       };
       try{
-        const res = await fetch("https://websitebackendtest.onrender.com/oauthLogin",{
+        const res = await fetch("/oauthLogin",{
             method: "post",
             mode: "cors",
             headers: {
@@ -113,11 +139,11 @@ function Login() {
         console.log(data.ismanager)
 
         if (data.ismanager === true) {
-          window.location.href = 'https://websitebackendtest.onrender.com/ManagerSide'
+          window.location.href = 'http://localhost:3000/ManagerSide'
         }
 
         if (data.ismanager === false) {
-          window.location.href = 'https://websitebackendtest.onrender.com/ServerSide'
+          window.location.href = 'http://localhost:3000/ServerSide'
         }
 
 
@@ -173,22 +199,22 @@ function Login() {
     
 
     return (
-      <div className="login">
-        <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5" >
-          <div id = "signInDiv"></div>
-            <img src={logo} alt="Logo" />
-            <form id="login" className="w-full max-w-sm">
-            <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                <label
+
+        &lt;div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
+          &lt;div id = "signInDiv">&lt;/div>
+            &lt;img src={logo} alt="Logo" />
+            &lt;form id="login" className="w-full max-w-sm">
+            &lt;div className="md:flex md:items-center mb-6">
+                &lt;div className="md:w-1/3">
+                &lt;label
                     className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                     for="name"
                 >
                     Enter Login Id:
-                </label>
-                </div>
-                <div className="md:w-2/3">
-                <input
+                &lt;/label>
+                &lt;/div>
+                &lt;div className="md:w-2/3">
+                &lt;input
                     className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="loginVal"
                     type="text"
@@ -196,25 +222,47 @@ function Login() {
                     placeholder=""
                     ref = {loginNum}
                 />
-                </div>
-            </div>
-            <div class = "flex flex-wrap justify-center space-x-5">
-                <Button variant="primary" onClick={handleLogin}>
+                &lt;/div>
+            &lt;/div>
+            &lt;div class = "flex flex-wrap justify-center space-x-5">
+                &lt;Button variant="primary" onClick={handleLogin}>
                                     Login
-                </Button>
-                {/* <Button variant="primary" href="/ManagerSide">
+                &lt;/Button>
+                {/* &lt;Button variant="primary" href="/ManagerSide">
                                     Manager Override
-                </Button> */}
-                <Button variant="primary" href="/CustomerSide">
+                &lt;/Button> */}
+                &lt;Button variant="primary" href="/CustomerSide">
                                     Customer UI
-                </Button>
-            </div>
-            </form>
+                &lt;/Button>
+            &lt;/div>
+            &lt;/form>
 
-        </div>
-        </div>
+        &lt;/div>
       );
     }
 export {exportLoginNum}
 export default Login;
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Login">Login</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#oauthLogin">oauthLogin</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 21:56:49 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -62,6 +62,7 @@ function SalesReport(){
 
     return(
         <>
+        <div className="sales">
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
             <Button variant="danger" href="/ManagerSide">
                     Back
@@ -111,6 +112,7 @@ function SalesReport(){
                     })}
                 </tbody>
             </table>
+        </div>
         </div>
         </>
     );

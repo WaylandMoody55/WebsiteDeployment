@@ -55,6 +55,15 @@ h3{
     width: 700px;
 }
 
+.login{
+    background-size: cover;
+    height: 100vh;
+}
+
+.sales {
+    height: 200vh;
+}
+
 th {
     background: white;
     position: sticky;

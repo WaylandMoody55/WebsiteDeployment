@@ -40,7 +40,9 @@ function App() {
             <Route path='/Inventory' element={<Inventory/>}/>
             <Route path='/ViewEditMenu' element={<ViewEditMenu/>}/>
             <Route path='/ServerSide' element={<ServerSide/>}/>
+            {/* <div className='login'> */}
             <Route path='/Login' element={<Login/>}/>
+            {/* </div> */}
             <Route path='/RestockReport' element={<RestockReport/>}/>
             <Route path='/ExcessReport' element={<ExcessReport/>}/>
             <Route path='/PairSales' element={<PairSales/>}/>
