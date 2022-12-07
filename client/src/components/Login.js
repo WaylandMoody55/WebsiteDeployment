@@ -149,6 +149,7 @@ function Login() {
     
 
     return (
+
         <div class = "flex flex-wrap justify-center space-x-5 px-5 py-5">
           <div id = "signInDiv"></div>
             <img src={logo} alt="Logo" />
@@ -191,3 +192,4 @@ function Login() {
     }
 export {exportLoginNum}
 export default Login;
+
