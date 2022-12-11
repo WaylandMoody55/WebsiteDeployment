@@ -12,7 +12,7 @@ function NewItems(props) {
 
   async function getNewItems(){
     try {
-      const res = await fetch("/newItems", {
+      const res = await fetch("https://websitebackendtest.onrender.com/newItems", {
         method: "post",
         mode : "cors",
         // cache: 'no-cache',
