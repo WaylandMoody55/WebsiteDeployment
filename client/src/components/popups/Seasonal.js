@@ -12,7 +12,7 @@ function Seasonal(props) {
 
   async function getSeasonalItems(){
     try {
-      const res = await fetch("/seasonalItems", {
+      const res = await fetch("https://websitebackendtest.onrender.com/seasonalItems", {
         method: "post",
         mode : "cors",
         // cache: 'no-cache',
